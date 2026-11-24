@@ -1,0 +1,15 @@
+{
+  "uv": {
+    "version": "0.13.6",
+    "url": "https://files.pythonhosted.org/packages/7c/9d/714523188aea3054644d8e69ae8089aac70325a3cee2d3d05509d4f23398/uv-0.13.6-py3-none-win_amd64.whl",
+    "sha256": "7c9bc35ccb65932d8dc10a0669f9c805eaa3c9827ce18ecbecb1bd67944b2cdf"
+  },
+  "python": { "version": "3.11.18" },
+  "livekit_server": {
+    "version": "1.13.11",
+    "url": "https://github.com/livekit/livekit/releases/download/v1.13.11/livekit_1.13.11_windows_amd64.zip",
+    "sha256": "5d071ea43339f0140d24a66f0b2ff8a7bf6c4d0dceb19b30abca835670213667"
+  },
+  "node": { "version": "24.22.0", "source": "existing system installation" },
+  "npm": { "version": "11.19.1", "source": "existing system installation" }
+}

@@ -1,0 +1,235 @@
+{
+  "python_tests_passed": 141,
+  "frontend_build": "passed",
+  "physical_devices_used": false,
+  "harness_internal_controller_and_policy_changed": false,
+  "validation_status": "ordinary QA passed; showcase/control cases passed; after-task QA completion timed out",
+  "phone_validation": "pending",
+  "reports": [
+    {
+      "status": "failed",
+      "physicalDevicesUsed": false,
+      "syntheticDrawings": true,
+      "handheldSimulation": true,
+      "motionProfile": {
+        "xPixels": 48,
+        "yPixels": 30,
+        "rotationDegrees": 4,
+        "scaleChange": 0.06,
+        "lightingChange": 0.08
+      },
+      "qaAfter": true,
+      "voicePath": ".runtime/h2-fixtures/showcase-short.wav",
+      "measurementLabel": "auto-input-live",
+      "answers": [],
+      "cases": [],
+      "sceneTimings": [],
+      "pageErrors": [
+        "Cannot set properties of undefined (setting 'getUserMedia')"
+      ],
+      "error": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:8000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8000/\", waiting until \"load\"\u001b[22m\n",
+      "liveTracksAfterHangup": 0
+    },
+    {
+      "status": "failed",
+      "physicalDevicesUsed": false,
+      "syntheticDrawings": true,
+      "handheldSimulation": true,
+      "motionProfile": {
+        "xPixels": 48,
+        "yPixels": 30,
+        "rotationDegrees": 4,
+        "scaleChange": 0.06,
+        "lightingChange": 0.08
+      },
+      "qaAfter": true,
+      "voicePath": ".runtime/h2-fixtures/showcase-short.wav",
+      "measurementLabel": "auto-input-live-ready",
+      "answers": [],
+      "cases": [],
+      "sceneTimings": [],
+      "pageErrors": [
+        "Cannot set properties of undefined (setting 'getUserMedia')"
+      ],
+      "error": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:8000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8000/\", waiting until \"load\"\u001b[22m\n",
+      "liveTracksAfterHangup": 0
+    },
+    {
+      "status": "failed",
+      "physicalDevicesUsed": false,
+      "syntheticDrawings": true,
+      "handheldSimulation": true,
+      "motionProfile": {
+        "xPixels": 48,
+        "yPixels": 30,
+        "rotationDegrees": 4,
+        "scaleChange": 0.06,
+        "lightingChange": 0.08
+      },
+      "qaAfter": true,
+      "voicePath": ".runtime/h2-fixtures/showcase-short.wav",
+      "measurementLabel": "auto-input-v1",
+      "answers": [],
+      "cases": [],
+      "sceneTimings": [],
+      "pageErrors": [],
+      "error": "page.waitForFunction: Timeout 45000ms exceeded.",
+      "liveTracksAfterHangup": 0
+    },
+    {
+      "status": "failed",
+      "physicalDevicesUsed": false,
+      "syntheticDrawings": true,
+      "handheldSimulation": true,
+      "motionProfile": {
+        "xPixels": 48,
+        "yPixels": 30,
+        "rotationDegrees": 4,
+        "scaleChange": 0.06,
+        "lightingChange": 0.08
+      },
+      "qaAfter": true,
+      "voicePath": ".runtime/h2-fixtures/showcase-short.wav",
+      "measurementLabel": "auto-input-v2",
+      "answers": [],
+      "cases": [],
+      "sceneTimings": [],
+      "pageErrors": [],
+      "error": "page.waitForFunction: Timeout 45000ms exceeded.",
+      "liveTracksAfterHangup": 0
+    },
+    {
+      "status": "failed",
+      "physicalDevicesUsed": false,
+      "syntheticDrawings": true,
+      "handheldSimulation": true,
+      "motionProfile": {
+        "xPixels": 48,
+        "yPixels": 30,
+        "rotationDegrees": 4,
+        "scaleChange": 0.06,
+        "lightingChange": 0.08
+      },
+      "qaAfter": true,
+      "voicePath": ".runtime/h2-fixtures/showcase-short.wav",
+      "measurementLabel": "auto-input-v3",
+      "answers": [
+        "好，那咱们就开始吧。你先给我看看第一个东西是啥？",
+        "这是一个蓝色的马克杯插画，带有黑色的轮廓和把手。",
+        "这是一把棕色的扁平钥匙插画，通常用来开锁。",
+        "这书封面红得俗气，也就装装样子。"
+      ],
+      "cases": [
+        "one spoken request starts continuous showcase",
+        "continuous camera sweep is quiet",
+        "cup introduced without new speech",
+        "held cup does not repeat across recheck",
+        "keys introduced without new speech",
+        "book introduced without new speech",
+        "pause/resume/end preserve silence for known or inactive scenes"
+      ],
+      "sceneTimings": [
+        {
+          "scene": "cup",
+          "switchToFirstDecodedAudioMs": 16259,
+          "switchToPlaybackEndMs": 20723
+        },
+        {
+          "scene": "keys",
+          "switchToFirstDecodedAudioMs": 9545,
+          "switchToPlaybackEndMs": 13846
+        },
+        {
+          "scene": "book",
+          "switchToFirstDecodedAudioMs": 9524,
+          "switchToPlaybackEndMs": 13519
+        }
+      ],
+      "pageErrors": [],
+      "autoInput": true,
+      "error": "page.waitForFunction: Timeout 65000ms exceeded.",
+      "liveTracksAfterHangup": 0
+    },
+    {
+      "status": "failed",
+      "physicalDevicesUsed": false,
+      "syntheticDrawings": true,
+      "handheldSimulation": true,
+      "motionProfile": {
+        "xPixels": 48,
+        "yPixels": 30,
+        "rotationDegrees": 4,
+        "scaleChange": 0.06,
+        "lightingChange": 0.08
+      },
+      "qaAfter": true,
+      "voicePath": ".runtime/h2-fixtures/showcase-short.wav",
+      "measurementLabel": "auto-input-final",
+      "answers": [
+        "没问题，请开始展示物品，我会为您逐个介绍。",
+        "这是一个蓝色的马克杯。",
+        "这是一把金色的钥匙。",
+        "这是一本红色封面的书，上面有两条金色的横线。这种书通常用来记录笔记或者作为日记本使用。"
+      ],
+      "cases": [
+        "one spoken request starts continuous showcase",
+        "continuous camera sweep is quiet",
+        "cup introduced without new speech",
+        "held cup does not repeat across recheck",
+        "keys introduced without new speech",
+        "book introduced without new speech",
+        "pause/resume/end preserve silence for known or inactive scenes"
+      ],
+      "sceneTimings": [
+        {
+          "scene": "cup",
+          "switchToFirstDecodedAudioMs": 10297,
+          "switchToPlaybackEndMs": 12287
+        },
+        {
+          "scene": "keys",
+          "switchToFirstDecodedAudioMs": 17147,
+          "switchToPlaybackEndMs": 18972
+        },
+        {
+          "scene": "book",
+          "switchToFirstDecodedAudioMs": 7487,
+          "switchToPlaybackEndMs": 16063
+        }
+      ],
+      "pageErrors": [],
+      "autoInput": true,
+      "error": "page.waitForFunction: Timeout 65000ms exceeded.",
+      "liveTracksAfterHangup": 0
+    },
+    {
+      "status": "passed",
+      "physicalDevicesUsed": false,
+      "syntheticDrawings": true,
+      "handheldSimulation": true,
+      "motionProfile": {
+        "xPixels": 48,
+        "yPixels": 30,
+        "rotationDegrees": 4,
+        "scaleChange": 0.06,
+        "lightingChange": 0.08
+      },
+      "qaAfter": true,
+      "qaOnly": true,
+      "voicePath": ".runtime/h2-fixtures/showcase.wav",
+      "measurementLabel": "auto-input-ordinary-qa",
+      "answers": [
+        "建议桌上可以放一些实用或装饰性的物品，如台灯、笔记本、笔筒、绿植等。"
+      ],
+      "cases": [
+        "silence is quiet; ordinary voice QA needs no manual submit"
+      ],
+      "sceneTimings": [],
+      "pageErrors": [],
+      "autoInput": true,
+      "audioBytesReceived": 83787,
+      "userTranscriptRows": 1,
+      "liveTracksAfterHangup": 0
+    }
+  ]
+}

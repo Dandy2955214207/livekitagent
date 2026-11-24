@@ -1,0 +1,90 @@
+{
+  "source": "Real Qwen M0 cancellation exchange, 2026-10-29; IDs anonymized; no PCM/Base64",
+  "events": [
+    {
+      "direction": "recv",
+      "type": "response.created",
+      "at_ms": 5453.0,
+      "response_id": "response-1",
+      "status": "in_progress"
+    },
+    {
+      "direction": "recv",
+      "type": "response.audio.delta",
+      "at_ms": 6110.0,
+      "response_id": "response-1",
+      "item_id": "item_PYUN6aZPMqcZA4etGIphR",
+      "byte_count": 15360
+    },
+    {
+      "direction": "send",
+      "type": "response.cancel",
+      "at_ms": 6110.0
+    },
+    {
+      "direction": "recv",
+      "type": "response.done",
+      "at_ms": 6188.0,
+      "response_id": "response-1",
+      "status": "cancelled"
+    },
+    {
+      "direction": "recv",
+      "type": "response.created",
+      "at_ms": 11031.0,
+      "response_id": "response-2",
+      "status": "in_progress"
+    },
+    {
+      "direction": "recv",
+      "type": "response.audio.delta",
+      "at_ms": 11235.0,
+      "response_id": "response-2",
+      "item_id": "item_JYBzAluLfuNodUUeoCQd2",
+      "byte_count": 15360
+    },
+    {
+      "direction": "recv",
+      "type": "response.audio.delta",
+      "at_ms": 11281.0,
+      "response_id": "response-2",
+      "item_id": "item_JYBzAluLfuNodUUeoCQd2",
+      "byte_count": 15360
+    },
+    {
+      "direction": "recv",
+      "type": "response.audio.delta",
+      "at_ms": 11313.0,
+      "response_id": "response-2",
+      "item_id": "item_JYBzAluLfuNodUUeoCQd2",
+      "byte_count": 15360
+    },
+    {
+      "direction": "recv",
+      "type": "response.audio.delta",
+      "at_ms": 11360.0,
+      "response_id": "response-2",
+      "item_id": "item_JYBzAluLfuNodUUeoCQd2",
+      "byte_count": 15360
+    },
+    {
+      "direction": "recv",
+      "type": "response.audio.delta",
+      "at_ms": 11360.0,
+      "response_id": "response-2",
+      "item_id": "item_JYBzAluLfuNodUUeoCQd2",
+      "byte_count": 3840
+    },
+    {
+      "direction": "recv",
+      "type": "response.done",
+      "at_ms": 11375.0,
+      "response_id": "response-2",
+      "status": "completed"
+    }
+  ],
+  "expected_audio_bytes": {
+    "response-1": 15360,
+    "response-2": 65280
+  }
+}

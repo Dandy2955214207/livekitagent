@@ -1,0 +1,394 @@
+{
+  "date_local": "2026-10-30",
+  "timezone": "Asia/Shanghai",
+  "python_tests_passed": 79,
+  "frontend_build": "passed",
+  "cleanup": {
+    "remaining_demo_rooms": 0,
+    "active_worker_jobs": 0,
+    "active_api_sessions": 0
+  },
+  "measurement": "fixed synthetic media; server_playout; browser RTC received bytes; no physical devices",
+  "final_browser_run": {
+    "status": "passed",
+    "guideOnly": false,
+    "physicalDevicesUsed": false,
+    "turns": [
+      {
+        "name": "color",
+        "answer": "当前图片中大圆形的颜色是红色。",
+        "expectedMatched": true
+      },
+      {
+        "name": "color",
+        "answer": "当前图片中大圆形的颜色是蓝色。",
+        "expectedMatched": true
+      },
+      {
+        "name": "guide",
+        "answer": "第一步，请在桌上摆放第一个积木，摆好后告诉我。",
+        "expectedMatched": true
+      },
+      {
+        "name": "question",
+        "answer": "把第一个积木放在桌上任意位置，摆稳就行。",
+        "expectedMatched": true
+      },
+      {
+        "name": "done",
+        "answer": "接下来，请在桌上摆放第二个积木。",
+        "expectedMatched": true
+      },
+      {
+        "name": "after",
+        "answer": "桌上可以放笔、本子、水杯、手机、钥匙等日常小物品。",
+        "expectedMatched": true
+      }
+    ],
+    "cases": [
+      "manual idle is quiet",
+      "current red image and blue follow-up",
+      "guidance, pause/resume, follow-up, user-confirmed advance, end task",
+      "ordinary voice QA after task ended"
+    ],
+    "pageErrors": [],
+    "audioBytesReceived": 275380,
+    "liveTracksAfterHangup": 0
+  },
+  "final_browser_source": ".runtime/h2-results/report-1793350971870.json",
+  "final_browser_sha256": "04eb8295d097df76138c4c565125dfc0ccaf9050b722b1407b6a9854e635fe96",
+  "prior_browser_attempts": [
+    {
+      "source": ".runtime/h2-results/report-1793349237818.json",
+      "sha256": "dac486246bddddff0e23becb6e952373229009271d76d96fb27c4d21f31d5244",
+      "status": "failed",
+      "guide_only": null,
+      "successful_turns": [
+        "color"
+      ],
+      "error": "page.waitForFunction: Timeout 45000ms exceeded.",
+      "page_errors": [],
+      "live_tracks_after_hangup": 0
+    },
+    {
+      "source": ".runtime/h2-results/report-1793349720612.json",
+      "sha256": "62cb8818daad1c692e86232ac51319e39a54be95501f46327bba6244bd2ba78a",
+      "status": "failed",
+      "guide_only": null,
+      "successful_turns": [
+        "color",
+        "color"
+      ],
+      "error": "page.waitForFunction: Timeout 45000ms exceeded.",
+      "page_errors": [],
+      "live_tracks_after_hangup": 0
+    },
+    {
+      "source": ".runtime/h2-results/report-1793349828815.json",
+      "sha256": "ab1a8eb314ab362d3d7664b7dd0bd567a2d573412e764febc2fe6ea48206b771",
+      "status": "failed",
+      "guide_only": true,
+      "successful_turns": [],
+      "error": "page.waitForFunction: Timeout 45000ms exceeded.",
+      "page_errors": [],
+      "live_tracks_after_hangup": 0
+    },
+    {
+      "source": ".runtime/h2-results/report-1793349953457.json",
+      "sha256": "8acaa388c7a80ad2df9acd29800ff30433d6fa01b5a6111ab63b7ebe15425812",
+      "status": "failed",
+      "guide_only": true,
+      "successful_turns": [
+        "guide"
+      ],
+      "error": "page.waitForFunction: Timeout 45000ms exceeded.",
+      "page_errors": [],
+      "live_tracks_after_hangup": 0
+    },
+    {
+      "source": ".runtime/h2-results/report-1793350115165.json",
+      "sha256": "9805a2a70a5c564ba5b92bb66ddb31480080489917aca157c5b07efffd7636ce",
+      "status": "failed",
+      "guide_only": true,
+      "successful_turns": [
+        "guide"
+      ],
+      "error": "page.waitForFunction: Timeout 45000ms exceeded.",
+      "page_errors": [],
+      "live_tracks_after_hangup": 0
+    },
+    {
+      "source": ".runtime/h2-results/report-1793350261945.json",
+      "sha256": "cf3d6a441ca6bac5311ab14b5a2ec56fe2509dcbb217c6c066734522290b0cfd",
+      "status": "passed",
+      "guide_only": true,
+      "successful_turns": [
+        "guide",
+        "question",
+        "done"
+      ],
+      "error": null,
+      "page_errors": [],
+      "live_tracks_after_hangup": 0
+    },
+    {
+      "source": ".runtime/h2-results/report-1793350738882.json",
+      "sha256": "8acd51bf7439d1230d9854a191c3039cdbe0e2425d94d8c13aff764b146e56e6",
+      "status": "failed",
+      "guide_only": false,
+      "successful_turns": [
+        "color",
+        "color",
+        "guide",
+        "question",
+        "done"
+      ],
+      "error": "page.waitForFunction: Timeout 45000ms exceeded.",
+      "page_errors": [],
+      "live_tracks_after_hangup": 0
+    }
+  ],
+  "protocol_probes": [
+    {
+      "source": ".runtime/harness-probes/control-716f00db5feb4c8bb48c2fe8b4278d55.json",
+      "status": "failed",
+      "responses": [
+        {
+          "response_id": "resp_Ikvh7948Vnubxq7YCGyVA",
+          "call_id": "call_0ada3cb92fb242368e803c97",
+          "status": "completed",
+          "audio_bytes": 0,
+          "tool_result_acknowledged": true
+        },
+        {
+          "response_id": "resp_XE4pkoouBpAKCIfXPUciN",
+          "status": "completed",
+          "audio_bytes": 0
+        }
+      ],
+      "fixed_audio": null,
+      "fixed_tools": null
+    },
+    {
+      "source": ".runtime/harness-probes/control-493ccecd51f14343be09b0dcc804bf89.json",
+      "status": "completed_probe",
+      "responses": [
+        {
+          "response_id": "resp_XYTwUYIedJO6LBAYXOVYr",
+          "call_id": "call_23579992613444cf9d33ca5d",
+          "status": "completed",
+          "audio_bytes": 0,
+          "tool_result_acknowledged": true
+        },
+        {
+          "response_id": "resp_QrnhYiJDSA5hecuZaoQDC",
+          "status": "completed",
+          "audio_bytes": 80640
+        }
+      ],
+      "fixed_audio": true,
+      "fixed_tools": null
+    },
+    {
+      "source": ".runtime/harness-probes/loop-090147c4f13e421e81fa80c59de027d7.json",
+      "status": "failed",
+      "responses": [
+        {
+          "response_id": "resp_AC5vIlSmyFjEAy3lvp2pz",
+          "status": "completed",
+          "audio_bytes": 0,
+          "call_count": 1,
+          "text_chars": 0,
+          "call_id": "call_244aaf8466f64607b056888b",
+          "tool_result_acknowledged": true
+        },
+        {
+          "response_id": "resp_DdniJY7jHMw7RBfeYN8TJ",
+          "status": "completed",
+          "audio_bytes": 80640,
+          "call_count": 0
+        },
+        {
+          "response_id": "resp_JhY3XK7lbngcWXLpiL5lX",
+          "status": "completed",
+          "audio_bytes": 80640,
+          "call_count": 0,
+          "text_chars": 7
+        }
+      ],
+      "fixed_audio": null,
+      "fixed_tools": null
+    },
+    {
+      "source": ".runtime/harness-probes/loop-36193ba735fb402d86086115c9c029f6.json",
+      "status": "failed",
+      "responses": [
+        {
+          "response_id": "resp_M2ZD756xc4TkQfkPF4e8w",
+          "status": "completed",
+          "audio_bytes": 0,
+          "call_count": 1,
+          "text_chars": 0,
+          "call_id": "call_93095afb6c9d47a2915b123e",
+          "tool_result_acknowledged": true
+        },
+        {
+          "response_id": "resp_RAscUg73iwDCzr52Dyg8F",
+          "status": "completed",
+          "audio_bytes": 84480,
+          "call_count": 0
+        },
+        {
+          "response_id": "resp_VVg5FpzUcatyRJQ9wyY14",
+          "status": "completed",
+          "audio_bytes": 76800,
+          "call_count": 0,
+          "text_chars": 6
+        }
+      ],
+      "fixed_audio": null,
+      "fixed_tools": true
+    },
+    {
+      "source": ".runtime/harness-probes/loop-fc019a7e39be423689d4df5c246412d1.json",
+      "status": "passed",
+      "responses": [
+        {
+          "response_id": "resp_DQ1IUtGtWBSMdfSnGiILr",
+          "status": "completed",
+          "audio_bytes": 0,
+          "call_count": 1,
+          "text_chars": 0,
+          "call_id": "call_9036daa511914afab744805d",
+          "tool_result_acknowledged": true
+        },
+        {
+          "response_id": "resp_A5b2vIpGCZuQy4oVhgzBp",
+          "status": "completed",
+          "audio_bytes": 84480,
+          "call_count": 0
+        },
+        {
+          "response_id": "resp_THEGiy37qHVZNkDtX74HS",
+          "status": "completed",
+          "audio_bytes": 0,
+          "call_count": 1,
+          "text_chars": 0,
+          "call_id": "call_d4c8341a89ce444eb35ffd51",
+          "tool_result_acknowledged": true
+        },
+        {
+          "response_id": "resp_WIdH2F765WsTQp8yP5pr5",
+          "status": "completed",
+          "audio_bytes": 88320,
+          "call_count": 0
+        }
+      ],
+      "fixed_audio": null,
+      "fixed_tools": true
+    }
+  ],
+  "limitations": [
+    "No phone hardware or audible-speaker acceptance in these runs.",
+    "Literal repetition after ending the task produced no tool and was correctly gated after one correction; failure retained.",
+    "Model tool compliance is not guaranteed for every utterance; no control decision means no task advancement."
+  ],
+  "guidance_event_example": [
+    {
+      "timestamp": "2026-10-30T08:50:21.724301+00:00",
+      "message": "harness_input input=e391b170-cd4e-46da-9a38-0bff8776158d audio_bytes=359680 frame=None camera_epoch=0"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:23.916935+00:00",
+      "message": "harness_generation request=bea65116789845a4b1ea4a2a7b01eafe context=5c211ba756b24dabab47bd39250c7ba3 purpose=user_turn task=None epoch=3"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:25.867365+00:00",
+      "message": "harness_response request=bea65116789845a4b1ea4a2a7b01eafe response=resp_Svvy6f23iGjdfoemz5oJO purpose=user_turn status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:25.971815+00:00",
+      "message": "harness_tool_result call=call_a2b470f6276141aa909560b7 accepted=True reason=None"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:26.075780+00:00",
+      "message": "harness_generation request=bc2f06206b9140faa461a6adcf8349f5 context=636585e48da24a20878a87ba3a3e7074 purpose=speak task=c3f5a7233dd34ec9bea82c81985659f8 epoch=4"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:27.539046+00:00",
+      "message": "harness_response request=bc2f06206b9140faa461a6adcf8349f5 response=resp_QenzRcrirkPnvf1nwLSOg purpose=speak status=completed calls=0 audio_bytes=249600 text_chars=24"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:37.313452+00:00",
+      "message": "harness_input input=9e30cbe6-1201-4784-a4a3-c1b1569d66b5 audio_bytes=163840 frame=None camera_epoch=0"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:37.892329+00:00",
+      "message": "harness_generation request=57aad263d994433597f36ef4409e7208 context=b0043cac08d846cd92031f53229e9bd5 purpose=user_turn task=c3f5a7233dd34ec9bea82c81985659f8 epoch=9"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:39.168677+00:00",
+      "message": "harness_response request=57aad263d994433597f36ef4409e7208 response=resp_QUu6jS2jatEh9GSQK5MYV purpose=user_turn status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:39.294054+00:00",
+      "message": "harness_tool_result call=call_adc4f001d30d45409c7997ea accepted=False reason=action_not_allowed"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:39.427472+00:00",
+      "message": "harness_generation request=5a4b976c96014a15b37e4747d3810ef6 context=9230cb9728074372a36a3ff2f81bba44 purpose=user_turn task=c3f5a7233dd34ec9bea82c81985659f8 epoch=10"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:40.162042+00:00",
+      "message": "harness_response request=5a4b976c96014a15b37e4747d3810ef6 response=resp_VMP2qPDxjHSoILyr4XmYr purpose=user_turn status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:40.274073+00:00",
+      "message": "harness_tool_result call=call_a4a8a16b61164610a843ca12 accepted=True reason=None"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:40.380206+00:00",
+      "message": "harness_generation request=4fc12f7a8fb24c6fafe4f270744e05a4 context=97dcb714596e47ee80ad4751ea390b08 purpose=speak task=c3f5a7233dd34ec9bea82c81985659f8 epoch=11"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:41.873584+00:00",
+      "message": "harness_response request=4fc12f7a8fb24c6fafe4f270744e05a4 response=resp_XC9OTLUJlXPEdkWFae292 purpose=speak status=completed calls=0 audio_bytes=199680 text_chars=20"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:50.833359+00:00",
+      "message": "harness_input input=8fea7ee5-40e1-45ab-b1c9-dc39a6e1b411 audio_bytes=168320 frame=None camera_epoch=0"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:51.252454+00:00",
+      "message": "harness_generation request=f7a96463f341410896990802cbbca0bd context=76c925a7dea542e0a0af2b7a764725a7 purpose=user_turn task=c3f5a7233dd34ec9bea82c81985659f8 epoch=14"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:52.635725+00:00",
+      "message": "harness_response request=f7a96463f341410896990802cbbca0bd response=resp_ZPnQ8b6ETwRYHGYn3Fdio purpose=user_turn status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:52.901603+00:00",
+      "message": "harness_tool_result call=call_a62f25231e5346e88fd07857 accepted=False reason=completion_evidence_required"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:53.031547+00:00",
+      "message": "harness_generation request=faf9e0ae77ab40ef91598c7f7c46e65b context=d9b26df61b5a4943926d2611b2d54324 purpose=user_turn task=c3f5a7233dd34ec9bea82c81985659f8 epoch=15"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:54.338946+00:00",
+      "message": "harness_response request=faf9e0ae77ab40ef91598c7f7c46e65b response=resp_Ip8TtMV6Lkn3zfp6yNIIP purpose=user_turn status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:54.457646+00:00",
+      "message": "harness_tool_result call=call_a1c278031d8047f082607bca accepted=True reason=None"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:54.582682+00:00",
+      "message": "harness_generation request=003d457789734580a8774986415fb0eb context=61374e5e12674dbab47541e8e2261894 purpose=speak task=c3f5a7233dd34ec9bea82c81985659f8 epoch=16"
+    },
+    {
+      "timestamp": "2026-10-30T08:50:57.539523+00:00",
+      "message": "harness_response request=003d457789734580a8774986415fb0eb response=resp_JzVI49oH4RsbP3956ajYA purpose=speak status=completed calls=0 audio_bytes=238080 text_chars=23"
+    }
+  ]
+}

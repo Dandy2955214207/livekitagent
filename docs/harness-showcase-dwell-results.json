@@ -1,0 +1,354 @@
+{
+  "date": "2026-11-02",
+  "baseline_commit": "c25b961",
+  "scope": "Distinguish camera sweep from hand-held dwell; remove old-anchor stillness gate",
+  "offline_tests": {
+    "passed": 103,
+    "command": ".venv/Scripts/python.exe -m unittest discover -s tests -q"
+  },
+  "frontend_build": "passed_existing_bundle_warning",
+  "local_filter_microbenchmark": {
+    "samples": 100,
+    "mean_update_ms": 1.57,
+    "scope": "single local measurement"
+  },
+  "runs": [
+    {
+      "path": ".runtime/showcase-results/report-1793588226120.json",
+      "sha256": "d50a64e7c67128cd7f594bb56f9e8d03cea49ca3b58207521dfaa3f7a358c040",
+      "result": {
+        "status": "passed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "handheldSimulation": true,
+        "motionProfile": {
+          "xPixels": 48,
+          "yPixels": 30,
+          "rotationDegrees": 4,
+          "scaleChange": 0.06,
+          "lightingChange": 0.08
+        },
+        "answers": [
+          "好的，请开始展示物品，我会为您逐个介绍。",
+          "这是一个蓝色的马克杯，平时可以用来喝水或者咖啡。",
+          "这是一把黄铜色的复古钥匙，看起来很有年代感，通常用来开老式的锁。",
+          "这是一本红色的书，封面上有两条金色的横线装饰，看起来像是一本日记或笔记本。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "continuous camera sweep is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck",
+          "keys introduced without new speech",
+          "book introduced without new speech",
+          "pause/resume/end preserve silence for known or inactive scenes"
+        ],
+        "sceneTimings": [
+          {
+            "scene": "cup",
+            "switchToPlaybackEndMs": 12523
+          },
+          {
+            "scene": "keys",
+            "switchToPlaybackEndMs": 14413
+          },
+          {
+            "scene": "book",
+            "switchToPlaybackEndMs": 17807
+          }
+        ],
+        "pageErrors": [],
+        "audioBytesReceived": 271283,
+        "userTranscriptRows": 1,
+        "liveTracksAfterHangup": 0
+      }
+    }
+  ],
+  "events": [
+    {
+      "timestamp": "2026-11-02T02:55:39.255326+00:00",
+      "message": "harness_input input=3ca50972-9fa7-4950-b259-86eb5bf33017 audio_bytes=373120 frame=None camera_epoch=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:39.978705+00:00",
+      "message": "harness_generation request=b7982f853fd7465abe06748909acc85a context=1b533a83103d41719a829f40fce898b2 purpose=user_turn task=None epoch=3 session=f51bde20183d47768e6b962733ff19b5 step=None connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:41.441663+00:00",
+      "message": "harness_response request=b7982f853fd7465abe06748909acc85a response=resp_YJTZMaSM1wlYctv54jkBY purpose=user_turn status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:41.441663+00:00",
+      "message": "harness_function request=b7982f853fd7465abe06748909acc85a response=resp_YJTZMaSM1wlYctv54jkBY call=call_0447cf9051b845c0837593ba"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:41.558172+00:00",
+      "message": "harness_tool_result call=call_0447cf9051b845c0837593ba accepted=False reason=invalid_schema::presentation_fields_only_for_observe"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:41.695348+00:00",
+      "message": "harness_generation request=8011338d91d84bea81a818c5f5c85c1e context=ab29cef8335d4aabac940e73e663e8e6 purpose=user_turn task=None epoch=4 session=f51bde20183d47768e6b962733ff19b5 step=None connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:43.160313+00:00",
+      "message": "harness_response request=8011338d91d84bea81a818c5f5c85c1e response=resp_Zb5Hj9BJHV6R8Sf9ObfEf purpose=user_turn status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:43.160313+00:00",
+      "message": "harness_function request=8011338d91d84bea81a818c5f5c85c1e response=resp_Zb5Hj9BJHV6R8Sf9ObfEf call=call_e1a0b33f5a7f4ce5827faa98"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:43.293152+00:00",
+      "message": "harness_tool_result call=call_e1a0b33f5a7f4ce5827faa98 accepted=True reason=None"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:43.420779+00:00",
+      "message": "harness_generation request=c4966242e9d54da0bbade9386e095983 context=1b8e0f29a0b74ca2936fcbc68acf4823 purpose=speak task=320ede444c814218ace53b373a8b37f7 epoch=5 session=f51bde20183d47768e6b962733ff19b5 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:45.006532+00:00",
+      "message": "harness_response request=c4966242e9d54da0bbade9386e095983 response=resp_JrYOZnqJzuBGozFc5K8QZ purpose=speak status=completed calls=0 audio_bytes=199680 text_chars=20"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:48.499657+00:00",
+      "message": "harness_playback segment=c4966242e9d54da0bbade9386e095983 interrupted=False source=server_playout"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:48.730708+00:00",
+      "message": "harness_view_change {\"scene_id\": 3, \"stable_seconds\": 0, \"motion_state\": \"dwelling\", \"step_difference\": 0, \"window_net_pixels\": 0, \"window_travel_pixels\": 0, \"direction_coherence\": 0, \"change_reason\": \"first_or_gap\"}"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:50.043578+00:00",
+      "message": "harness_view_change {\"scene_id\": 4, \"stable_seconds\": 0, \"motion_state\": \"moving\", \"step_difference\": 0.015, \"window_net_pixels\": 8.0, \"window_travel_pixels\": 8.0, \"direction_coherence\": 1.0, \"change_reason\": \"camera_sweep\"}"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:54.344707+00:00",
+      "message": "harness_view_change {\"scene_id\": 5, \"stable_seconds\": 0, \"motion_state\": \"dwelling\", \"step_difference\": 0.295, \"window_net_pixels\": 0, \"window_travel_pixels\": 0, \"direction_coherence\": 0, \"change_reason\": \"scene_cut\"}"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:56.639176+00:00",
+      "message": "harness_observation request=c62a9f9ee43f48d5b48cf6ec916d0c29 scene=5 stable_seconds=1.66 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:56.639176+00:00",
+      "message": "harness_generation request=c62a9f9ee43f48d5b48cf6ec916d0c29 context=7b2a483cfc6f4895909f68902ebaa816 purpose=observe task=320ede444c814218ace53b373a8b37f7 epoch=6 session=f51bde20183d47768e6b962733ff19b5 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:58.258461+00:00",
+      "message": "harness_response request=c62a9f9ee43f48d5b48cf6ec916d0c29 response=resp_OhaSUlS1bwxFvJjTtoFsv purpose=observe status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:58.258461+00:00",
+      "message": "harness_function request=c62a9f9ee43f48d5b48cf6ec916d0c29 response=resp_OhaSUlS1bwxFvJjTtoFsv call=call_126ecdff4ae646bc99ed4dc1"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:58.378438+00:00",
+      "message": "harness_tool_result call=call_126ecdff4ae646bc99ed4dc1 accepted=True reason=candidate_presentation"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:59.659338+00:00",
+      "message": "harness_observation request=5887ce697e5d42699309eb93983d2291 scene=5 stable_seconds=4.94 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:55:59.659338+00:00",
+      "message": "harness_generation request=5887ce697e5d42699309eb93983d2291 context=c40a21afaa8146baafc8ad71ffeb44d9 purpose=confirm task=320ede444c814218ace53b373a8b37f7 epoch=7 session=f51bde20183d47768e6b962733ff19b5 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:00.876531+00:00",
+      "message": "harness_response request=5887ce697e5d42699309eb93983d2291 response=resp_DXV2FSDEDMwHPvXXiVc4s purpose=confirm status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:00.876531+00:00",
+      "message": "harness_function request=5887ce697e5d42699309eb93983d2291 response=resp_DXV2FSDEDMwHPvXXiVc4s call=call_19fb084371794a2b838b1f04"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:00.996628+00:00",
+      "message": "harness_tool_result call=call_19fb084371794a2b838b1f04 accepted=True reason=confirmed_presentation"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:01.120682+00:00",
+      "message": "harness_generation request=6560432df42c47a59134e4d105197739 context=801957d62ecc4deea09d8357c7223e74 purpose=speak task=320ede444c814218ace53b373a8b37f7 epoch=8 session=f51bde20183d47768e6b962733ff19b5 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:02.605523+00:00",
+      "message": "harness_response request=6560432df42c47a59134e4d105197739 response=resp_XCDtLl5UUBCRGWDbdMPJb purpose=speak status=completed calls=0 audio_bytes=218880 text_chars=24"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:06.576643+00:00",
+      "message": "harness_playback segment=6560432df42c47a59134e4d105197739 interrupted=False source=server_playout"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:08.619022+00:00",
+      "message": "harness_observation request=cf2c93369d4e45e19870c9620c4c147e scene=5 stable_seconds=13.86 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:08.619022+00:00",
+      "message": "harness_generation request=cf2c93369d4e45e19870c9620c4c147e context=a4103e21c6604176b0b4beb3726091f8 purpose=observe task=320ede444c814218ace53b373a8b37f7 epoch=9 session=f51bde20183d47768e6b962733ff19b5 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:09.775623+00:00",
+      "message": "harness_response request=cf2c93369d4e45e19870c9620c4c147e response=resp_KsXIXvOEBvr7vmj8gBVtx purpose=observe status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:09.775623+00:00",
+      "message": "harness_function request=cf2c93369d4e45e19870c9620c4c147e response=resp_KsXIXvOEBvr7vmj8gBVtx call=call_4f79155925c045b8a58fc895"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:09.950729+00:00",
+      "message": "harness_tool_result call=call_4f79155925c045b8a58fc895 accepted=True reason=quiet_observation:known"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:22.653036+00:00",
+      "message": "harness_observation request=f6bfbd2f60f3493fb1ecea6ac1913278 scene=5 stable_seconds=27.72 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:22.653036+00:00",
+      "message": "harness_generation request=f6bfbd2f60f3493fb1ecea6ac1913278 context=17626a272dac48d591bdf2dc62f3301c purpose=observe task=320ede444c814218ace53b373a8b37f7 epoch=10 session=f51bde20183d47768e6b962733ff19b5 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:24.411383+00:00",
+      "message": "harness_response request=f6bfbd2f60f3493fb1ecea6ac1913278 response=resp_WLOSCUCxWhTutiZ1rBSwT purpose=observe status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:24.411383+00:00",
+      "message": "harness_function request=f6bfbd2f60f3493fb1ecea6ac1913278 response=resp_WLOSCUCxWhTutiZ1rBSwT call=call_cb6b7d4b093c4653b835bd68"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:24.557549+00:00",
+      "message": "harness_tool_result call=call_cb6b7d4b093c4653b835bd68 accepted=True reason=candidate_presentation"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:26.556870+00:00",
+      "message": "harness_observation request=8d34df4fc7d9404cabac8a638464bd26 scene=5 stable_seconds=31.67 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:26.556870+00:00",
+      "message": "harness_generation request=8d34df4fc7d9404cabac8a638464bd26 context=22141c01f991409fb1ddde66efb941cc purpose=confirm task=320ede444c814218ace53b373a8b37f7 epoch=11 session=f51bde20183d47768e6b962733ff19b5 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:27.886698+00:00",
+      "message": "harness_response request=8d34df4fc7d9404cabac8a638464bd26 response=resp_Upv2PTRfMaGdOZt5nctfT purpose=confirm status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:27.886698+00:00",
+      "message": "harness_function request=8d34df4fc7d9404cabac8a638464bd26 response=resp_Upv2PTRfMaGdOZt5nctfT call=call_2e03bc3403fe40e795af19a7"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:28.060452+00:00",
+      "message": "harness_tool_result call=call_2e03bc3403fe40e795af19a7 accepted=True reason=confirmed_presentation"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:28.195350+00:00",
+      "message": "harness_generation request=9c8b2f6094124e32aea10b5609c131b4 context=a683c5608c3d4f0e85efbdc03ba0f5b9 purpose=speak task=320ede444c814218ace53b373a8b37f7 epoch=12 session=f51bde20183d47768e6b962733ff19b5 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:30.380453+00:00",
+      "message": "harness_response request=9c8b2f6094124e32aea10b5609c131b4 response=resp_R5q7htzfbVevukUbBv7Fh purpose=speak status=completed calls=0 audio_bytes=326400 text_chars=32"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:35.997274+00:00",
+      "message": "harness_playback segment=9c8b2f6094124e32aea10b5609c131b4 interrupted=False source=server_playout"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:36.248646+00:00",
+      "message": "harness_view_change {\"scene_id\": 6, \"stable_seconds\": 0, \"motion_state\": \"dwelling\", \"step_difference\": 0.332, \"window_net_pixels\": 0, \"window_travel_pixels\": 0, \"direction_coherence\": 0, \"change_reason\": \"scene_cut\"}"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:38.566040+00:00",
+      "message": "harness_observation request=914b1d860d3b4feebdbedce51a4b1262 scene=6 stable_seconds=1.98 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:38.566040+00:00",
+      "message": "harness_generation request=914b1d860d3b4feebdbedce51a4b1262 context=08f58ba94d334f93b262db14377df5d8 purpose=observe task=320ede444c814218ace53b373a8b37f7 epoch=13 session=f51bde20183d47768e6b962733ff19b5 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:40.592850+00:00",
+      "message": "harness_response request=914b1d860d3b4feebdbedce51a4b1262 response=resp_Ax9X3xNl5RDBR2RiRM7DR purpose=observe status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:40.592850+00:00",
+      "message": "harness_function request=914b1d860d3b4feebdbedce51a4b1262 response=resp_Ax9X3xNl5RDBR2RiRM7DR call=call_1b95b7a23a2546e28234041b"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:40.718239+00:00",
+      "message": "harness_tool_result call=call_1b95b7a23a2546e28234041b accepted=True reason=candidate_presentation"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:42.588696+00:00",
+      "message": "harness_observation request=dbf57ccb03a046b596c22455b14dbe47 scene=6 stable_seconds=5.94 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:42.588696+00:00",
+      "message": "harness_generation request=dbf57ccb03a046b596c22455b14dbe47 context=e5ed7122b80e400596c846636b8183c8 purpose=confirm task=320ede444c814218ace53b373a8b37f7 epoch=14 session=f51bde20183d47768e6b962733ff19b5 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:43.965577+00:00",
+      "message": "harness_response request=dbf57ccb03a046b596c22455b14dbe47 response=resp_GYIl5QyEhfD8Va2jpAYpt purpose=confirm status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:43.965577+00:00",
+      "message": "harness_function request=dbf57ccb03a046b596c22455b14dbe47 response=resp_GYIl5QyEhfD8Va2jpAYpt call=call_14a8585137f048fc8c9cd21e"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:44.129608+00:00",
+      "message": "harness_tool_result call=call_14a8585137f048fc8c9cd21e accepted=True reason=confirmed_presentation"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:44.240176+00:00",
+      "message": "harness_generation request=7c6b9fbe566d4e7687825d20efc4e1bc context=b8c10c6ffa4244fcb286eef485076a1a purpose=speak task=320ede444c814218ace53b373a8b37f7 epoch=15 session=f51bde20183d47768e6b962733ff19b5 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:47.127626+00:00",
+      "message": "harness_response request=7c6b9fbe566d4e7687825d20efc4e1bc response=resp_VDIVXgxhYpti6GG4owK84 purpose=speak status=completed calls=0 audio_bytes=380160 text_chars=37"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:53.801721+00:00",
+      "message": "harness_playback segment=7c6b9fbe566d4e7687825d20efc4e1bc interrupted=False source=server_playout"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:54.046082+00:00",
+      "message": "harness_view_change {\"scene_id\": 7, \"stable_seconds\": 0, \"motion_state\": \"dwelling\", \"step_difference\": 0.245, \"window_net_pixels\": 0, \"window_travel_pixels\": 0, \"direction_coherence\": 0, \"change_reason\": \"scene_cut\"}"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:58.703888+00:00",
+      "message": "harness_observation request=7b6f55a879be42f3a2b48ff20a419c0a scene=7 stable_seconds=3.97 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:56:58.703888+00:00",
+      "message": "harness_generation request=7b6f55a879be42f3a2b48ff20a419c0a context=3307e520d44c42bcaf024face3bce9be purpose=observe task=320ede444c814218ace53b373a8b37f7 epoch=18 session=f51bde20183d47768e6b962733ff19b5 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:57:00.220221+00:00",
+      "message": "harness_response request=7b6f55a879be42f3a2b48ff20a419c0a response=resp_RZpLwFelmiI2wiyn4bglf purpose=observe status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:57:00.220271+00:00",
+      "message": "harness_function request=7b6f55a879be42f3a2b48ff20a419c0a response=resp_RZpLwFelmiI2wiyn4bglf call=call_23b19cd42dda471bbb50114f"
+    },
+    {
+      "timestamp": "2026-11-02T02:57:00.435722+00:00",
+      "message": "harness_tool_result call=call_23b19cd42dda471bbb50114f accepted=True reason=quiet_observation:known"
+    },
+    {
+      "timestamp": "2026-11-02T02:57:02.320157+00:00",
+      "message": "harness_view_change {\"scene_id\": 8, \"stable_seconds\": 0, \"motion_state\": \"dwelling\", \"step_difference\": 0.195, \"window_net_pixels\": 0, \"window_travel_pixels\": 0, \"direction_coherence\": 0, \"change_reason\": \"scene_cut\"}"
+    }
+  ],
+  "cleanup": {
+    "remaining_demo_rooms": 0,
+    "active_worker_jobs": 0,
+    "active_api_sessions": 0,
+    "passed": true
+  },
+  "phone_evidence_before_change": {
+    "path": ".runtime/showcase-results/phone-before-dwell-window.json",
+    "observation": "Small adjacent-frame differences but frequent scene resets due to distance from an old anchor.",
+    "raw_media_recorded": false
+  },
+  "limitations": [
+    "Synthetic motion is not a substitute for the user physical-phone retest.",
+    "Motion classification is a local hint; the existing model must still confirm subject identity and presentation intent.",
+    "Protocol validation and bounded correction remain enabled.",
+    "switchToPlaybackEndMs includes spoken segment duration and is not first-audio latency."
+  ]
+}

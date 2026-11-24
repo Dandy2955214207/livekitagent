@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-03",
+  "timezone": "Asia/Shanghai",
+  "branch": "codex/qwen-live-harness-adapter",
+  "status": "official_core_integrated_provider_voice_passed_local_rtc_passed_phone_proactive_pending",
+  "dependency": "qwen-live-harness@1.0.0",
+  "checks": {
+    "python_regression": {"passed": 179, "failed": 0},
+    "official_adapter": {"passed": 7, "failed": 0},
+    "browser_audio_sink": {"passed": 3, "failed": 0},
+    "legacy_direct_panel": "passed",
+    "frontend_build": "passed_existing_large_chunk_warning",
+    "git_diff_check": "passed",
+    "local_full_rtc": "passed"
+  },
+  "evidence": {
+    "local_rtc_initial_failed": ".runtime/official-harness-rtc/96f3e3acc7944cf4a67fbedec8163beb/report.json",
+    "local_rtc_fixture_fixed_passed": ".runtime/official-harness-rtc/05e54da200bf400ea9bd0707d9f1d0ad/report.json",
+    "local_rtc_final_passed": ".runtime/official-harness-rtc/14a0055f36c94a249c9440c8854ad4f4/report.json",
+    "live_initial_failed": ".runtime/official-harness-probes/1c31f5337dce419198afd860d6a6ff0b.json",
+    "live_voice_passed": ".runtime/official-harness-probes/1fb9742ec9434f5c839a7fbcecaf47ae.json"
+  },
+  "live_scope": {
+    "provider": "yibuapi",
+    "model": "qwen3.8-omni-flash-realtime",
+    "attempts": 2,
+    "budget_per_attempt": {"max_generations": 2, "timeout_seconds": 60},
+    "successful_attempt_generations": 1,
+    "audio_bytes": 207360,
+    "reported_input_tokens": 5885,
+    "reported_output_tokens": 84,
+    "reported_total_tokens_lower_bound": 5969,
+    "first_failure_usage_unknown": true,
+    "proactive_enabled": false,
+    "memory_enabled": false,
+    "physical_devices": false,
+    "browser_playback_tested_in_live_probe": false
+  },
+  "remaining": [
+    "Real provider plus phone single visual reminder and negative case",
+    "Real phone barge-in, cancellation, audio buffering and browser receipt",
+    "Official memory updater provider/model budget and adaptation"
+  ],
+  "existing_services_restarted": false,
+  "personal_env_modified": false,
+  "changes_committed": false
+}

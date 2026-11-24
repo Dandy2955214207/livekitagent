@@ -1,0 +1,471 @@
+{
+  "date_local": "2026-10-30",
+  "timezone": "Asia/Shanghai",
+  "scope": "four fixed-fixture generations, no physical devices or playback",
+  "production_capabilities_changed": false,
+  "interpretation": {
+    "P1": "passed_fixed_probe",
+    "P2": "passed_fixed_probe",
+    "P3": "failed_speak_returned_text_without_audio",
+    "P4": "passed_red_blue_transport_silence_only",
+    "P5": "observed_one_second_delayed_text_continuation",
+    "P6": "unknown",
+    "P7": "unknown",
+    "P8": "unknown"
+  },
+  "limitations": [
+    "Original traces omit call_id and submitted configuration fields; subsequent probe logging now includes them.",
+    "P3 and P5 were left unknown in the original control report because audio assertion failed before status assignment. Interpretation above follows the recorded event order and usage.",
+    "No raw arguments, audio, image data, credentials, or endpoint are included."
+  ],
+  "runs": [
+    {
+      "case": "control",
+      "timestamp_utc": "2026-10-30T07:50:44.514835+00:00",
+      "status": "failed",
+      "checks": {
+        "P1": "passed_fixed_probe",
+        "P2": "passed_fixed_probe",
+        "P3": "unknown",
+        "P4": "unknown",
+        "P5": "unknown",
+        "P6": "unknown",
+        "P7": "unknown",
+        "P8": "unknown"
+      },
+      "observations": [],
+      "usage": [
+        {
+          "total_tokens": 1105,
+          "input_tokens": 1062,
+          "output_tokens": 43,
+          "input_tokens_details": {
+            "text_tokens": 1027,
+            "audio_tokens": 35
+          },
+          "output_tokens_details": {
+            "text_tokens": 43
+          }
+        },
+        {
+          "total_tokens": 1146,
+          "input_tokens": 1142,
+          "output_tokens": 4,
+          "input_tokens_details": {
+            "text_tokens": 1107,
+            "audio_tokens": 35
+          },
+          "output_tokens_details": {
+            "text_tokens": 4
+          }
+        }
+      ],
+      "source_file": ".runtime/harness-probes/control-938a698b517e4b8d83f6223059104404.json",
+      "source_sha256": "c25dc16a0dfdd1afd3030a3f7e80eccc839a523d0769a175ab82d61f527b0474",
+      "generation_requests": 2,
+      "trace": [
+        {
+          "direction": "recv",
+          "type": "session.created",
+          "at_ms": 343.0
+        },
+        {
+          "direction": "send",
+          "type": "session.update",
+          "at_ms": 359.0
+        },
+        {
+          "direction": "recv",
+          "type": "session.updated",
+          "at_ms": 453.0
+        },
+        {
+          "direction": "send",
+          "type": "input_audio_buffer.commit",
+          "at_ms": 640.0
+        },
+        {
+          "direction": "recv",
+          "type": "input_audio_buffer.committed",
+          "at_ms": 750.0,
+          "item_id": "item_FZKMEMp7iO9njGnFsDkCj"
+        },
+        {
+          "direction": "recv",
+          "type": "conversation.item.created",
+          "at_ms": 750.0
+        },
+        {
+          "direction": "recv",
+          "type": "conversation.item.input_audio_transcription.completed",
+          "at_ms": 968.0,
+          "item_id": "item_FZKMEMp7iO9njGnFsDkCj"
+        },
+        {
+          "direction": "send",
+          "type": "response.create",
+          "at_ms": 1265.0
+        },
+        {
+          "direction": "recv",
+          "type": "response.created",
+          "at_ms": 1640.0,
+          "response_id": "resp_I2TjiroN12AXpnoO3mBaD",
+          "status": "in_progress"
+        },
+        {
+          "direction": "recv",
+          "type": "response.output_item.added",
+          "at_ms": 1640.0,
+          "response_id": "resp_I2TjiroN12AXpnoO3mBaD"
+        },
+        {
+          "direction": "recv",
+          "type": "conversation.item.created",
+          "at_ms": 1640.0
+        },
+        {
+          "direction": "recv",
+          "type": "response.function_call_arguments.done",
+          "at_ms": 1843.0,
+          "response_id": "resp_I2TjiroN12AXpnoO3mBaD",
+          "item_id": "item_NKLVUWnhCyd4fvqq7EOJE"
+        },
+        {
+          "direction": "recv",
+          "type": "response.output_item.done",
+          "at_ms": 1843.0,
+          "response_id": "resp_I2TjiroN12AXpnoO3mBaD"
+        },
+        {
+          "direction": "recv",
+          "type": "response.done",
+          "at_ms": 1843.0,
+          "response_id": "resp_I2TjiroN12AXpnoO3mBaD",
+          "status": "completed"
+        },
+        {
+          "direction": "send",
+          "type": "conversation.item.create",
+          "at_ms": 1843.0
+        },
+        {
+          "direction": "recv",
+          "type": "conversation.item.created",
+          "at_ms": 1937.0
+        },
+        {
+          "direction": "send",
+          "type": "session.update",
+          "at_ms": 2937.0
+        },
+        {
+          "direction": "recv",
+          "type": "session.updated",
+          "at_ms": 3015.0
+        },
+        {
+          "direction": "send",
+          "type": "response.create",
+          "at_ms": 3015.0
+        },
+        {
+          "direction": "recv",
+          "type": "response.created",
+          "at_ms": 3375.0,
+          "response_id": "resp_OOGu4EiFj1ilrMNdrtikC",
+          "status": "in_progress"
+        },
+        {
+          "direction": "recv",
+          "type": "response.output_item.added",
+          "at_ms": 3375.0,
+          "response_id": "resp_OOGu4EiFj1ilrMNdrtikC"
+        },
+        {
+          "direction": "recv",
+          "type": "conversation.item.created",
+          "at_ms": 3375.0
+        },
+        {
+          "direction": "recv",
+          "type": "response.content_part.added",
+          "at_ms": 3375.0,
+          "response_id": "resp_OOGu4EiFj1ilrMNdrtikC",
+          "item_id": "item_N1zInJRobgWtRSM7SRzlq"
+        },
+        {
+          "direction": "recv",
+          "type": "response.text.done",
+          "at_ms": 3390.0,
+          "response_id": "resp_OOGu4EiFj1ilrMNdrtikC",
+          "item_id": "item_N1zInJRobgWtRSM7SRzlq"
+        },
+        {
+          "direction": "recv",
+          "type": "response.content_part.done",
+          "at_ms": 3390.0,
+          "response_id": "resp_OOGu4EiFj1ilrMNdrtikC",
+          "item_id": "item_N1zInJRobgWtRSM7SRzlq"
+        },
+        {
+          "direction": "recv",
+          "type": "response.output_item.done",
+          "at_ms": 3390.0,
+          "response_id": "resp_OOGu4EiFj1ilrMNdrtikC"
+        },
+        {
+          "direction": "recv",
+          "type": "response.done",
+          "at_ms": 3390.0,
+          "response_id": "resp_OOGu4EiFj1ilrMNdrtikC",
+          "status": "completed"
+        }
+      ],
+      "error_type": "QwenProtocolError"
+    },
+    {
+      "case": "vision",
+      "timestamp_utc": "2026-10-30T07:51:34.258082+00:00",
+      "status": "completed_probe",
+      "checks": {
+        "P1": "unknown",
+        "P2": "unknown",
+        "P3": "unknown",
+        "P4": "passed_fixed_transport_silence_only",
+        "P5": "unknown",
+        "P6": "unknown",
+        "P7": "unknown",
+        "P8": "unknown"
+      },
+      "observations": [
+        {
+          "frame_id": "probe-red",
+          "audio_origin": "transport_silence",
+          "expected": "红色",
+          "matched": true,
+          "response_id": "resp_ApHkwLFmeDecY7ttBqBiL",
+          "decide_audio_bytes": 0
+        },
+        {
+          "frame_id": "probe-blue",
+          "audio_origin": "transport_silence",
+          "expected": "蓝色",
+          "matched": true,
+          "response_id": "resp_HKntU6k2UcIWpWRXuFNJY",
+          "decide_audio_bytes": 0
+        }
+      ],
+      "usage": [
+        {
+          "total_tokens": 1384,
+          "input_tokens": 1343,
+          "output_tokens": 41,
+          "input_tokens_details": {
+            "text_tokens": 1036,
+            "audio_tokens": 7,
+            "video_tokens": 300
+          },
+          "output_tokens_details": {
+            "text_tokens": 41
+          }
+        },
+        {
+          "total_tokens": 1774,
+          "input_tokens": 1733,
+          "output_tokens": 41,
+          "input_tokens_details": {
+            "text_tokens": 1119,
+            "audio_tokens": 14,
+            "video_tokens": 600
+          },
+          "output_tokens_details": {
+            "text_tokens": 41
+          }
+        }
+      ],
+      "source_file": ".runtime/harness-probes/vision-eb943a27e1c440129c92200bbf378bb6.json",
+      "source_sha256": "e211930afe25df172cbd7d11453ea2c4866b33fb0c4ee34d8812a69432dd4a5f",
+      "generation_requests": 2,
+      "trace": [
+        {
+          "direction": "recv",
+          "type": "session.created",
+          "at_ms": 250.0
+        },
+        {
+          "direction": "send",
+          "type": "session.update",
+          "at_ms": 250.0
+        },
+        {
+          "direction": "recv",
+          "type": "session.updated",
+          "at_ms": 375.0
+        },
+        {
+          "direction": "send",
+          "type": "input_image_buffer.append",
+          "at_ms": 375.0,
+          "base64_chars": 16316
+        },
+        {
+          "direction": "send",
+          "type": "input_audio_buffer.commit",
+          "at_ms": 390.0
+        },
+        {
+          "direction": "recv",
+          "type": "input_audio_buffer.committed",
+          "at_ms": 531.0,
+          "item_id": "item_TtLluMYzTgefe7oAATLTQ"
+        },
+        {
+          "direction": "recv",
+          "type": "conversation.item.created",
+          "at_ms": 531.0
+        },
+        {
+          "direction": "recv",
+          "type": "conversation.item.input_audio_transcription.completed",
+          "at_ms": 656.0,
+          "item_id": "item_TtLluMYzTgefe7oAATLTQ"
+        },
+        {
+          "direction": "send",
+          "type": "response.create",
+          "at_ms": 1031.0
+        },
+        {
+          "direction": "recv",
+          "type": "response.created",
+          "at_ms": 1437.0,
+          "response_id": "resp_ApHkwLFmeDecY7ttBqBiL",
+          "status": "in_progress"
+        },
+        {
+          "direction": "recv",
+          "type": "response.output_item.added",
+          "at_ms": 1437.0,
+          "response_id": "resp_ApHkwLFmeDecY7ttBqBiL"
+        },
+        {
+          "direction": "recv",
+          "type": "conversation.item.created",
+          "at_ms": 1437.0
+        },
+        {
+          "direction": "recv",
+          "type": "response.function_call_arguments.done",
+          "at_ms": 1625.0,
+          "response_id": "resp_ApHkwLFmeDecY7ttBqBiL",
+          "item_id": "item_ZxXSXGCvdn1MnwoWZRmx7"
+        },
+        {
+          "direction": "recv",
+          "type": "response.output_item.done",
+          "at_ms": 1625.0,
+          "response_id": "resp_ApHkwLFmeDecY7ttBqBiL"
+        },
+        {
+          "direction": "recv",
+          "type": "response.done",
+          "at_ms": 1625.0,
+          "response_id": "resp_ApHkwLFmeDecY7ttBqBiL",
+          "status": "completed"
+        },
+        {
+          "direction": "send",
+          "type": "conversation.item.create",
+          "at_ms": 1625.0
+        },
+        {
+          "direction": "recv",
+          "type": "conversation.item.created",
+          "at_ms": 1718.0
+        },
+        {
+          "direction": "send",
+          "type": "input_image_buffer.append",
+          "at_ms": 2234.0,
+          "base64_chars": 16444
+        },
+        {
+          "direction": "send",
+          "type": "input_audio_buffer.commit",
+          "at_ms": 2234.0
+        },
+        {
+          "direction": "recv",
+          "type": "input_audio_buffer.committed",
+          "at_ms": 2328.0,
+          "item_id": "item_OaQt7dhESQNZsQlTvLtgb"
+        },
+        {
+          "direction": "recv",
+          "type": "conversation.item.created",
+          "at_ms": 2328.0
+        },
+        {
+          "direction": "recv",
+          "type": "conversation.item.input_audio_transcription.completed",
+          "at_ms": 2437.0,
+          "item_id": "item_OaQt7dhESQNZsQlTvLtgb"
+        },
+        {
+          "direction": "send",
+          "type": "response.create",
+          "at_ms": 2843.0
+        },
+        {
+          "direction": "recv",
+          "type": "response.created",
+          "at_ms": 3406.0,
+          "response_id": "resp_HKntU6k2UcIWpWRXuFNJY",
+          "status": "in_progress"
+        },
+        {
+          "direction": "recv",
+          "type": "response.output_item.added",
+          "at_ms": 3406.0,
+          "response_id": "resp_HKntU6k2UcIWpWRXuFNJY"
+        },
+        {
+          "direction": "recv",
+          "type": "conversation.item.created",
+          "at_ms": 3406.0
+        },
+        {
+          "direction": "recv",
+          "type": "response.function_call_arguments.done",
+          "at_ms": 3593.0,
+          "response_id": "resp_HKntU6k2UcIWpWRXuFNJY",
+          "item_id": "item_KCNAwyutOStj2kUBi6iXV"
+        },
+        {
+          "direction": "recv",
+          "type": "response.output_item.done",
+          "at_ms": 3593.0,
+          "response_id": "resp_HKntU6k2UcIWpWRXuFNJY"
+        },
+        {
+          "direction": "recv",
+          "type": "response.done",
+          "at_ms": 3593.0,
+          "response_id": "resp_HKntU6k2UcIWpWRXuFNJY",
+          "status": "completed"
+        },
+        {
+          "direction": "send",
+          "type": "conversation.item.create",
+          "at_ms": 3593.0
+        },
+        {
+          "direction": "recv",
+          "type": "conversation.item.created",
+          "at_ms": 3687.0
+        }
+      ]
+    }
+  ]
+}

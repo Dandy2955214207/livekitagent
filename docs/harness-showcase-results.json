@@ -1,0 +1,402 @@
+{
+  "date": "2026-11-02",
+  "branch": "codex/showcase-prototype",
+  "scope": "continuous showcase prototype, same Qwen connection, fixed synthetic speech and drawings",
+  "offline_tests": {
+    "passed": 95,
+    "command": ".venv/Scripts/python.exe -m unittest discover -s tests -q"
+  },
+  "frontend_build": "passed_existing_bundle_size_warning",
+  "attempts": [
+    {
+      "attempt": 1,
+      "path": ".runtime/showcase-results/report-1793584860479.json",
+      "sha256": "fd9b33495b72b51089960396db1328a196f604347cef6ab3e0dfa2701a5a9510",
+      "result": {
+        "status": "failed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "answers": [],
+        "cases": [],
+        "pageErrors": [],
+        "error": "page.waitForFunction: Timeout 45000ms exceeded.",
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "attempt": 2,
+      "path": ".runtime/showcase-results/report-1793584950596.json",
+      "sha256": "a9198fa35bb523206948d6319039b8591a3ba05f2412ebaf3bca9360323c97cb",
+      "result": {
+        "status": "failed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "answers": [
+          "好的，我会逐个介绍你展示的物品。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "rapidly changing passing view is quiet"
+        ],
+        "pageErrors": [],
+        "error": "模型没有返回有效的任务决定，请重新说话并提交；当前步骤不会跳过。",
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "attempt": 3,
+      "path": ".runtime/showcase-results/report-1793585141759.json",
+      "sha256": "f2d9645a7fda62e722e97395c8152cd8b35ae8426c627b78bfdc549caaf316dc",
+      "result": {
+        "status": "passed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "answers": [
+          "好的，我会根据你展示的画面，逐个为你介绍物品。",
+          "这是一个蓝色的马克杯，带有把手，适合用来盛放热饮。",
+          "这是一把金色的钥匙，通常用来开锁或启动设备。",
+          "这是一本红色的书，封面上有两条金色的横线装饰。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "rapidly changing passing view is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck",
+          "keys introduced without new speech",
+          "book introduced without new speech",
+          "pause/resume/end preserve silence for known or inactive scenes"
+        ],
+        "pageErrors": [],
+        "audioBytesReceived": 220616,
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "attempt": 4,
+      "path": ".runtime/showcase-results/report-1793585424189.json",
+      "sha256": "33a354323291734eb4e58b13a866de12f7772820753cba9bb7e551f2d45d1cba",
+      "result": {
+        "status": "failed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "answers": [
+          "好的，请开始展示物品，我会逐一为你介绍。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "rapidly changing passing view is quiet"
+        ],
+        "pageErrors": [],
+        "error": "page.waitForFunction: Timeout 65000ms exceeded.",
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "attempt": 5,
+      "path": ".runtime/showcase-results/report-1793585583260.json",
+      "sha256": "27a3672034e7ba5b53e82e8c82eda3c605f84662c3d9f4136aed113692e55b5a",
+      "result": {
+        "status": "failed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "answers": [
+          "好的，我会逐个介绍你展示的物品，每件讲一两句。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "rapidly changing passing view is quiet"
+        ],
+        "pageErrors": [],
+        "error": "模型没有返回有效的任务决定，请重新说话并提交；当前步骤不会跳过。",
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "attempt": 6,
+      "path": ".runtime/showcase-results/report-1793585815920.json",
+      "sha256": "e5e13365332c4f82265bcb62d73e1faeb68f1eed46134be1f8744810cafa2de1",
+      "result": {
+        "status": "passed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "answers": [
+          "好的，我已经准备好，请开始展示物品。",
+          "这是一个蓝色的带柄马克杯，通常用来盛放咖啡或茶等热饮。",
+          "这是一把黄铜色的钥匙，通常用来开启门锁或柜子。",
+          "这是一本红色封面的书，通常用来阅读或记录知识。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "rapidly changing passing view is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck",
+          "keys introduced without new speech",
+          "book introduced without new speech",
+          "pause/resume/end preserve silence for known or inactive scenes"
+        ],
+        "pageErrors": [],
+        "audioBytesReceived": 227613,
+        "userTranscriptRows": 1,
+        "liveTracksAfterHangup": 0
+      }
+    }
+  ],
+  "final_attempt": 6,
+  "final_generation_count": 13,
+  "final_observation_count": 8,
+  "final_events": [
+    {
+      "timestamp": "2026-11-02T02:15:32.113034+00:00",
+      "message": "harness_input input=4b2dfa62-f250-46a7-83cc-d47d43b194de audio_bytes=373120 frame=None camera_epoch=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:32.825163+00:00",
+      "message": "harness_generation request=bc985b4ea17f4b70812ea88e4fcb6931 context=eda26b16ac214348acfb8cabf8ec2637 purpose=user_turn task=None epoch=3 session=bf589d80ce564a558d33cf3a67128a3f step=None connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:34.404819+00:00",
+      "message": "harness_response request=bc985b4ea17f4b70812ea88e4fcb6931 response=resp_DPjHbLndMxGrkcb7jZ7Z7 purpose=user_turn status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:34.404819+00:00",
+      "message": "harness_function request=bc985b4ea17f4b70812ea88e4fcb6931 response=resp_DPjHbLndMxGrkcb7jZ7Z7 call=call_d294a858de3b4ea4a5f5cc9e"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:34.531426+00:00",
+      "message": "harness_tool_result call=call_d294a858de3b4ea4a5f5cc9e accepted=True reason=None"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:34.633014+00:00",
+      "message": "harness_generation request=1b747ea7e3364a4abb3e7e738178098f context=567c360006e94cc0acfac5cd47558d83 purpose=speak task=672433b9068a495ba90bd9efaab66517 epoch=4 session=bf589d80ce564a558d33cf3a67128a3f step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:35.830423+00:00",
+      "message": "harness_response request=1b747ea7e3364a4abb3e7e738178098f response=resp_Oj6F9KtO6FzAJRGVGiver purpose=speak status=completed calls=0 audio_bytes=176640 text_chars=18"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:39.073014+00:00",
+      "message": "harness_playback segment=1b747ea7e3364a4abb3e7e738178098f interrupted=False source=server_playout"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:47.388622+00:00",
+      "message": "harness_observation request=bc535aa42b6748ccbf6105927d50189b scene=20 stable_seconds=1.97 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:47.388622+00:00",
+      "message": "harness_generation request=bc535aa42b6748ccbf6105927d50189b context=d41386c7e4084fecb0a10b18609cc1fb purpose=observe task=672433b9068a495ba90bd9efaab66517 epoch=5 session=bf589d80ce564a558d33cf3a67128a3f step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:49.063317+00:00",
+      "message": "harness_response request=bc535aa42b6748ccbf6105927d50189b response=resp_O9PVzO9bsC7O14tjyoaBt purpose=observe status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:49.063317+00:00",
+      "message": "harness_function request=bc535aa42b6748ccbf6105927d50189b response=resp_O9PVzO9bsC7O14tjyoaBt call=call_e4eb3e767f9449a6aae51949"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:49.206594+00:00",
+      "message": "harness_tool_result call=call_e4eb3e767f9449a6aae51949 accepted=True reason=candidate_presentation"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:50.397074+00:00",
+      "message": "harness_observation request=f0f2b914a28f40a4911956a1080a92d4 scene=20 stable_seconds=4.92 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:50.397074+00:00",
+      "message": "harness_generation request=f0f2b914a28f40a4911956a1080a92d4 context=b03267d1fc6544b4ae38827d9aae24dc purpose=observe task=672433b9068a495ba90bd9efaab66517 epoch=6 session=bf589d80ce564a558d33cf3a67128a3f step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:51.862795+00:00",
+      "message": "harness_response request=f0f2b914a28f40a4911956a1080a92d4 response=resp_HAQsIKoiogLaVhXU7a9bO purpose=observe status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:51.862795+00:00",
+      "message": "harness_function request=f0f2b914a28f40a4911956a1080a92d4 response=resp_HAQsIKoiogLaVhXU7a9bO call=call_2c99982ea7c5432c82c00845"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:51.972229+00:00",
+      "message": "harness_tool_result call=call_2c99982ea7c5432c82c00845 accepted=True reason=confirmed_presentation"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:52.083533+00:00",
+      "message": "harness_generation request=c2ac87e43613406fad1a4025de47aeb9 context=4519b2eb1dc14d2895a882c2a1e8dba6 purpose=speak task=672433b9068a495ba90bd9efaab66517 epoch=7 session=bf589d80ce564a558d33cf3a67128a3f step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:53.931053+00:00",
+      "message": "harness_response request=c2ac87e43613406fad1a4025de47aeb9 response=resp_JJW14oaXruVYZ3aUxEK4l purpose=speak status=completed calls=0 audio_bytes=276480 text_chars=27"
+    },
+    {
+      "timestamp": "2026-11-02T02:15:58.914986+00:00",
+      "message": "harness_playback segment=c2ac87e43613406fad1a4025de47aeb9 interrupted=False source=server_playout"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:00.395979+00:00",
+      "message": "harness_observation request=ee10b42d73844904b18592d64d59b19d scene=20 stable_seconds=15.14 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:00.395979+00:00",
+      "message": "harness_generation request=ee10b42d73844904b18592d64d59b19d context=05d50cf0a64b4bf6bcbf1350204131e2 purpose=observe task=672433b9068a495ba90bd9efaab66517 epoch=8 session=bf589d80ce564a558d33cf3a67128a3f step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:01.808869+00:00",
+      "message": "harness_response request=ee10b42d73844904b18592d64d59b19d response=resp_WHAzJJmzX2B9rsZoVReyf purpose=observe status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:01.808869+00:00",
+      "message": "harness_function request=ee10b42d73844904b18592d64d59b19d response=resp_WHAzJJmzX2B9rsZoVReyf call=call_c9466d341bb441409baa0d7f"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:01.934729+00:00",
+      "message": "harness_tool_result call=call_c9466d341bb441409baa0d7f accepted=True reason=quiet_observation:known"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:16.392509+00:00",
+      "message": "harness_observation request=7facfa66ed574bb2a7d7ec66a05c5635 scene=21 stable_seconds=1.64 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:16.393506+00:00",
+      "message": "harness_generation request=7facfa66ed574bb2a7d7ec66a05c5635 context=4f07435fb5484057b2a48bab14efb8c0 purpose=observe task=672433b9068a495ba90bd9efaab66517 epoch=11 session=bf589d80ce564a558d33cf3a67128a3f step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:18.172576+00:00",
+      "message": "harness_response request=7facfa66ed574bb2a7d7ec66a05c5635 response=resp_TZUXzIuB3E3yRzPXbCYVS purpose=observe status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:18.172576+00:00",
+      "message": "harness_function request=7facfa66ed574bb2a7d7ec66a05c5635 response=resp_TZUXzIuB3E3yRzPXbCYVS call=call_c54e848d781548ecb8930781"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:18.276436+00:00",
+      "message": "harness_tool_result call=call_c54e848d781548ecb8930781 accepted=True reason=candidate_presentation"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:20.405319+00:00",
+      "message": "harness_observation request=4e9ad8ae1e94456fad352eb0dd63d810 scene=21 stable_seconds=5.61 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:20.405417+00:00",
+      "message": "harness_generation request=4e9ad8ae1e94456fad352eb0dd63d810 context=9a1a6fa2256740159a06ce828178d0b6 purpose=observe task=672433b9068a495ba90bd9efaab66517 epoch=12 session=bf589d80ce564a558d33cf3a67128a3f step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:22.084570+00:00",
+      "message": "harness_response request=4e9ad8ae1e94456fad352eb0dd63d810 response=resp_JWofMEhfqAB8MXzRnPlbl purpose=observe status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:22.084570+00:00",
+      "message": "harness_function request=4e9ad8ae1e94456fad352eb0dd63d810 response=resp_JWofMEhfqAB8MXzRnPlbl call=call_95bef068588243c7ae2ef348"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:22.213634+00:00",
+      "message": "harness_tool_result call=call_95bef068588243c7ae2ef348 accepted=True reason=confirmed_presentation"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:22.324451+00:00",
+      "message": "harness_generation request=1023167be8724e7bb9509b01ffdaa08a context=8be0627b3d5949ba9d07c17d82445285 purpose=speak task=672433b9068a495ba90bd9efaab66517 epoch=13 session=bf589d80ce564a558d33cf3a67128a3f step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:24.093713+00:00",
+      "message": "harness_response request=1023167be8724e7bb9509b01ffdaa08a response=resp_Zj7f944Mqf8KglL39PtGj purpose=speak status=completed calls=0 audio_bytes=230400 text_chars=23"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:28.294600+00:00",
+      "message": "harness_playback segment=1023167be8724e7bb9509b01ffdaa08a interrupted=False source=server_playout"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:31.443447+00:00",
+      "message": "harness_observation request=5ee28bbb99b8491b847a763a0e29caf4 scene=22 stable_seconds=2.31 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:31.443447+00:00",
+      "message": "harness_generation request=5ee28bbb99b8491b847a763a0e29caf4 context=6b0aae50857e476b87b8c0e2d3c12cd0 purpose=observe task=672433b9068a495ba90bd9efaab66517 epoch=14 session=bf589d80ce564a558d33cf3a67128a3f step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:33.147336+00:00",
+      "message": "harness_response request=5ee28bbb99b8491b847a763a0e29caf4 response=resp_UXcoqV1aRqS7DoANT7uRX purpose=observe status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:33.147336+00:00",
+      "message": "harness_function request=5ee28bbb99b8491b847a763a0e29caf4 response=resp_UXcoqV1aRqS7DoANT7uRX call=call_151300aa0bdc48b8ac3bc883"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:33.257087+00:00",
+      "message": "harness_tool_result call=call_151300aa0bdc48b8ac3bc883 accepted=True reason=candidate_presentation"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:35.421840+00:00",
+      "message": "harness_observation request=cbee3634be5b42e6803cf8ed612fffd5 scene=22 stable_seconds=6.27 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:35.421840+00:00",
+      "message": "harness_generation request=cbee3634be5b42e6803cf8ed612fffd5 context=fa5aa7ff3d9c4c88a924982babd7da9c purpose=observe task=672433b9068a495ba90bd9efaab66517 epoch=15 session=bf589d80ce564a558d33cf3a67128a3f step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:37.407373+00:00",
+      "message": "harness_response request=cbee3634be5b42e6803cf8ed612fffd5 response=resp_LbSZK6BmYZHXj52oyDG6o purpose=observe status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:37.407373+00:00",
+      "message": "harness_function request=cbee3634be5b42e6803cf8ed612fffd5 response=resp_LbSZK6BmYZHXj52oyDG6o call=call_17af4a4b41c54968b5c87043"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:37.510914+00:00",
+      "message": "harness_tool_result call=call_17af4a4b41c54968b5c87043 accepted=True reason=confirmed_presentation"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:37.622164+00:00",
+      "message": "harness_generation request=0da48f642d624508a488eb468d8d5e58 context=5115e7fef9b247ffa8eda0bb6b8558e3 purpose=speak task=672433b9068a495ba90bd9efaab66517 epoch=16 session=bf589d80ce564a558d33cf3a67128a3f step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:39.741094+00:00",
+      "message": "harness_response request=0da48f642d624508a488eb468d8d5e58 response=resp_KZPiafzlxHm5rCDZ6QlYs purpose=speak status=completed calls=0 audio_bytes=222720 text_chars=23"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:43.633333+00:00",
+      "message": "harness_playback segment=0da48f642d624508a488eb468d8d5e58 interrupted=False source=server_playout"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:48.393007+00:00",
+      "message": "harness_observation request=11c7a7df87494e1796be5387ecf61209 scene=23 stable_seconds=3.91 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:48.393007+00:00",
+      "message": "harness_generation request=11c7a7df87494e1796be5387ecf61209 context=2e3c83881af94775a001c99d6cca2c03 purpose=observe task=672433b9068a495ba90bd9efaab66517 epoch=19 session=bf589d80ce564a558d33cf3a67128a3f step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:49.891602+00:00",
+      "message": "harness_response request=11c7a7df87494e1796be5387ecf61209 response=resp_WPAeOofcjbxroqkIruqxa purpose=observe status=completed calls=1 audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:49.891602+00:00",
+      "message": "harness_function request=11c7a7df87494e1796be5387ecf61209 response=resp_WPAeOofcjbxroqkIruqxa call=call_84ddb04e1740492e964f27b0"
+    },
+    {
+      "timestamp": "2026-11-02T02:16:49.997014+00:00",
+      "message": "harness_tool_result call=call_84ddb04e1740492e964f27b0 accepted=True reason=quiet_observation:known"
+    }
+  ],
+  "prior_event_files": [
+    ".runtime/showcase-results/attempt-2-events.json",
+    ".runtime/showcase-results/attempt-3-events.json",
+    ".runtime/showcase-results/attempt-4-events.json",
+    ".runtime/showcase-results/attempt-5-events.json"
+  ],
+  "cleanup": {
+    "remaining_demo_rooms": 0,
+    "active_worker_jobs": 0,
+    "active_api_sessions": 0,
+    "passed": true
+  },
+  "mobile_readiness": {
+    "origin": "https://172.20.10.9:8443",
+    "ipv4_confirmed": true,
+    "project_ca_verified_https_status": 200,
+    "browser_smoke_ignores_dev_certificate_errors": true,
+    "physical_phone_test": "pending"
+  },
+  "limits": [
+    "Physical hand-held presentation intent and similar-object identity need user testing.",
+    "Initial request and interruptions still use explicit voice submission.",
+    "Application gates both tools and all observation output; provider tool compliance is not guaranteed.",
+    "Prototype does not establish full H3/H4/H5 completion."
+  ]
+}

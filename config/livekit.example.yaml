@@ -1,0 +1,14 @@
+# Reference only. init-local.ps1 generates livekit.local.yaml with local credentials.
+port: 7880
+bind_addresses:
+  - 127.0.0.1
+rtc:
+  tcp_port: 7881
+  udp_port: 7882
+  node_ip: 127.0.0.1
+  use_external_ip: false
+  enable_loopback_candidate: true
+keys:
+  replace_with_local_key: replace_with_random_secret_at_least_32_characters
+logging:
+  level: info

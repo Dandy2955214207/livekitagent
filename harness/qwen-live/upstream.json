@@ -1,0 +1,16 @@
+{
+  "repository": "https://github.com/QwenLM/Qwen-Live-Harness",
+  "distribution": "qwen-live-harness@1.0.0",
+  "tarball": "https://registry.npmjs.org/qwen-live-harness/-/qwen-live-harness-1.0.0.tgz",
+  "integrity": "sha512-EztM7QeM8cfFzEBUdCLghyZdJAL28F47QJrf1ZxhzUOrGHKn85gMPHXTZlhuTFNnQNSmQ82GgpTqJuwmsDEOzg==",
+  "buildSourceSha256": "ddfc13c2796f31181c731c49aaba510b6bd87aac7b0fd2357fff69f10693e0a8",
+  "license": "Apache-2.0",
+  "modificationsToOfficialFiles": false,
+  "internalEntryPoints": [
+    "dist/orchestrator/live-session.js",
+    "dist/adaptor/registry.js",
+    "dist/proactive/scheduler.js",
+    "dist/config.js"
+  ],
+  "notes": "Internal entry points are not a stable exported SDK. Lockfile pins the distribution and transitive dependencies. Upstream dist/LICENSE and vendor notices stay in the installed package."
+}

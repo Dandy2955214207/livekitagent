@@ -1,0 +1,197 @@
+{
+  "date": "2026-11-02",
+  "timezone": "Asia/Shanghai",
+  "git_head": "b915ed18398d23779303eab2a06d31b41a793ee3",
+  "provider": "yibuapi",
+  "endpoint_type": "yibuapi_realtime",
+  "model": "qwen3.8-omni-flash-realtime",
+  "status": "component_text_observation_passed_rtc_acceptance_failed_voice_closed",
+  "implementation_sha256": {
+    "src/livekit_vlm_agent/observation/background.py": "cde777c6c542a7bb2ce18038b9c77902724a24bf97e3d5529476a46a35dcb392",
+    "src/livekit_vlm_agent/observation/monitor.py": "f0ee4aacb414b518f5739f042c4bdc177644953d484ff61f2754886ee9814134",
+    "src/livekit_vlm_agent/providers/qwen_live.py": "0f378798ee468e4a47a3468f667ee7bae1fd4db2a5c610f8e25ed416b884e720",
+    "src/livekit_vlm_agent/coordination/direct.py": "afb76ff4ff096e687827e29ad69706c10d3dfbcf5278a9832afb749eda355936",
+    "src/livekit_vlm_agent/worker.py": "17f3208c51796a03cde1f2d122f2682fee40d4716292cbd26f37e28cafe2553e",
+    "scripts/probe_live_background.py": "aecc2064f2c59508b1b6207ad61f6c17d8e71487f976a89eb52e1535fe076603",
+    "scripts/probe_direct_scheduler.py": "14fafe1f76f1b20cbb98eaf85bd7084102d5c2c301e66c2974e5a8b6785c5c63",
+    "scripts/verify_direct_background.py": "4b0f72adcf3303ae54a243d13ba0ad66e136b7a30643e3a8f862b92d60ab3f04"
+  },
+  "runtime": {
+    "foreground": "unchanged M2 automatic direct response",
+    "background_default": false,
+    "opt_in": "scripts/run_local.py --direct-background --observe-text --mobile",
+    "proactive_audio": false,
+    "memory_injection": false,
+    "natural_task_tools": false,
+    "max_attempts_per_call_default": 10,
+    "max_frame_age_seconds": 5
+  },
+  "protocol_attempts": [
+    {
+      "report": ".runtime/direct-background-probes/fd79e1f304f64960bf1836ed24e2d5aa.json",
+      "status": "failed",
+      "reported_tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "generations": 0,
+      "error_type": "TimeoutError"
+    },
+    {
+      "report": ".runtime/direct-background-probes/d8205b9ce80942169b8622416c231ce3.json",
+      "status": "failed",
+      "reported_tokens": {
+        "input_tokens": 1564,
+        "output_tokens": 50,
+        "total_tokens": 1614
+      },
+      "generations": 2,
+      "error_type": "ValueError"
+    },
+    {
+      "report": ".runtime/direct-background-probes/9b9d956bb1374f10bf1523bb442715a2.json",
+      "status": "completed_with_pending_gates",
+      "reported_tokens": {
+        "input_tokens": 1566,
+        "output_tokens": 109,
+        "total_tokens": 1675
+      },
+      "generations": 2,
+      "error_type": null
+    },
+    {
+      "report": ".runtime/direct-background-probes/scheduler-1e15ade8388a4b61b7d0a4bf9bc83a04.json",
+      "status": "passed_fixed_scheduler_probe",
+      "reported_tokens": {
+        "input_tokens": 2350,
+        "output_tokens": 196,
+        "total_tokens": 2546
+      },
+      "generations": 3,
+      "error_type": null
+    },
+    {
+      "report": ".runtime/direct-background-probes/observer-bc3703ad941848998f11ea80dd6fc51e.json",
+      "status": "failed",
+      "reported_tokens": {
+        "input_tokens": 809,
+        "output_tokens": 98,
+        "total_tokens": 907
+      },
+      "generations": 2,
+      "error_type": "ValueError"
+    },
+    {
+      "report": ".runtime/direct-background-probes/observer-24f292d0d9104268ade3a6c421bf3f5f.json",
+      "status": "passed_text_observer",
+      "reported_tokens": {
+        "input_tokens": 284,
+        "output_tokens": 50,
+        "total_tokens": 334
+      },
+      "generations": 1,
+      "error_type": null
+    },
+    {
+      "report": ".runtime/direct-background-probes/54fafeb7756940568624edc8e2309fb8.json",
+      "status": "failed",
+      "reported_tokens": {
+        "input_tokens": 764,
+        "output_tokens": 72,
+        "total_tokens": 836
+      },
+      "generations": 1,
+      "error_type": "TimeoutError"
+    }
+  ],
+  "rtc_attempts": [
+    {
+      "report": ".runtime/direct-background-rtc/report.json",
+      "status": "failed",
+      "error": "TimeoutError: page.waitForFunction: Timeout 35000ms exceeded.",
+      "last_metrics": null,
+      "cleanup": {
+        "owned_children_exited": true,
+        "existing_services_touched": false
+      }
+    },
+    {
+      "report": ".runtime/direct-background-rtc/4a8e2e4859b7415e8d6b1d8ef9d5cb18/report.json",
+      "status": "failed",
+      "error": "TimeoutError: page.waitForFunction: Timeout 35000ms exceeded.",
+      "last_metrics": {
+        "phase": "idle",
+        "last_result": null,
+        "counts": {
+          "generations": 2,
+          "replaced_pending": 3,
+          "refreshed_before_send": 1,
+          "evaluations_completed": 2,
+          "last_result_age_ms": 5578,
+          "stale_results": 2,
+          "call_budget_pauses": 1
+        },
+        "max_generations_per_call": 2,
+        "reported_tokens": {
+          "input_tokens": 811,
+          "output_tokens": 100,
+          "total_tokens": 911
+        },
+        "voice_enabled": false
+      },
+      "cleanup": {
+        "owned_children_exited": true,
+        "existing_services_touched": false
+      }
+    },
+    {
+      "report": ".runtime/direct-background-rtc/bd17eeb33fae40afaa9fe347ca37ce3a/report.json",
+      "status": "failed",
+      "error": "TimeoutError: page.waitForFunction: Timeout 50000ms exceeded.",
+      "last_metrics": null,
+      "cleanup": {
+        "owned_children_exited": true,
+        "existing_services_touched": false
+      }
+    }
+  ],
+  "verification": {
+    "python_tests": 175,
+    "frontend_build": "passed with existing chunk warning",
+    "offline_ui": "passed",
+    "final_frame_refresh": "passed offline; final RTC attempt timed out before observing"
+  },
+  "cost": {
+    "reported_tokens": {
+      "input_tokens": 8148,
+      "output_tokens": 675,
+      "total_tokens": 8823
+    },
+    "complete": false,
+    "currency_cost": null,
+    "includes_usage_returned_during_cleanup": true,
+    "unknown": "First RTC attempt, continuous inputs and failed connection charges may be unreported",
+    "further_paid_runs_this_stage": "stopped"
+  },
+  "cleanup": {
+    "owned_test_rooms": [
+      "voice-09a8110743ad49a083126d9ecc534ed3",
+      "voice-e034334ad95443aaa27da036db873e00"
+    ],
+    "residual_before_cleanup": [],
+    "residual_after_cleanup": [],
+    "existing_user_rooms_touched": false
+  },
+  "existing_services_restarted": false,
+  "raw_user_media_persisted": false,
+  "pending": [
+    "RTC stable connection and fresh event",
+    "event response correctness across prior user prompts",
+    "generation origin/user priority at injection/generation/playback stages",
+    "server_playout association",
+    "natural task tools",
+    "actual model memory injection and recovery",
+    "phone and long-call acceptance"
+  ]
+}

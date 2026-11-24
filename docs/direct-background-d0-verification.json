@@ -1,0 +1,320 @@
+{
+  "provider": "yibuapi",
+  "endpoint_type": "yibuapi_realtime",
+  "model": "qwen3.8-omni-flash-realtime",
+  "turn_detection": "semantic_vad_ec",
+  "git_head": "b915ed18398d23779303eab2a06d31b41a793ee3",
+  "date": "2026-11-02",
+  "timezone": "Asia/Shanghai",
+  "physical_devices_used": false,
+  "python_tests_passed": 149,
+  "frontend_build": "passed_with_existing_chunk_warning",
+  "services_started": 0,
+  "services_stopped": 0,
+  "env_modified": false,
+  "phone_profile_modified": false,
+  "raw_media_persisted": false,
+  "workspace": [
+    " M .env.example",
+    " M README.md",
+    " M docs/harness-implementation-plan.md",
+    " M scripts/check_environment.py",
+    " M scripts/probe_qwen.py",
+    " M scripts/run_local.py",
+    " M src/livekit_vlm_agent/config.py",
+    " M src/livekit_vlm_agent/media/video.py",
+    " M src/livekit_vlm_agent/providers/qwen_client.py",
+    " M src/livekit_vlm_agent/session.py",
+    " M src/livekit_vlm_agent/worker.py",
+    " M tests/test_qwen_client.py",
+    " M tests/test_sessions.py",
+    " M web/src/main.js",
+    "?? docs/direct-background-d0-verification.md",
+    "?? docs/direct-background-d1-verification.md",
+    "?? docs/m2-background-observation-memory-plan.md",
+    "?? scripts/probe_live_background.py",
+    "?? src/livekit_vlm_agent/media/fanout.py",
+    "?? src/livekit_vlm_agent/observation/",
+    "?? src/livekit_vlm_agent/providers/qwen_live.py",
+    "?? tests/test_background_probe.py",
+    "?? tests/test_direct_background.py",
+    "?? tests/test_provider_config.py"
+  ],
+  "implementation_sha256": {
+    "scripts/probe_live_background.py": "3e3ab84a2a1155d2ae9ecf7463d64917c2012755f430800a51443979f4e87bee",
+    "src/livekit_vlm_agent/providers/qwen_live.py": "91b221832f8f9180fbfa8c16755d0291aaf4945ed4237a7005bfe18d5fa62782",
+    "src/livekit_vlm_agent/media/fanout.py": "0874c4996b6d3dab7e95d5d1bac05ca6190dcba502a39fdd756dea186a274be6",
+    "src/livekit_vlm_agent/observation/contracts.py": "a65d006d9a12b5b576c47ad3c2593911378f0179eb4ece0ba4a0e730f56aa52a"
+  },
+  "stage": "D0",
+  "status": "dual_and_visual_fixed_probes_passed_event_probe_failed_remaining_gates_pending",
+  "capabilities": {
+    "P0-A": {
+      "status": "passed",
+      "description": "dual connections and foreground reply after monitor closes",
+      "evidence": "Two completed direct foreground audio replies; independent Monitor connection; foreground still replies after Monitor closes",
+      "scope": "fixed synthetic probe only"
+    },
+    "P0-B": {
+      "status": "passed",
+      "description": "text monitor red/blue latest image + chunked protocol silence",
+      "evidence": "Red matched then blue not_matched, no audio or speech events; two known-empty transcription completions",
+      "scope": "fixed synthetic probe only"
+    },
+    "P0-C": {
+      "status": "passed",
+      "description": "strict JSON result, negative versus unknown",
+      "evidence": "Strict parsing passed both real JSON results; actual ambiguous-image unknown and correction paths remain untested",
+      "scope": "fixed synthetic probe only"
+    },
+    "P0-D": {
+      "status": "unknown",
+      "description": "bounded instructions snapshot, ack then explicit audio response",
+      "execution": "failed_current_probe_path",
+      "evidence": "Neutral-history manual example spoke report; literal-history example repeated old answer. Response override probe timed out during warmup. Runtime voice remains disabled."
+    },
+    "P0-E": {
+      "status": "unknown",
+      "description": "user speech races at injection/generation/playout (RTC pending)",
+      "evidence": "VAD automatic-response suppression and single commit/request primitive tested; report correctness and playback interruption remain pending."
+    },
+    "P0-F": {
+      "status": "unknown",
+      "description": "ordinary QA mixed with real idempotent task tools (D3 pending)"
+    },
+    "P0-G": {
+      "status": "unknown",
+      "description": "corrected fact restored in fresh connection (full memory gate pending)"
+    },
+    "P0-H": {
+      "status": "unknown",
+      "description": "separate usage records; shared quota/pricing/auth failures pending"
+    }
+  },
+  "live_attempts": [
+    {
+      "command": ".venv/Scripts/python.exe scripts/probe_live_background.py --live",
+      "execution": "failed_before_connection",
+      "error_type": "PermissionError",
+      "connections_established": 0,
+      "generations": 0,
+      "media_sent": false,
+      "usage": null,
+      "raw_report": ".runtime\\direct-background-probes\\b7acae3497dd45558c16e532c31d7fc4.json",
+      "interpretation": "raw P0-A failed means execution failure; provider capability remains unknown"
+    },
+    {
+      "execution": "rejected_before_process_creation",
+      "review": "automatic_approval",
+      "reason": "No explicit authorization to send fixed audio/images to external Yibu API with potential cost",
+      "retried_via_alternate_route": false
+    },
+    {
+      "execution": "failed_before_connection",
+      "error_type": "CalledProcessError",
+      "reason": "Elevated account Git ownership mismatch; no network connection",
+      "fix": "read-only command-scoped safe.directory for current repository; no global config edit",
+      "generations": 0
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/probe_live_background.py --live",
+      "execution": "failed",
+      "raw_report": ".runtime/direct-background-probes/87833ec9825e453888e6c61dcd6a5b48.json",
+      "connections_established": 2,
+      "generations": 1,
+      "provider_reported_usage": {
+        "total_tokens": 194,
+        "input_tokens": 166,
+        "output_tokens": 28,
+        "input_tokens_details": {
+          "text_tokens": 79,
+          "audio_tokens": 7,
+          "video_tokens": 80
+        },
+        "output_tokens_details": {
+          "text_tokens": 28
+        }
+      },
+      "foreground_usage": "not returned; partial input may still be billed",
+      "foreground_sent_pcm_seconds": 2.68,
+      "monitor_sent_silence_seconds": 0.5,
+      "connections_closed": true,
+      "failure": "Monitor transcription.completed existence rejected by original checker; raw trace has no transcript length",
+      "paid_retries_after_failure": 0
+    },
+    {
+      "date": "2026-11-02",
+      "execution": "additional_probe_rejected_before_process_creation",
+      "reason": "Automatic review interpreted prior explicit authorization as one paid run already consumed",
+      "additional_generations": 0,
+      "additional_usage": 0,
+      "bypassed": false
+    },
+    {
+      "timestamp_utc": "2026-11-02T10:19:56.785365+00:00",
+      "authorization": "User explicitly authorized an additional test: 允许追加测试",
+      "raw_report": ".runtime/direct-background-probes/ae8e004005264b7e860c4178e33cf57d.json",
+      "command": ".venv/Scripts/python.exe scripts/probe_live_background.py --live",
+      "execution": "failed_at_event_probe_after_dual_success",
+      "generations": 4,
+      "provider_reported_usage": {
+        "input_tokens": 1997,
+        "output_tokens": 101,
+        "total_tokens": 2098
+      },
+      "connections": [
+        {
+          "label": "foreground",
+          "connection_id": "61ccae9bcf8045b7b1fd613a403cfdda",
+          "closed": true,
+          "response_count": 2,
+          "reported_tokens": {
+            "input_tokens": 1540,
+            "output_tokens": 46,
+            "total_tokens": 1586
+          }
+        },
+        {
+          "label": "monitor",
+          "connection_id": "6758a3908dc54e7e872c885451fd1763",
+          "closed": true,
+          "response_count": 2,
+          "reported_tokens": {
+            "input_tokens": 457,
+            "output_tokens": 55,
+            "total_tokens": 512
+          }
+        },
+        {
+          "label": "event_foreground",
+          "connection_id": "f8bc74a62d464ca7ae44cad9f63ddd0b",
+          "closed": true,
+          "response_count": 0,
+          "reported_tokens": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          }
+        }
+      ],
+      "checks": {
+        "P0-A": {
+          "status": "passed",
+          "description": "dual connections and foreground reply after monitor closes",
+          "execution": "completed"
+        },
+        "P0-B": {
+          "status": "passed",
+          "description": "text monitor red/blue latest image + chunked protocol silence"
+        },
+        "P0-C": {
+          "status": "passed",
+          "description": "strict JSON result, negative versus unknown"
+        },
+        "P0-D": {
+          "status": "unknown",
+          "description": "bounded instructions snapshot, ack then explicit audio response",
+          "execution": "failed"
+        },
+        "P0-E": {
+          "status": "unknown",
+          "description": "user speech races at injection/generation/playout (RTC pending)"
+        },
+        "P0-F": {
+          "status": "unknown",
+          "description": "ordinary QA mixed with real idempotent task tools (D3 pending)"
+        },
+        "P0-G": {
+          "status": "unknown",
+          "description": "corrected fact restored in fresh connection (full memory gate pending)"
+        },
+        "P0-H": {
+          "status": "unknown",
+          "description": "separate usage records; shared quota/pricing/auth failures pending"
+        }
+      },
+      "fixed_qa_fixture_end_to_first_audio_ms": [
+        3906.0,
+        3343.0
+      ],
+      "event_failure": {
+        "stage": "response.create after acknowledged instructions snapshot, on fresh connection with no media input",
+        "supplier_error_code": null,
+        "error_type": "QwenProtocolError",
+        "error_message": "not captured by existing redacted trace; root cause unknown",
+        "generation_created": false,
+        "audio_bytes": 0
+      },
+      "memory_probe": "not executed after event failure",
+      "paid_retries": 0,
+      "runtime_capabilities_enabled": false,
+      "currency_cost": null,
+      "billing_note": "4 completed responses reported usage; error connection returned no usage. Account price and complete billed charges unknown."
+    }
+  ],
+  "planned_live_budget": {
+    "generations": 6,
+    "seconds": 150,
+    "concurrent_connections": 2,
+    "automatic_retries": 0
+  },
+  "protocol_basis": "https://help.aliyun.com/zh/model-studio/client-events",
+  "pending": [
+    "P0-D diagnose bare response.create error without assuming instructions injection unsupported",
+    "P0-E RTC race probe implementation and response/playout source correlation",
+    "P0-F real task tools at D3",
+    "P0-G memory probe not executed due to preceding error",
+    "P0-H actual quota/pricing and complete billed usage",
+    "actual ambiguous-image unknown branch and phone/long-call validation"
+  ],
+  "residual_resources": {
+    "probe_connections": 0,
+    "new_services": 0,
+    "existing_services": "untouched"
+  },
+  "authorization": {
+    "status": "granted",
+    "user_text": "允许，但要注意成本控制",
+    "scope": "current Yibu API fixed images and synthetic audio; control costs",
+    "additional_test": {
+      "status": "granted_and_executed_once",
+      "user_text": "允许追加测试"
+    }
+  },
+  "cost_control": {
+    "planned_generations": 6,
+    "planned_output_token_caps_total": 2048,
+    "actual_generations": 1,
+    "reported_tokens": {
+      "input": 166,
+      "output": 28,
+      "total": 194
+    },
+    "usage_complete": false,
+    "currency_cost": null,
+    "currency_cost_reason": "Account-specific price and unreported foreground input charges unavailable",
+    "paid_retries_after_failure": 0,
+    "automatic_retries": 0,
+    "services_started": 0,
+    "latest_additional_test": {
+      "actual_generations": 4,
+      "reported_tokens": {
+        "input_tokens": 1997,
+        "output_tokens": 101,
+        "total_tokens": 2098
+      },
+      "paid_retries": 0,
+      "all_connections_closed": true,
+      "currency_cost": null
+    },
+    "cumulative_reported_tokens": 2292,
+    "cumulative_usage_complete": false
+  },
+  "validation_followup": {
+    "targeted_probe_tests_passed": 4,
+    "new_tests": 2,
+    "full_suite_previous_passed": 149,
+    "fixed_checker_paid_revalidation": "passed red and blue; empty completions confirmed"
+  },
+  "latest_stage_report": "direct-background-d2-integration-verification.json"
+}

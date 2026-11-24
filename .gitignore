@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+.venv/
+.tools/
+.runtime/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+web/node_modules/
+web/dist/
+harness/qwen-live/node_modules/
+config/livekit.local.yaml
+*.log

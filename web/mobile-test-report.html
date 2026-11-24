@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>手机测试复盘 · LiveKitAgent</title>
+</head>
+<body>
+  <main>
+    <header>
+      <div><a class="back" href="/">← 视觉通话</a><h1>手机测试复盘</h1></div>
+      <div class="pick">
+        <label for="run">测试记录</label>
+        <select id="run"></select>
+        <button id="refresh" type="button">刷新</button>
+      </div>
+    </header>
+    <p id="status" role="status"></p>
+    <div id="workspace" hidden>
+      <section class="timeline-card" aria-labelledby="timeline-title">
+        <div class="timeline-header">
+          <div>
+            <h2 id="timeline-title">测试时间轴</h2>
+            <p id="duration"></p>
+          </div>
+          <div class="modes" role="group" aria-label="时间轴内容">
+            <button id="media-mode" type="button" aria-pressed="true">音视频</button>
+            <button id="system-mode" type="button" aria-pressed="false">系统动作</button>
+          </div>
+        </div>
+        <div class="axis-wrap">
+          <div id="axis" role="group" aria-label="按时间排序的测试事件">
+            <div class="axis-line"></div>
+            <div id="axis-ticks" aria-hidden="true"></div>
+            <div id="axis-points"></div>
+            <div id="axis-preview" role="tooltip" hidden></div>
+          </div>
+        </div>
+        <div class="timeline-controls">
+          <p class="axis-help">悬停预览，点击查看详情</p>
+          <div id="mark-jumps" aria-label="跳到问题标记" hidden></div>
+          <div class="zoom" role="group" aria-label="时间轴缩放">
+            <button id="zoom-out" type="button" aria-label="缩小时间轴">−</button>
+            <button id="zoom-in" type="button" aria-label="放大时间轴">＋</button>
+            <button id="zoom-reset" type="button">全程</button>
+          </div>
+        </div>
+        <div id="pan-control" hidden>
+          <label for="pan">移动时间窗口</label>
+          <input id="pan" type="range" min="0" step="1">
+          <output id="visible-range" for="pan"></output>
+        </div>
+      </section>
+      <section id="inspector" aria-labelledby="selection" hidden>
+        <div class="inspector-head">
+          <div id="selection"></div>
+          <button id="close-inspector" type="button">关闭详情</button>
+        </div>
+        <div id="summary"></div>
+        <div id="event-details"></div>
+      </section>
+      <details class="files"><summary>原始事件文件</summary>
+        <a id="worker-file">Worker 与 Harness</a>
+        <a id="phone-file">手机</a>
+      </details>
+    </div>
+  </main>
+  <script type="module" src="/src/mobile-test-report.js"></script>
+</body>
+</html>

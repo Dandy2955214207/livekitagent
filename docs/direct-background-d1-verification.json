@@ -1,0 +1,96 @@
+{
+  "provider": "yibuapi",
+  "endpoint_type": "yibuapi_realtime",
+  "model": "qwen3.8-omni-flash-realtime",
+  "turn_detection": "semantic_vad_ec",
+  "git_head": "b915ed18398d23779303eab2a06d31b41a793ee3",
+  "date": "2026-11-02",
+  "timezone": "Asia/Shanghai",
+  "physical_devices_used": false,
+  "python_tests_passed": 149,
+  "frontend_build": "passed_with_existing_chunk_warning",
+  "services_started": 0,
+  "services_stopped": 0,
+  "env_modified": false,
+  "phone_profile_modified": false,
+  "raw_media_persisted": false,
+  "workspace": [
+    " M .env.example",
+    " M README.md",
+    " M docs/harness-implementation-plan.md",
+    " M scripts/check_environment.py",
+    " M scripts/probe_qwen.py",
+    " M scripts/run_local.py",
+    " M src/livekit_vlm_agent/config.py",
+    " M src/livekit_vlm_agent/media/video.py",
+    " M src/livekit_vlm_agent/providers/qwen_client.py",
+    " M src/livekit_vlm_agent/session.py",
+    " M src/livekit_vlm_agent/worker.py",
+    " M tests/test_qwen_client.py",
+    " M tests/test_sessions.py",
+    " M web/src/main.js",
+    "?? docs/direct-background-d0-verification.md",
+    "?? docs/direct-background-d1-verification.md",
+    "?? docs/m2-background-observation-memory-plan.md",
+    "?? scripts/probe_live_background.py",
+    "?? src/livekit_vlm_agent/media/fanout.py",
+    "?? src/livekit_vlm_agent/observation/",
+    "?? src/livekit_vlm_agent/providers/qwen_live.py",
+    "?? tests/test_background_probe.py",
+    "?? tests/test_direct_background.py",
+    "?? tests/test_provider_config.py"
+  ],
+  "implementation_sha256": {
+    "scripts/probe_live_background.py": "3e3ab84a2a1155d2ae9ecf7463d64917c2012755f430800a51443979f4e87bee",
+    "src/livekit_vlm_agent/providers/qwen_live.py": "91b221832f8f9180fbfa8c16755d0291aaf4945ed4237a7005bfe18d5fa62782",
+    "src/livekit_vlm_agent/media/fanout.py": "0874c4996b6d3dab7e95d5d1bac05ca6190dcba502a39fdd756dea186a274be6",
+    "src/livekit_vlm_agent/observation/contracts.py": "a65d006d9a12b5b576c47ad3c2593911378f0179eb4ece0ba4a0e730f56aa52a"
+  },
+  "stage": "D1",
+  "status": "offline_skeleton_passed_live_acceptance_pending",
+  "mode": "direct_background",
+  "dialogue": "inherited_M2_semantic_vad",
+  "capabilities": {
+    "observation": "unavailable",
+    "proactive_audio": "unavailable",
+    "task_tools": "unavailable",
+    "memory_injection": "unavailable"
+  },
+  "frame_buffer": {
+    "max_frames": 10,
+    "max_base64_chars": 3000000,
+    "max_age_seconds_on_read": 10,
+    "independent_cursors": true,
+    "duplicate_encoding": false
+  },
+  "tests": [
+    "strict_monitor_result",
+    "fanout_cursors_bounds_age_epoch",
+    "encoded_frame_shared_with_foreground",
+    "direct_generation_and_shutdown",
+    "background_publish_fault_isolation",
+    "session_capabilities",
+    "snapshot_ack_before_generation",
+    "snapshot_missing_ack_shutdown"
+  ],
+  "pending": [
+    "Q1 real RTC QA/followup/object switch/interruption",
+    "foreground server_playout correlation before D2",
+    "Q2 actual monitor concurrency",
+    "same-input M2/H2/new mode latency comparison",
+    "phone validation",
+    "20-minute stability"
+  ],
+  "fallback": {
+    "M2": "HARNESS_MODE=legacy_auto with original launcher",
+    "H2": "scripts/run_local.py --harness",
+    "automatic_fallback": false
+  },
+  "commands": [
+    ".venv/Scripts/python.exe -m unittest discover -s tests -q",
+    "npm.cmd run build --prefix web",
+    ".venv/Scripts/python.exe scripts/probe_live_background.py",
+    ".venv/Scripts/python.exe scripts/run_local.py --help"
+  ],
+  "d0_live_followup": "One monitor generation; red JSON valid, ambiguous transcription event stopped probe; foreground RTC and D1 acceptance still pending"
+}

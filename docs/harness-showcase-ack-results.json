@@ -1,0 +1,332 @@
+{
+  "target_ms": 5000,
+  "target_stably_met": false,
+  "python_tests_passed": 132,
+  "reports": [
+    {
+      "status": "failed",
+      "physicalDevicesUsed": false,
+      "syntheticDrawings": true,
+      "handheldSimulation": true,
+      "motionProfile": {
+        "xPixels": 48,
+        "yPixels": 30,
+        "rotationDegrees": 4,
+        "scaleChange": 0.06,
+        "lightingChange": 0.08
+      },
+      "qaAfter": true,
+      "measurementLabel": "serial-ack-pipeline",
+      "answers": [],
+      "cases": [],
+      "sceneTimings": [],
+      "pageErrors": [],
+      "error": "page.waitForFunction: Timeout 45000ms exceeded.",
+      "liveTracksAfterHangup": 0
+    },
+    {
+      "status": "passed",
+      "physicalDevicesUsed": false,
+      "syntheticDrawings": true,
+      "handheldSimulation": true,
+      "motionProfile": {
+        "xPixels": 48,
+        "yPixels": 30,
+        "rotationDegrees": 4,
+        "scaleChange": 0.06,
+        "lightingChange": 0.08
+      },
+      "qaAfter": true,
+      "measurementLabel": "serial-ack-pipeline-live",
+      "answers": [
+        "没问题，我会等你切换画面，然后逐个为你介绍。",
+        "这是一个蓝色的带柄马克杯。它通常用来装咖啡、茶或者水，方便日常饮用。",
+        "这是一把金黄色的老式钥匙，通常用来开启传统的机械锁。",
+        "这是一本深红色的硬壳书，封面上有金色的装饰线条。",
+        "桌上可以放笔筒、水杯、台灯、手机支架、小盆栽和收纳盒等日常小物品。"
+      ],
+      "cases": [
+        "one spoken request starts continuous showcase",
+        "continuous camera sweep is quiet",
+        "cup introduced without new speech",
+        "held cup does not repeat across recheck",
+        "keys introduced without new speech",
+        "book introduced without new speech",
+        "pause/resume/end preserve silence for known or inactive scenes",
+        "ordinary submitted voice QA after ending task"
+      ],
+      "sceneTimings": [
+        {
+          "scene": "cup",
+          "switchToFirstDecodedAudioMs": 10288,
+          "switchToPlaybackEndMs": 17627
+        },
+        {
+          "scene": "keys",
+          "switchToFirstDecodedAudioMs": 10483,
+          "switchToPlaybackEndMs": 15762
+        },
+        {
+          "scene": "book",
+          "switchToFirstDecodedAudioMs": 10507,
+          "switchToPlaybackEndMs": 15698
+        }
+      ],
+      "pageErrors": [],
+      "audioBytesReceived": 363479,
+      "userTranscriptRows": 2,
+      "liveTracksAfterHangup": 0
+    },
+    {
+      "status": "failed",
+      "physicalDevicesUsed": false,
+      "syntheticDrawings": true,
+      "handheldSimulation": true,
+      "motionProfile": {
+        "xPixels": 48,
+        "yPixels": 30,
+        "rotationDegrees": 4,
+        "scaleChange": 0.06,
+        "lightingChange": 0.08
+      },
+      "qaAfter": true,
+      "measurementLabel": "ack-coalesced-verified-input",
+      "answers": [
+        "没问题，我会逐个介绍你展示的物品，每件简单说一两句话。",
+        "这是一个蓝色的带柄马克杯，通常用来装咖啡或茶等热饮。",
+        "这是一把金色的复古钥匙，通常用来开启老式门锁或作为装饰。",
+        "这是一本红色封面的书，通常用来阅读或收藏。"
+      ],
+      "cases": [
+        "one spoken request starts continuous showcase",
+        "continuous camera sweep is quiet",
+        "cup introduced without new speech",
+        "held cup does not repeat across recheck",
+        "keys introduced without new speech",
+        "book introduced without new speech",
+        "pause/resume/end preserve silence for known or inactive scenes"
+      ],
+      "sceneTimings": [
+        {
+          "scene": "cup",
+          "switchToFirstDecodedAudioMs": 17070,
+          "switchToPlaybackEndMs": 22274
+        },
+        {
+          "scene": "keys",
+          "switchToFirstDecodedAudioMs": 9344,
+          "switchToPlaybackEndMs": 15095
+        },
+        {
+          "scene": "book",
+          "switchToFirstDecodedAudioMs": 7966,
+          "switchToPlaybackEndMs": 12053
+        }
+      ],
+      "pageErrors": [],
+      "error": "page.waitForFunction: Timeout 65000ms exceeded.",
+      "liveTracksAfterHangup": 0
+    },
+    {
+      "status": "failed",
+      "physicalDevicesUsed": false,
+      "syntheticDrawings": true,
+      "handheldSimulation": true,
+      "motionProfile": {
+        "xPixels": 48,
+        "yPixels": 30,
+        "rotationDegrees": 4,
+        "scaleChange": 0.06,
+        "lightingChange": 0.08
+      },
+      "qaAfter": true,
+      "measurementLabel": "ack-coalesced-final",
+      "answers": [],
+      "cases": [],
+      "sceneTimings": [],
+      "pageErrors": [],
+      "error": "page.waitForFunction: Timeout 65000ms exceeded.",
+      "liveTracksAfterHangup": 0
+    },
+    {
+      "status": "failed",
+      "physicalDevicesUsed": false,
+      "syntheticDrawings": true,
+      "handheldSimulation": true,
+      "motionProfile": {
+        "xPixels": 48,
+        "yPixels": 30,
+        "rotationDegrees": 4,
+        "scaleChange": 0.06,
+        "lightingChange": 0.08
+      },
+      "qaAfter": true,
+      "measurementLabel": "ack-coalesced-final-retry",
+      "answers": [],
+      "cases": [],
+      "sceneTimings": [],
+      "pageErrors": [],
+      "error": "page.waitForFunction: Timeout 65000ms exceeded.",
+      "liveTracksAfterHangup": 0
+    },
+    {
+      "status": "failed",
+      "physicalDevicesUsed": false,
+      "syntheticDrawings": true,
+      "handheldSimulation": true,
+      "motionProfile": {
+        "xPixels": 48,
+        "yPixels": 30,
+        "rotationDegrees": 4,
+        "scaleChange": 0.06,
+        "lightingChange": 0.08
+      },
+      "qaAfter": true,
+      "voicePath": ".runtime/h2-fixtures/showcase-short.wav",
+      "measurementLabel": "ack-coalesced-final-short-fixture",
+      "answers": [
+        "好的，请开始展示您的物品，我会为您逐一介绍。",
+        "这是一个蓝色的带柄马克杯。",
+        "这是一把金色的复古钥匙。",
+        "这是一本红色封面的书，通常用来阅读或记录内容。"
+      ],
+      "cases": [
+        "one spoken request starts continuous showcase",
+        "continuous camera sweep is quiet",
+        "cup introduced without new speech",
+        "held cup does not repeat across recheck",
+        "keys introduced without new speech",
+        "book introduced without new speech",
+        "pause/resume/end preserve silence for known or inactive scenes"
+      ],
+      "sceneTimings": [
+        {
+          "scene": "cup",
+          "switchToFirstDecodedAudioMs": 13801,
+          "switchToPlaybackEndMs": 16202
+        },
+        {
+          "scene": "keys",
+          "switchToFirstDecodedAudioMs": 15305,
+          "switchToPlaybackEndMs": 17563
+        },
+        {
+          "scene": "book",
+          "switchToFirstDecodedAudioMs": 14214,
+          "switchToPlaybackEndMs": 19662
+        }
+      ],
+      "pageErrors": [],
+      "error": "任务已暂停，可以继续或结束任务。",
+      "liveTracksAfterHangup": 0
+    },
+    {
+      "status": "passed",
+      "physicalDevicesUsed": false,
+      "syntheticDrawings": true,
+      "handheldSimulation": true,
+      "motionProfile": {
+        "xPixels": 48,
+        "yPixels": 30,
+        "rotationDegrees": 4,
+        "scaleChange": 0.06,
+        "lightingChange": 0.08
+      },
+      "qaAfter": true,
+      "voicePath": ".runtime/h2-fixtures/showcase-short.wav",
+      "measurementLabel": "ack-final-original-chunks",
+      "answers": [
+        "好的，请开始展示物品，我会为您逐一介绍。",
+        "这是一个蓝色的带柄杯子，看起来像是用来喝水或咖啡的。",
+        "这是一把棕色的钥匙，通常用来开锁。",
+        "这是一本红色封面的书，通常用来阅读或记录内容。",
+        "桌上可以放笔筒、台灯、笔记本或绿植等物品，既实用又能装饰空间。"
+      ],
+      "cases": [
+        "one spoken request starts continuous showcase",
+        "continuous camera sweep is quiet",
+        "cup introduced without new speech",
+        "held cup does not repeat across recheck",
+        "keys introduced without new speech",
+        "book introduced without new speech",
+        "pause/resume/end preserve silence for known or inactive scenes",
+        "ordinary submitted voice QA after ending task"
+      ],
+      "sceneTimings": [
+        {
+          "scene": "cup",
+          "switchToFirstDecodedAudioMs": 7134,
+          "switchToPlaybackEndMs": 12254
+        },
+        {
+          "scene": "keys",
+          "switchToFirstDecodedAudioMs": 6519,
+          "switchToPlaybackEndMs": 9873
+        },
+        {
+          "scene": "book",
+          "switchToFirstDecodedAudioMs": 6834,
+          "switchToPlaybackEndMs": 11217
+        }
+      ],
+      "pageErrors": [],
+      "audioBytesReceived": 293576,
+      "userTranscriptRows": 2,
+      "liveTracksAfterHangup": 0
+    }
+  ],
+  "final": {
+    "status": "passed",
+    "physicalDevicesUsed": false,
+    "syntheticDrawings": true,
+    "handheldSimulation": true,
+    "motionProfile": {
+      "xPixels": 48,
+      "yPixels": 30,
+      "rotationDegrees": 4,
+      "scaleChange": 0.06,
+      "lightingChange": 0.08
+    },
+    "qaAfter": true,
+    "voicePath": ".runtime/h2-fixtures/showcase-short.wav",
+    "measurementLabel": "ack-final-original-chunks",
+    "answers": [
+      "好的，请开始展示物品，我会为您逐一介绍。",
+      "这是一个蓝色的带柄杯子，看起来像是用来喝水或咖啡的。",
+      "这是一把棕色的钥匙，通常用来开锁。",
+      "这是一本红色封面的书，通常用来阅读或记录内容。",
+      "桌上可以放笔筒、台灯、笔记本或绿植等物品，既实用又能装饰空间。"
+    ],
+    "cases": [
+      "one spoken request starts continuous showcase",
+      "continuous camera sweep is quiet",
+      "cup introduced without new speech",
+      "held cup does not repeat across recheck",
+      "keys introduced without new speech",
+      "book introduced without new speech",
+      "pause/resume/end preserve silence for known or inactive scenes",
+      "ordinary submitted voice QA after ending task"
+    ],
+    "sceneTimings": [
+      {
+        "scene": "cup",
+        "switchToFirstDecodedAudioMs": 7134,
+        "switchToPlaybackEndMs": 12254
+      },
+      {
+        "scene": "keys",
+        "switchToFirstDecodedAudioMs": 6519,
+        "switchToPlaybackEndMs": 9873
+      },
+      {
+        "scene": "book",
+        "switchToFirstDecodedAudioMs": 6834,
+        "switchToPlaybackEndMs": 11217
+      }
+    ],
+    "pageErrors": [],
+    "audioBytesReceived": 293576,
+    "userTranscriptRows": 2,
+    "liveTracksAfterHangup": 0
+  }
+}

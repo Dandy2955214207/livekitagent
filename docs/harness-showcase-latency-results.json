@@ -1,0 +1,1037 @@
+{
+  "date": "2026-11-02",
+  "baseline_commit": "03771c2",
+  "scope": "early observation and guarded fast path; full-quality images retained",
+  "target_first_decoded_audio_ms": [
+    1000,
+    3000
+  ],
+  "target_stably_met": false,
+  "offline_tests": {
+    "passed": 122
+  },
+  "frontend_build": "passed_existing_bundle_warning",
+  "measurement": {
+    "definition": "synthetic new object drawn to first browser-decoded remote audio RMS over .008; not physical phone audibility",
+    "first_audio_detector": "Web Audio analyser, FFT 512, 10 ms polling, muted output; 400 ms previous-tail drain before switch",
+    "final_sample_count": 3,
+    "final_first_audio_ms": [
+      8159,
+      4543,
+      4564
+    ],
+    "final_median_ms": 4564,
+    "final_range_ms": [
+      4543,
+      8159
+    ],
+    "not_controlled_network_ab_test": true
+  },
+  "runs": [
+    {
+      "path": ".runtime/showcase-results/report-1793589944581.json",
+      "sha256": "9b842aa1781367497263059c54dc017d60b61c9ba48659510703ba6eeb561658",
+      "result": {
+        "status": "passed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "handheldSimulation": true,
+        "motionProfile": {
+          "xPixels": 48,
+          "yPixels": 30,
+          "rotationDegrees": 4,
+          "scaleChange": 0.06,
+          "lightingChange": 0.08
+        },
+        "measurementLabel": "before-latency-optimization",
+        "answers": [
+          "没问题，你随时切换画面，我会接着介绍。",
+          "这是一个深蓝色的马克杯，带有把手，适合用来喝咖啡或茶。",
+          "这是一把古铜色的复古钥匙，造型经典，通常用来开启老式的门锁。",
+          "这是一本红色封面的书，上面有两条黄色的横线装饰，看起来像是一本日记或笔记本。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "continuous camera sweep is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck",
+          "keys introduced without new speech",
+          "book introduced without new speech",
+          "pause/resume/end preserve silence for known or inactive scenes"
+        ],
+        "sceneTimings": [
+          {
+            "scene": "cup",
+            "switchToFirstDecodedAudioMs": 13501,
+            "switchToPlaybackEndMs": 18795
+          },
+          {
+            "scene": "keys",
+            "switchToFirstDecodedAudioMs": 26598,
+            "switchToPlaybackEndMs": 32527
+          },
+          {
+            "scene": "book",
+            "switchToFirstDecodedAudioMs": 24642,
+            "switchToPlaybackEndMs": 32410
+          }
+        ],
+        "pageErrors": [],
+        "audioBytesReceived": 282722,
+        "userTranscriptRows": 1,
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "path": ".runtime/showcase-results/report-1793590380913.json",
+      "sha256": "b65d65502fb6891d359cff8b437efa30b1aec363115367a8dc1a56ca7a645a66",
+      "result": {
+        "status": "failed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "handheldSimulation": true,
+        "motionProfile": {
+          "xPixels": 48,
+          "yPixels": 30,
+          "rotationDegrees": 4,
+          "scaleChange": 0.06,
+          "lightingChange": 0.08
+        },
+        "measurementLabel": "after-latency-optimization",
+        "answers": [
+          "好的，我会逐个为你介绍展示的物品，每件简短说一两句。",
+          "这是一个蓝色的马克杯。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "continuous camera sweep is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck"
+        ],
+        "sceneTimings": [
+          {
+            "scene": "cup",
+            "switchToFirstDecodedAudioMs": 5978,
+            "switchToPlaybackEndMs": 7876
+          }
+        ],
+        "pageErrors": [],
+        "error": "模型没有返回有效的任务决定，请重新说话并提交；当前步骤不会跳过。",
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "path": ".runtime/showcase-results/report-1793590681480.json",
+      "sha256": "89809a157b900e727091a696dcddbdcb17a532f743e43df6634c7d1d42041fcc",
+      "result": {
+        "status": "failed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "handheldSimulation": true,
+        "motionProfile": {
+          "xPixels": 48,
+          "yPixels": 30,
+          "rotationDegrees": 4,
+          "scaleChange": 0.06,
+          "lightingChange": 0.08
+        },
+        "measurementLabel": "after-compact-observation",
+        "answers": [
+          "没问题，你随时切换画面，我会逐个简短介绍。",
+          "这是一个蓝色的马克杯，适合用来喝咖啡或茶。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "continuous camera sweep is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck"
+        ],
+        "sceneTimings": [
+          {
+            "scene": "cup",
+            "switchToFirstDecodedAudioMs": 5710,
+            "switchToPlaybackEndMs": 10021
+          }
+        ],
+        "pageErrors": [],
+        "error": "模型没有返回有效的任务决定，请重新说话并提交；当前步骤不会跳过。",
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "path": ".runtime/showcase-results/report-1793590895683.json",
+      "sha256": "4709e980d5219a4cf8661cd131cdaa2727eb0947e784c1e18cdd687690fdf6ba",
+      "result": {
+        "status": "failed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "handheldSimulation": true,
+        "motionProfile": {
+          "xPixels": 48,
+          "yPixels": 30,
+          "rotationDegrees": 4,
+          "scaleChange": 0.06,
+          "lightingChange": 0.08
+        },
+        "measurementLabel": "after-fast-path-race-fix",
+        "answers": [
+          "没问题，我会逐个介绍你展示的物品，每件只讲一两句。请开始展示吧。",
+          "这是一个蓝色的马克杯，带有把手，适合日常饮水。",
+          "这是一把金色的钥匙，通常用来开锁。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "continuous camera sweep is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck",
+          "keys introduced without new speech"
+        ],
+        "sceneTimings": [
+          {
+            "scene": "cup",
+            "switchToFirstDecodedAudioMs": 3893,
+            "switchToPlaybackEndMs": 8300
+          },
+          {
+            "scene": "keys",
+            "switchToFirstDecodedAudioMs": 7304,
+            "switchToPlaybackEndMs": 10680
+          }
+        ],
+        "pageErrors": [],
+        "error": "本轮未能完成，请重新说话或继续任务。",
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "path": ".runtime/showcase-results/report-1793591292148.json",
+      "sha256": "a9f75b46fbc472ccb6426157ea659d7c5ada3bfcf7ba45771b92558422e3841b",
+      "result": {
+        "status": "failed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "handheldSimulation": true,
+        "motionProfile": {
+          "xPixels": 48,
+          "yPixels": 30,
+          "rotationDegrees": 4,
+          "scaleChange": 0.06,
+          "lightingChange": 0.08
+        },
+        "measurementLabel": "after-authorized-fast-feedback",
+        "answers": [
+          "没问题，我已经准备好了。你随时可以开始展示物品，我会逐个简单介绍。",
+          "这是一个蓝色的马克杯，通常用来喝咖啡或茶。",
+          "这是一把金色的钥匙，通常用来开锁。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "continuous camera sweep is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck",
+          "keys introduced without new speech"
+        ],
+        "sceneTimings": [
+          {
+            "scene": "cup",
+            "switchToFirstDecodedAudioMs": 3880,
+            "switchToPlaybackEndMs": 8041
+          },
+          {
+            "scene": "keys",
+            "switchToFirstDecodedAudioMs": 4139,
+            "switchToPlaybackEndMs": 7487
+          }
+        ],
+        "pageErrors": [],
+        "error": "本轮未能完成，请重新说话或继续任务。",
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "path": ".runtime/showcase-results/report-1793591736415.json",
+      "sha256": "05a054b5c2a0768e7588845fc581c261905673ce4d9d9806aba372582c957d6f",
+      "result": {
+        "status": "failed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "handheldSimulation": true,
+        "motionProfile": {
+          "xPixels": 48,
+          "yPixels": 30,
+          "rotationDegrees": 4,
+          "scaleChange": 0.06,
+          "lightingChange": 0.08
+        },
+        "measurementLabel": "final-latency-guards",
+        "answers": [
+          "好的，我已经准备好了，请开始展示物品吧。",
+          "这是一个蓝色的马克杯，带有把手，适合用来喝咖啡或茶。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "continuous camera sweep is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck"
+        ],
+        "sceneTimings": [
+          {
+            "scene": "cup",
+            "switchToFirstDecodedAudioMs": 3365,
+            "switchToPlaybackEndMs": 8823
+          }
+        ],
+        "pageErrors": [],
+        "error": "page.waitForFunction: Timeout 65000ms exceeded.",
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "path": ".runtime/showcase-results/report-1793592116148.json",
+      "sha256": "f5ee1c8c3b0a6b39aa8a867f373d059a4ca571262ccaeeb942763a456c67c2d5",
+      "result": {
+        "status": "failed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "handheldSimulation": true,
+        "motionProfile": {
+          "xPixels": 48,
+          "yPixels": 30,
+          "rotationDegrees": 4,
+          "scaleChange": 0.06,
+          "lightingChange": 0.08
+        },
+        "qaAfter": true,
+        "measurementLabel": "final-recovery-and-qa",
+        "answers": [
+          "好的，我已准备好，请开始展示物品。",
+          "这是一个蓝色的带柄马克杯，通常用来盛放热饮或咖啡。",
+          "这是一把棕色的老式钥匙，通常用来开启锁具。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "continuous camera sweep is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck",
+          "keys introduced without new speech"
+        ],
+        "sceneTimings": [
+          {
+            "scene": "cup",
+            "switchToFirstDecodedAudioMs": 3824,
+            "switchToPlaybackEndMs": 8699
+          },
+          {
+            "scene": "keys",
+            "switchToFirstDecodedAudioMs": 7334,
+            "switchToPlaybackEndMs": 11555
+          }
+        ],
+        "pageErrors": [],
+        "error": "本轮未能完成，请重新说话或继续任务。",
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "path": ".runtime/showcase-results/report-1793592852196.json",
+      "sha256": "7228bcad1da843d22b7610670fedc3696e86dd92fbcd993e7a480b99f24d6cc7",
+      "result": {
+        "status": "failed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "handheldSimulation": true,
+        "motionProfile": {
+          "xPixels": 48,
+          "yPixels": 30,
+          "rotationDegrees": 4,
+          "scaleChange": 0.06,
+          "lightingChange": 0.08
+        },
+        "qaAfter": true,
+        "measurementLabel": "final-local-network",
+        "answers": [
+          "没问题，我已经准备好了。请开始展示你的物品吧。",
+          "这是一个蓝色的带把手马克杯，适合用来喝水或咖啡。",
+          "这是一把黄铜色的钥匙，通常用来开锁。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "continuous camera sweep is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck",
+          "keys introduced without new speech"
+        ],
+        "sceneTimings": [
+          {
+            "scene": "cup",
+            "switchToFirstDecodedAudioMs": 4351,
+            "switchToPlaybackEndMs": 9162
+          },
+          {
+            "scene": "keys",
+            "switchToFirstDecodedAudioMs": 6400,
+            "switchToPlaybackEndMs": 9987
+          }
+        ],
+        "pageErrors": [],
+        "error": "本轮未能完成，请重新说话或继续任务。",
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "path": ".runtime/showcase-results/report-1793593247462.json",
+      "sha256": "6c2e8c6d2b73f6764e2b5a921449c69c73a42a9715f656e70dac4c8a1bbe78da",
+      "result": {
+        "status": "passed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "handheldSimulation": true,
+        "motionProfile": {
+          "xPixels": 48,
+          "yPixels": 30,
+          "rotationDegrees": 4,
+          "scaleChange": 0.06,
+          "lightingChange": 0.08
+        },
+        "qaAfter": true,
+        "measurementLabel": "final-original-speech-context",
+        "answers": [
+          "好的，我会逐个为你介绍展示的物品。",
+          "这是一个深蓝色的带柄马克杯，通常用来盛放咖啡或茶。",
+          "这是一把金色的钥匙，通常用来开锁。",
+          "这是一本红色封面的书，通常用来阅读或记录。",
+          "桌上可以放笔筒、水杯、台灯、小盆栽、便签本和手机支架等日常物品。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "continuous camera sweep is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck",
+          "keys introduced without new speech",
+          "book introduced without new speech",
+          "pause/resume/end preserve silence for known or inactive scenes",
+          "ordinary submitted voice QA after ending task"
+        ],
+        "sceneTimings": [
+          {
+            "scene": "cup",
+            "switchToFirstDecodedAudioMs": 4036,
+            "switchToPlaybackEndMs": 9336
+          },
+          {
+            "scene": "keys",
+            "switchToFirstDecodedAudioMs": 3869,
+            "switchToPlaybackEndMs": 7078
+          },
+          {
+            "scene": "book",
+            "switchToFirstDecodedAudioMs": 4607,
+            "switchToPlaybackEndMs": 9084
+          }
+        ],
+        "pageErrors": [],
+        "audioBytesReceived": 281134,
+        "userTranscriptRows": 2,
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "path": ".runtime/showcase-results/report-1793593624257.json",
+      "sha256": "313422e96dc3a525b55e8dab400d544973856185c5df45f890de23cc6a1f7f28",
+      "result": {
+        "status": "passed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "handheldSimulation": true,
+        "motionProfile": {
+          "xPixels": 48,
+          "yPixels": 30,
+          "rotationDegrees": 4,
+          "scaleChange": 0.06,
+          "lightingChange": 0.08
+        },
+        "qaAfter": true,
+        "measurementLabel": "final-brief-recognition",
+        "answers": [
+          "好的，我已准备好，请开始展示物品。",
+          "这是一个蓝色的带柄马克杯，适合日常喝水或咖啡。",
+          "这是一把古铜色的钥匙，通常用来开启门锁。",
+          "这是一本红色封面的书，适合用来阅读或记录。",
+          "桌上可以放笔筒、水杯、小台灯、便签本和手机支架，都是实用又好看的小物件。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "continuous camera sweep is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck",
+          "keys introduced without new speech",
+          "book introduced without new speech",
+          "pause/resume/end preserve silence for known or inactive scenes",
+          "ordinary submitted voice QA after ending task"
+        ],
+        "sceneTimings": [
+          {
+            "scene": "cup",
+            "switchToFirstDecodedAudioMs": 5936,
+            "switchToPlaybackEndMs": 10413
+          },
+          {
+            "scene": "keys",
+            "switchToFirstDecodedAudioMs": 4336,
+            "switchToPlaybackEndMs": 8253
+          },
+          {
+            "scene": "book",
+            "switchToFirstDecodedAudioMs": 4621,
+            "switchToPlaybackEndMs": 8705
+          }
+        ],
+        "pageErrors": [],
+        "audioBytesReceived": 285125,
+        "userTranscriptRows": 2,
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "path": ".runtime/showcase-results/report-1793593888038.json",
+      "sha256": "53af0b5ae84c2043e4ca68562e71d83bbe36f6a594ae7ed3e356b2e5490c6d31",
+      "result": {
+        "status": "failed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "handheldSimulation": true,
+        "motionProfile": {
+          "xPixels": 48,
+          "yPixels": 30,
+          "rotationDegrees": 4,
+          "scaleChange": 0.06,
+          "lightingChange": 0.08
+        },
+        "qaAfter": true,
+        "measurementLabel": "preview-384-experiment",
+        "answers": [],
+        "cases": [],
+        "sceneTimings": [],
+        "pageErrors": [],
+        "error": "page.waitForFunction: Timeout 45000ms exceeded.",
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "path": ".runtime/showcase-results/report-1793594385414.json",
+      "sha256": "96c48944299654a4e42a6bca319f99cf2db676b9c42139bea5a2a8bedc7f2a5f",
+      "result": {
+        "status": "passed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "handheldSimulation": true,
+        "motionProfile": {
+          "xPixels": 48,
+          "yPixels": 30,
+          "rotationDegrees": 4,
+          "scaleChange": 0.06,
+          "lightingChange": 0.08
+        },
+        "qaAfter": true,
+        "measurementLabel": "preview-384-working-rtc",
+        "answers": [
+          "好的，我已经准备好，请开始展示物品。",
+          "这是一个蓝色的马克杯，带有黑色的把手。",
+          "这是一把棕色的钥匙，有着圆形的头部和齿状的末端。",
+          "这是一本红色带黑边的书，通常用来阅读或做笔记。",
+          "桌上可以放笔筒、水杯、小台灯、便签本或收纳盒等日常物品。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "continuous camera sweep is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck",
+          "keys introduced without new speech",
+          "book introduced without new speech",
+          "pause/resume/end preserve silence for known or inactive scenes",
+          "ordinary submitted voice QA after ending task"
+        ],
+        "sceneTimings": [
+          {
+            "scene": "cup",
+            "switchToFirstDecodedAudioMs": 4258,
+            "switchToPlaybackEndMs": 7712
+          },
+          {
+            "scene": "keys",
+            "switchToFirstDecodedAudioMs": 4085,
+            "switchToPlaybackEndMs": 8964
+          },
+          {
+            "scene": "book",
+            "switchToFirstDecodedAudioMs": 4827,
+            "switchToPlaybackEndMs": 9848
+          }
+        ],
+        "pageErrors": [],
+        "audioBytesReceived": 282241,
+        "userTranscriptRows": 2,
+        "liveTracksAfterHangup": 0
+      }
+    },
+    {
+      "path": ".runtime/showcase-results/report-1793594656340.json",
+      "sha256": "d8b46698838b13065bcdecc356b49d52e68fd8a6c5ba59897f7355d5332f2a50",
+      "result": {
+        "status": "passed",
+        "physicalDevicesUsed": false,
+        "syntheticDrawings": true,
+        "handheldSimulation": true,
+        "motionProfile": {
+          "xPixels": 48,
+          "yPixels": 30,
+          "rotationDegrees": 4,
+          "scaleChange": 0.06,
+          "lightingChange": 0.08
+        },
+        "qaAfter": true,
+        "measurementLabel": "final-full-quality",
+        "answers": [
+          "好的，我已经准备好，请开始展示物品。",
+          "这是一个蓝色的马克杯，带有黑色的轮廓和把手。",
+          "这是一把棕色钥匙，圆头带齿。它通常用来开锁。",
+          "这是一本红色封面的书，上面有两条黄色的条纹。它通常用来阅读或记录内容。",
+          "桌上可以放笔筒、水杯、台灯、手机支架、小盆栽或便签本，既实用又能让桌面更有生活气息。"
+        ],
+        "cases": [
+          "one spoken request starts continuous showcase",
+          "continuous camera sweep is quiet",
+          "cup introduced without new speech",
+          "held cup does not repeat across recheck",
+          "keys introduced without new speech",
+          "book introduced without new speech",
+          "pause/resume/end preserve silence for known or inactive scenes",
+          "ordinary submitted voice QA after ending task"
+        ],
+        "sceneTimings": [
+          {
+            "scene": "cup",
+            "switchToFirstDecodedAudioMs": 8159,
+            "switchToPlaybackEndMs": 12410
+          },
+          {
+            "scene": "keys",
+            "switchToFirstDecodedAudioMs": 4543,
+            "switchToPlaybackEndMs": 9423
+          },
+          {
+            "scene": "book",
+            "switchToFirstDecodedAudioMs": 4564,
+            "switchToPlaybackEndMs": 11602
+          }
+        ],
+        "pageErrors": [],
+        "audioBytesReceived": 345034,
+        "userTranscriptRows": 2,
+        "liveTracksAfterHangup": 0
+      }
+    }
+  ],
+  "final_events": [
+    {
+      "timestamp": "2026-11-02T04:42:35.027527+00:00",
+      "message": "harness_input input=9eef0698-11d2-4660-9dcf-8479a01ac4b8 audio_bytes=373760 frame=None camera_epoch=0"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:35.260661+00:00",
+      "message": "harness_configuration request=ed7dc50dfeb8465db494c27091c89ec8 purpose=user_turn elapsed_ms=235.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:40.038291+00:00",
+      "message": "harness_generation request=ed7dc50dfeb8465db494c27091c89ec8 context=439d3b4b3f954d34b260de8e9c8d53e3 purpose=user_turn trigger=user_submit task=None epoch=3 session=126eedf71aa2474ea9de0317fe9064b1 step=None connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:41.448781+00:00",
+      "message": "harness_response request=ed7dc50dfeb8465db494c27091c89ec8 response=resp_FLYhaEJotCMDv3WJ4wLNe purpose=user_turn status=completed calls=1 audio_bytes=0 dropped_audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:41.449773+00:00",
+      "message": "harness_function request=ed7dc50dfeb8465db494c27091c89ec8 response=resp_FLYhaEJotCMDv3WJ4wLNe call=call_c61ddc0222194ed6818b8315"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:41.692254+00:00",
+      "message": "harness_tool_result call=call_c61ddc0222194ed6818b8315 accepted=True reason=None"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:41.938679+00:00",
+      "message": "harness_configuration request=856beb93021c47c1a1a405a0f21c1fbf purpose=speak elapsed_ms=235.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:41.938679+00:00",
+      "message": "harness_generation request=856beb93021c47c1a1a405a0f21c1fbf context=0f1ca39d348f49c7813f3073a2eb082b purpose=speak trigger=start_task task=246907fc0855401ea71dafa8bd7b2ffb epoch=4 session=126eedf71aa2474ea9de0317fe9064b1 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:42.838624+00:00",
+      "message": "harness_first_audio request=856beb93021c47c1a1a405a0f21c1fbf response=resp_SAWHOM9mxzH1Jwg21eo7L generate_ms=906.0 dwell_ms=-1.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:43.840739+00:00",
+      "message": "harness_response request=856beb93021c47c1a1a405a0f21c1fbf response=resp_SAWHOM9mxzH1Jwg21eo7L purpose=speak status=completed calls=0 audio_bytes=176640 dropped_audio_bytes=0 text_chars=18"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:46.509188+00:00",
+      "message": "harness_playback segment=856beb93021c47c1a1a405a0f21c1fbf interrupted=False source=server_playout"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:46.762309+00:00",
+      "message": "harness_view_change {\"scene_id\": 3, \"stable_seconds\": 0, \"motion_state\": \"dwelling\", \"step_difference\": 0, \"window_net_pixels\": 0, \"window_travel_pixels\": 0, \"direction_coherence\": 0, \"change_reason\": \"first_or_gap\"}"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:47.675365+00:00",
+      "message": "harness_configuration request=225c9162a795436ba0af72b2ededaf28 purpose=observe elapsed_ms=250.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:48.079130+00:00",
+      "message": "harness_view_change {\"scene_id\": 4, \"stable_seconds\": 0, \"motion_state\": \"moving\", \"step_difference\": 0.066, \"window_net_pixels\": 8.0, \"window_travel_pixels\": 8.0, \"direction_coherence\": 1.0, \"change_reason\": \"camera_sweep\"}"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:48.127928+00:00",
+      "message": "harness_observation request=225c9162a795436ba0af72b2ededaf28 scene=3 stable_seconds=0.59 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:52.703708+00:00",
+      "message": "harness_view_change {\"scene_id\": 5, \"stable_seconds\": 0, \"motion_state\": \"dwelling\", \"step_difference\": 0.258, \"window_net_pixels\": 0, \"window_travel_pixels\": 0, \"direction_coherence\": 0, \"change_reason\": \"scene_cut\"}"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:53.556812+00:00",
+      "message": "harness_configuration request=6dbd466801104a4894f1897a0edc8944 purpose=observe elapsed_ms=203.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:53.777915+00:00",
+      "message": "harness_observation request=6dbd466801104a4894f1897a0edc8944 scene=5 stable_seconds=0.62 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:53.777915+00:00",
+      "message": "harness_generation request=6dbd466801104a4894f1897a0edc8944 context=3f9824539f6f43e0b2bd4629f594b79e purpose=observe trigger=observation_timer task=246907fc0855401ea71dafa8bd7b2ffb epoch=7 session=126eedf71aa2474ea9de0317fe9064b1 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:54.867628+00:00",
+      "message": "harness_response request=6dbd466801104a4894f1897a0edc8944 response=resp_QDud5TKGpFJKYRTdQ9hte purpose=observe status=completed calls=1 audio_bytes=0 dropped_audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:54.867628+00:00",
+      "message": "harness_function request=6dbd466801104a4894f1897a0edc8944 response=resp_QDud5TKGpFJKYRTdQ9hte call=call_f8e239861aa247e5ab652231"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:55.084415+00:00",
+      "message": "harness_tool_result call=call_f8e239861aa247e5ab652231 accepted=True reason=quiet_observation:wait"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:57.172501+00:00",
+      "message": "harness_configuration request=e48e50ab727d40ef8529ccc802adf103 purpose=observe elapsed_ms=219.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:57.408605+00:00",
+      "message": "harness_observation request=e48e50ab727d40ef8529ccc802adf103 scene=5 stable_seconds=3.92 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:57.409631+00:00",
+      "message": "harness_generation request=e48e50ab727d40ef8529ccc802adf103 context=806b79045e244215921bacc88c5f1a81 purpose=observe trigger=observation_timer task=246907fc0855401ea71dafa8bd7b2ffb epoch=8 session=126eedf71aa2474ea9de0317fe9064b1 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:59.066064+00:00",
+      "message": "harness_response request=e48e50ab727d40ef8529ccc802adf103 response=resp_EJye8KnAjuYmjQcOb578Q purpose=observe status=completed calls=1 audio_bytes=0 dropped_audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:59.067068+00:00",
+      "message": "harness_function request=e48e50ab727d40ef8529ccc802adf103 response=resp_EJye8KnAjuYmjQcOb578Q call=call_f0f663df2e2242819b2c7c5f"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:59.312954+00:00",
+      "message": "harness_tool_result call=call_f0f663df2e2242819b2c7c5f accepted=True reason=fast_presentation_confirmed"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:59.546000+00:00",
+      "message": "harness_configuration request=63be328b74be4e77960fea067ce459a2 purpose=speak elapsed_ms=234.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:42:59.546000+00:00",
+      "message": "harness_generation request=63be328b74be4e77960fea067ce459a2 context=2b3953018dc84ee984d02ea939268433 purpose=speak trigger=presentation_fast task=246907fc0855401ea71dafa8bd7b2ffb epoch=9 session=126eedf71aa2474ea9de0317fe9064b1 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:00.486174+00:00",
+      "message": "harness_first_audio request=63be328b74be4e77960fea067ce459a2 response=resp_A3ppzNbcQi1tN8q4jjt6K generate_ms=938.0 dwell_ms=7829.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:01.138866+00:00",
+      "message": "harness_response request=63be328b74be4e77960fea067ce459a2 response=resp_A3ppzNbcQi1tN8q4jjt6K purpose=speak status=completed calls=0 audio_bytes=211200 dropped_audio_bytes=0 text_chars=22"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:04.889862+00:00",
+      "message": "harness_playback segment=63be328b74be4e77960fea067ce459a2 interrupted=False source=server_playout"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:17.145048+00:00",
+      "message": "harness_configuration request=608d8d69df4e430db278c908ed5fc256 purpose=observe elapsed_ms=234.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:17.388444+00:00",
+      "message": "harness_observation request=608d8d69df4e430db278c908ed5fc256 scene=5 stable_seconds=24.12 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:17.388444+00:00",
+      "message": "harness_generation request=608d8d69df4e430db278c908ed5fc256 context=179b15d4bdf142098dd087dfc3a3fc82 purpose=observe trigger=observation_timer task=246907fc0855401ea71dafa8bd7b2ffb epoch=10 session=126eedf71aa2474ea9de0317fe9064b1 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:18.620505+00:00",
+      "message": "harness_response request=608d8d69df4e430db278c908ed5fc256 response=resp_SxFX4rxdpagZyjEcVqTLm purpose=observe status=completed calls=1 audio_bytes=0 dropped_audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:18.621538+00:00",
+      "message": "harness_function request=608d8d69df4e430db278c908ed5fc256 response=resp_SxFX4rxdpagZyjEcVqTLm call=call_f4c82d8397e44e759ef9df42"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:18.828800+00:00",
+      "message": "harness_tool_result call=call_f4c82d8397e44e759ef9df42 accepted=True reason=quiet_observation:known"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:19.379768+00:00",
+      "message": "harness_configuration request=44da4b0ada6d4eb792c72e392fa80671 purpose=observe elapsed_ms=235.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:19.606796+00:00",
+      "message": "harness_observation request=44da4b0ada6d4eb792c72e392fa80671 scene=5 stable_seconds=26.44 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:19.606796+00:00",
+      "message": "harness_generation request=44da4b0ada6d4eb792c72e392fa80671 context=cafb8369e44e4d9cbfe17640a99f595b purpose=observe trigger=observation_timer task=246907fc0855401ea71dafa8bd7b2ffb epoch=11 session=126eedf71aa2474ea9de0317fe9064b1 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:20.806529+00:00",
+      "message": "harness_view_change {\"scene_id\": 6, \"stable_seconds\": 0, \"motion_state\": \"dwelling\", \"step_difference\": 0.207, \"window_net_pixels\": 0, \"window_travel_pixels\": 0, \"direction_coherence\": 0, \"change_reason\": \"scene_cut\"}"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:20.865869+00:00",
+      "message": "harness_response request=44da4b0ada6d4eb792c72e392fa80671 response=resp_FRuO7kiCnTlWOLqZoBMwe purpose=observe status=completed calls=1 audio_bytes=0 dropped_audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:20.866878+00:00",
+      "message": "harness_function request=44da4b0ada6d4eb792c72e392fa80671 response=resp_FRuO7kiCnTlWOLqZoBMwe call=call_ad52b52f8b2d46c685628038"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:21.201837+00:00",
+      "message": "harness_tool_result call=call_ad52b52f8b2d46c685628038 accepted=False reason=cancelled"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:21.426926+00:00",
+      "message": "harness_configuration request=53f603efcda241529ecc46118af8ee7f purpose=observe elapsed_ms=235.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:21.660355+00:00",
+      "message": "harness_observation request=53f603efcda241529ecc46118af8ee7f scene=6 stable_seconds=0.34 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:21.660355+00:00",
+      "message": "harness_generation request=53f603efcda241529ecc46118af8ee7f context=8d0a1ae1a82b478f92ac52e214606c3d purpose=observe trigger=observation_timer task=246907fc0855401ea71dafa8bd7b2ffb epoch=13 session=126eedf71aa2474ea9de0317fe9064b1 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:23.157081+00:00",
+      "message": "harness_response request=53f603efcda241529ecc46118af8ee7f response=resp_J3kXRQnzvst2aOHHprD4i purpose=observe status=completed calls=1 audio_bytes=0 dropped_audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:23.157081+00:00",
+      "message": "harness_function request=53f603efcda241529ecc46118af8ee7f response=resp_J3kXRQnzvst2aOHHprD4i call=call_1fbe26763e6a4040a3847a53"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:23.395317+00:00",
+      "message": "harness_tool_result call=call_1fbe26763e6a4040a3847a53 accepted=True reason=fast_presentation_confirmed"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:23.623168+00:00",
+      "message": "harness_configuration request=d13a808f75e2407e8413ab5e6a0a5bb0 purpose=speak elapsed_ms=219.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:23.623168+00:00",
+      "message": "harness_generation request=d13a808f75e2407e8413ab5e6a0a5bb0 context=1518af8d32fc4609856454d663a928ae purpose=speak trigger=presentation_fast task=246907fc0855401ea71dafa8bd7b2ffb epoch=14 session=126eedf71aa2474ea9de0317fe9064b1 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:24.699000+00:00",
+      "message": "harness_first_audio request=d13a808f75e2407e8413ab5e6a0a5bb0 response=resp_UUsii3EYI8gukFw9OQIaZ generate_ms=1078.0 dwell_ms=3968.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:25.365384+00:00",
+      "message": "harness_response request=d13a808f75e2407e8413ab5e6a0a5bb0 response=resp_UUsii3EYI8gukFw9OQIaZ purpose=speak status=completed calls=0 audio_bytes=241920 dropped_audio_bytes=0 text_chars=22"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:29.729608+00:00",
+      "message": "harness_playback segment=d13a808f75e2407e8413ab5e6a0a5bb0 interrupted=False source=server_playout"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:30.360281+00:00",
+      "message": "harness_view_change {\"scene_id\": 7, \"stable_seconds\": 0, \"motion_state\": \"dwelling\", \"step_difference\": 0.318, \"window_net_pixels\": 0, \"window_travel_pixels\": 0, \"direction_coherence\": 0, \"change_reason\": \"scene_cut\"}"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:30.941932+00:00",
+      "message": "harness_configuration request=57389612b48447e3b39efe41d3532dd8 purpose=observe elapsed_ms=234.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:31.187796+00:00",
+      "message": "harness_observation request=57389612b48447e3b39efe41d3532dd8 scene=7 stable_seconds=0.33 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:31.188753+00:00",
+      "message": "harness_generation request=57389612b48447e3b39efe41d3532dd8 context=d6f0cc10aa494861aa85477957b9fcaf purpose=observe trigger=observation_timer task=246907fc0855401ea71dafa8bd7b2ffb epoch=15 session=126eedf71aa2474ea9de0317fe9064b1 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:32.740098+00:00",
+      "message": "harness_response request=57389612b48447e3b39efe41d3532dd8 response=resp_BkDq6THPc4cFPLzyJXJXx purpose=observe status=completed calls=1 audio_bytes=0 dropped_audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:32.740098+00:00",
+      "message": "harness_function request=57389612b48447e3b39efe41d3532dd8 response=resp_BkDq6THPc4cFPLzyJXJXx call=call_c28a240b66484f218f23bdbf"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:32.988946+00:00",
+      "message": "harness_tool_result call=call_c28a240b66484f218f23bdbf accepted=True reason=fast_presentation_confirmed"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:33.242844+00:00",
+      "message": "harness_configuration request=45843481a13c49d0b15984d9ff4489fd purpose=speak elapsed_ms=250.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:33.242844+00:00",
+      "message": "harness_generation request=45843481a13c49d0b15984d9ff4489fd context=38ef18ddb77648b786583e1ef1bf946a purpose=speak trigger=presentation_fast task=246907fc0855401ea71dafa8bd7b2ffb epoch=16 session=126eedf71aa2474ea9de0317fe9064b1 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:34.544234+00:00",
+      "message": "harness_first_audio request=45843481a13c49d0b15984d9ff4489fd response=resp_G76I36ikfFDJNGta6FFHl generate_ms=1297.0 dwell_ms=4234.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:35.554884+00:00",
+      "message": "harness_response request=45843481a13c49d0b15984d9ff4489fd response=resp_G76I36ikfFDJNGta6FFHl purpose=speak status=completed calls=0 audio_bytes=345600 dropped_audio_bytes=0 text_chars=35"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:41.729601+00:00",
+      "message": "harness_playback segment=45843481a13c49d0b15984d9ff4489fd interrupted=False source=server_playout"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:41.938015+00:00",
+      "message": "harness_view_change {\"scene_id\": 8, \"stable_seconds\": 0, \"motion_state\": \"dwelling\", \"step_difference\": 0.222, \"window_net_pixels\": 0, \"window_travel_pixels\": 0, \"direction_coherence\": 0, \"change_reason\": \"scene_cut\"}"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:45.244393+00:00",
+      "message": "harness_configuration request=4b469ea0822a467998b80235f85ad3c7 purpose=observe elapsed_ms=281.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:45.521740+00:00",
+      "message": "harness_observation request=4b469ea0822a467998b80235f85ad3c7 scene=8 stable_seconds=3.02 audio_origin=transport_silence"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:45.521740+00:00",
+      "message": "harness_generation request=4b469ea0822a467998b80235f85ad3c7 context=66c7b147c54146e0870c64525e9884ce purpose=observe trigger=observation_timer task=246907fc0855401ea71dafa8bd7b2ffb epoch=19 session=126eedf71aa2474ea9de0317fe9064b1 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:46.997449+00:00",
+      "message": "harness_response request=4b469ea0822a467998b80235f85ad3c7 response=resp_YoFv6cpbW71VdguHPNpTP purpose=observe status=completed calls=1 audio_bytes=0 dropped_audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:46.997449+00:00",
+      "message": "harness_function request=4b469ea0822a467998b80235f85ad3c7 response=resp_YoFv6cpbW71VdguHPNpTP call=call_0ace580fef95482cbc166a9f"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:47.235327+00:00",
+      "message": "harness_tool_result call=call_0ace580fef95482cbc166a9f accepted=True reason=quiet_observation:known"
+    },
+    {
+      "timestamp": "2026-11-02T04:43:50.226698+00:00",
+      "message": "harness_view_change {\"scene_id\": 9, \"stable_seconds\": 0, \"motion_state\": \"dwelling\", \"step_difference\": 0.203, \"window_net_pixels\": 0, \"window_travel_pixels\": 0, \"direction_coherence\": 0, \"change_reason\": \"scene_cut\"}"
+    },
+    {
+      "timestamp": "2026-11-02T04:44:02.208178+00:00",
+      "message": "harness_input input=ffd72a7e-c161-47e6-895b-5bea1a995ae9 audio_bytes=263680 frame=3ed52462a4dc4331a4e0261d8a5ce124 camera_epoch=2"
+    },
+    {
+      "timestamp": "2026-11-02T04:44:02.484350+00:00",
+      "message": "harness_configuration request=ce796404c5804b1ba3a33800c496b2cb purpose=user_turn elapsed_ms=266.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:44:03.189497+00:00",
+      "message": "harness_generation request=ce796404c5804b1ba3a33800c496b2cb context=03eab37c129342679d7f83824c07c890 purpose=user_turn trigger=user_submit task=246907fc0855401ea71dafa8bd7b2ffb epoch=23 session=126eedf71aa2474ea9de0317fe9064b1 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T04:44:04.992670+00:00",
+      "message": "harness_response request=ce796404c5804b1ba3a33800c496b2cb response=resp_PUVP9y4ZHSG7Oe749NCYx purpose=user_turn status=completed calls=1 audio_bytes=0 dropped_audio_bytes=0 text_chars=0"
+    },
+    {
+      "timestamp": "2026-11-02T04:44:04.993717+00:00",
+      "message": "harness_function request=ce796404c5804b1ba3a33800c496b2cb response=resp_PUVP9y4ZHSG7Oe749NCYx call=call_fcbf97bee4214c10a1ded6e0"
+    },
+    {
+      "timestamp": "2026-11-02T04:44:05.251536+00:00",
+      "message": "harness_tool_result call=call_fcbf97bee4214c10a1ded6e0 accepted=True reason=None"
+    },
+    {
+      "timestamp": "2026-11-02T04:44:05.557268+00:00",
+      "message": "harness_configuration request=aace7aff7c4f4f0f9dac977959e1985c purpose=speak elapsed_ms=313.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:44:05.558243+00:00",
+      "message": "harness_generation request=aace7aff7c4f4f0f9dac977959e1985c context=7d8159235a7b46e8b69ab8580775a1c5 purpose=speak trigger=answer task=246907fc0855401ea71dafa8bd7b2ffb epoch=24 session=126eedf71aa2474ea9de0317fe9064b1 step=showcase connection=1"
+    },
+    {
+      "timestamp": "2026-11-02T04:44:06.883008+00:00",
+      "message": "harness_first_audio request=aace7aff7c4f4f0f9dac977959e1985c response=resp_GJz5LfrDBctPiPpYd1bOu generate_ms=1328.0 dwell_ms=-1.0"
+    },
+    {
+      "timestamp": "2026-11-02T04:44:08.320528+00:00",
+      "message": "harness_response request=aace7aff7c4f4f0f9dac977959e1985c response=resp_GJz5LfrDBctPiPpYd1bOu purpose=speak status=completed calls=0 audio_bytes=449280 dropped_audio_bytes=0 text_chars=42"
+    },
+    {
+      "timestamp": "2026-11-02T04:44:16.238420+00:00",
+      "message": "harness_playback segment=aace7aff7c4f4f0f9dac977959e1985c interrupted=False source=server_playout"
+    }
+  ],
+  "development_event_files": [
+    ".runtime/showcase-results/latency-attempt-1-events.json",
+    ".runtime/showcase-results/latency-attempt-2-events.json",
+    ".runtime/showcase-results/latency-attempt-3-events.json",
+    ".runtime/showcase-results/latency-attempt-4-events.json",
+    ".runtime/showcase-results/latency-attempt-5-events.json",
+    ".runtime/showcase-results/latency-attempt-6-events.json",
+    ".runtime/showcase-results/latency-attempt-7-events.json",
+    ".runtime/showcase-results/latency-attempt-8-events.json",
+    ".runtime/showcase-results/latency-attempt-9-events.json",
+    ".runtime/showcase-results/latency-attempt-local-events.json",
+    ".runtime/showcase-results/latency-baseline-events.json",
+    ".runtime/showcase-results/latency-final-events.json",
+    ".runtime/showcase-results/latency-preview-events.json"
+  ],
+  "cleanup": {
+    "remaining_demo_rooms": 0,
+    "active_worker_jobs": 0,
+    "active_api_sessions": 0,
+    "passed": true
+  },
+  "discarded_experiment": {
+    "first_observation_preview_max_side": 384,
+    "adopted": false,
+    "reason": "No demonstrated useful latency reduction; restored full image quality."
+  },
+  "unrecorded_startup_failure": {
+    "label": "preview-384-current-rtc",
+    "result": "API not started; browser cleanup locator also timed out. No provider generation. Test finally cleanup subsequently hardened."
+  },
+  "mobile": {
+    "retest_pending": true,
+    "original_profile_modified": false,
+    "firewall_modified": false,
+    "certificate_modified": false,
+    "blocking_condition": "Original phone IPv4 is no longer on the computer; user network preference pending.",
+    "local_rtc_override": "Temporary ignored launcher only; never added to production launch scripts."
+  },
+  "rollback": {
+    "conservative_fast_path": "SHOWCASE_FAST_PATH=false",
+    "conservative_observe_start": "SHOWCASE_EARLY_OBSERVE_SECONDS=1.5",
+    "whole_change_baseline": "03771c2"
+  },
+  "remaining_work": [
+    "Physical phone retest after restoring/updating its network entry.",
+    "1-3 second target remains unmet; successful full interactions are not proof of latency success.",
+    "Provider generation variance and uncertain-scene fallback remain; no unvalidated natural-language control is executed."
+  ]
+}

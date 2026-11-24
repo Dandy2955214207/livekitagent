@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>手机音视频能力检测</title>
+<style>
+:root{font-family:system-ui,"Microsoft YaHei",sans-serif;color:#e8f0e9;background:#101812}body{max-width:800px;margin:auto;padding:24px}h1{font-size:27px}p,li{line-height:1.8;color:#aebeb1}section{border:1px solid #35463b;border-radius:12px;padding:18px;margin:20px 0}button{font:inherit;border:0;border-radius:8px;padding:12px 16px;background:#c9f59e;color:#152114;margin:5px 6px 5px 0}button:disabled{opacity:.4}video{display:block;background:#080c09;width:100%;max-height:400px;border-radius:8px;margin-top:16px;object-fit:contain}pre{white-space:pre-wrap;overflow-wrap:anywhere;color:#b7d9b1;font-size:12px;line-height:1.7}#notice{color:#e7bc8c}dl{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0}dt{color:#9eb4a2}dd{margin:0;text-align:right}a{color:#c9f59e}[hidden]{display:none!important}
+</style></head>
+<body>
+<h1>手机音视频能力检测</h1>
+<p>先验证这台手机能否采集和播放音视频。本页不加入 LiveKit 房间、不连接 Qwen，也不上传或录制摄像头与麦克风内容。</p>
+<p id="notice" role="status"></p>
+<section><h2>基础能力</h2><dl id="capabilities"></dl></section>
+<section><h2>摄像头与麦克风</h2><p>点击后由浏览器询问权限；允许后只在手机本地预览。切换摄像头会先释放原轨道。</p>
+<button id="start">开始本地采集</button><button id="switch" disabled>切换前后摄像头</button><button id="stop" disabled>停止采集</button>
+<video id="preview" autoplay muted playsinline></video></section>
+<section><h2>声音播放</h2><p>点击播放一段低音量提示音；听到后点击确认。建议使用耳机。</p><button id="beep">播放提示音</button><button id="heard" disabled>我听到了</button></section>
+<section><h2>检测结果</h2><p>复制以下文字发回电脑端即可，不含设备 ID、照片或音频。没有点击复制时，内容只保留在本页。</p><button id="copy">复制检测结果</button><pre id="result"></pre></section>
+<script type="module" src="/src/device-check.js"></script>
+</body></html>

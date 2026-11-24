@@ -1,0 +1,253 @@
+{
+  "date": "2026-11-02",
+  "timezone": "Asia/Shanghai",
+  "stage": "D2 prerequisites + local memory",
+  "status": "offline_implementation_passed_live_acceptance_pending",
+  "git_head": "b915ed18398d23779303eab2a06d31b41a793ee3",
+  "workspace": [
+    " M .env.example",
+    " M README.md",
+    " M docs/harness-implementation-plan.md",
+    " M scripts/check_environment.py",
+    " M scripts/probe_qwen.py",
+    " M scripts/run_local.py",
+    " M src/livekit_vlm_agent/config.py",
+    " M src/livekit_vlm_agent/media/video.py",
+    " M src/livekit_vlm_agent/providers/qwen_client.py",
+    " M src/livekit_vlm_agent/session.py",
+    " M src/livekit_vlm_agent/worker.py",
+    " M tests/test_qwen_client.py",
+    " M tests/test_sessions.py",
+    " M web/index.html",
+    " M web/src/main.js",
+    " M web/src/style.css",
+    "?? docs/direct-background-d0-verification.json",
+    "?? docs/direct-background-d0-verification.md",
+    "?? docs/direct-background-d1-verification.json",
+    "?? docs/direct-background-d1-verification.md",
+    "?? docs/direct-background-d2-verification.md",
+    "?? docs/m2-background-observation-memory-plan.md",
+    "?? scripts/probe_live_background.py",
+    "?? src/livekit_vlm_agent/coordination/",
+    "?? src/livekit_vlm_agent/media/fanout.py",
+    "?? src/livekit_vlm_agent/memory/",
+    "?? src/livekit_vlm_agent/observation/",
+    "?? src/livekit_vlm_agent/providers/qwen_live.py",
+    "?? tests/test_background_probe.py",
+    "?? tests/test_background_state.py",
+    "?? tests/test_direct_background.py",
+    "?? tests/test_provider_config.py",
+    "?? web/src/direct.js",
+    "?? web/tests/direct-local.mjs"
+  ],
+  "implementation_sha256": {
+    "src/livekit_vlm_agent/observation/tasks.py": "791caa239da5d2a2e0fa02170b6f4c5a0f3ab6bb18ebe61ad5fdf97befb90c4d",
+    "src/livekit_vlm_agent/observation/monitor.py": "e06478d7b082c5a1f1ac8462d359f7b53062d706c13e305bde69bad02da9cf6e",
+    "src/livekit_vlm_agent/memory/store.py": "928a6241e5c6a8be8caba3a3614a355f900d0c5b4cc1d32f4377fad359a9aff4",
+    "src/livekit_vlm_agent/memory/context.py": "87b5450790c93fe34047ccd6244209e090604dc1465e10be44565a6b77c30b89",
+    "src/livekit_vlm_agent/coordination/direct.py": "7b5ca2d7ae8123f6f0297a2d8b7bc9595e09a83ccde82e65ec16e3948a385091",
+    "src/livekit_vlm_agent/providers/qwen_live.py": "8a8db08b4f7dae2cfe78b0fec57146dd80f1e910876059a8a8421efd0026085e",
+    "src/livekit_vlm_agent/worker.py": "d617248965645ee9fb00e777a7203e1b62a6e688d4591b190608522cc9e7987a",
+    "web/src/direct.js": "adf5d285deda7c2d4778f2bd0185dd51bd467767fc770bd35216e14d7d0a682c"
+  },
+  "provider": "yibuapi",
+  "endpoint_type": "yibuapi_realtime",
+  "model": "qwen3.8-omni-flash-realtime",
+  "mode": "direct_background",
+  "foreground": "M2 semantic VAD direct response; no DECIDE/SPEAK",
+  "capabilities": {
+    "local_memory": "available",
+    "task_registration": "paused_until_protocol_verified",
+    "observation": "unavailable",
+    "proactive_audio": "unavailable",
+    "task_tools": "unavailable",
+    "memory_injection": "unavailable"
+  },
+  "memory": {
+    "default": "per-call SQLite in-memory",
+    "persistent": "explicit library ID only; .runtime/memory/<library_id>/records.sqlite3",
+    "max_current_facts": 16,
+    "max_other_records": 32,
+    "max_record_chars": 1000,
+    "recent_in_memory_turns": 32,
+    "snapshot_max_items": 8,
+    "snapshot_max_chars": 3000,
+    "automatic_fact_extraction": false,
+    "transcript_persistence": false,
+    "updater_model": null,
+    "embeddings": false,
+    "remote_sync": "not_connected"
+  },
+  "monitor": {
+    "wired_into_worker": false,
+    "client": "independent text-only Qwen client",
+    "real_microphone_input": false,
+    "max_frames_per_evaluation": 2,
+    "max_inflight": 1,
+    "max_latest_pending": 1,
+    "max_per_minute": 20,
+    "max_per_runner_lifetime": 10,
+    "request_timeout_seconds": 10,
+    "failure_pause_after": 3,
+    "http_auth_or_rate_limit_pause": "immediate",
+    "correction_retries": 0
+  },
+  "verification": {
+    "python_full_suite": {
+      "status": "passed",
+      "count": 170
+    },
+    "frontend_build": "passed_with_existing_chunk_size_warning",
+    "offline_ui": {
+      "status": "passed",
+      "width": 390,
+      "providerCalls": 0,
+      "physicalDevices": false,
+      "pageErrors": [],
+      "cases": [
+        "ack disables controls",
+        "paused target registration",
+        "fact correction uses real record ID",
+        "untrusted memory rendered as text",
+        "no horizontal overflow",
+        "leave clears local views"
+      ]
+    },
+    "initial_ui_failure": "about:blank lacked secure context for crypto.randomUUID; test now fulfills a localhost page entirely in-process"
+  },
+  "cost": {
+    "new_network_processes_started": 0,
+    "new_model_generations": 0,
+    "new_provider_usage": 0,
+    "extra_live_probe": "automatic_approval_rejected_before_process_creation",
+    "reason": "Prior explicit approval was for one paid probe; another paid call needs explicit additional authorization",
+    "bypassed": false
+  },
+  "resources": {
+    "existing_services": "not restarted or stopped",
+    "new_services": 0,
+    "new_live_model_connections": 0,
+    "test_databases": "temporary and cleaned",
+    "persistent_user_facts_created_by_tests": 0,
+    "raw_media_saved": false,
+    "env_modified": false
+  },
+  "pending": [
+    "P0-A/B/C fixed synthetic probes passed; ambiguous images/concurrency limits/long calls pending",
+    "P0-D/E foreground event injection, response source association, interruption, server playout",
+    "P0-F natural task tools",
+    "P0-G actual model use of corrected/restored memory",
+    "P0-H complete usage/account pricing",
+    "real RTC/phone and 20-minute stability"
+  ],
+  "commands": [
+    ".venv/Scripts/python.exe -m unittest discover -s tests -q",
+    "npm.cmd run build --prefix web",
+    "node web/tests/direct-local.mjs"
+  ],
+  "official_references": [
+    "https://github.com/QwenLM/Qwen-Live-Harness/blob/main/packages/qwen-live-harness/README.md",
+    "https://github.com/QwenLM/Qwen-Live-Harness/blob/main/docs/configuration.md"
+  ],
+  "latest_additional_test": {
+    "timestamp_utc": "2026-11-02T10:19:56.785365+00:00",
+    "authorization": "User explicitly authorized an additional test: 允许追加测试",
+    "raw_report": ".runtime/direct-background-probes/ae8e004005264b7e860c4178e33cf57d.json",
+    "command": ".venv/Scripts/python.exe scripts/probe_live_background.py --live",
+    "execution": "failed_at_event_probe_after_dual_success",
+    "generations": 4,
+    "provider_reported_usage": {
+      "input_tokens": 1997,
+      "output_tokens": 101,
+      "total_tokens": 2098
+    },
+    "connections": [
+      {
+        "label": "foreground",
+        "connection_id": "61ccae9bcf8045b7b1fd613a403cfdda",
+        "closed": true,
+        "response_count": 2,
+        "reported_tokens": {
+          "input_tokens": 1540,
+          "output_tokens": 46,
+          "total_tokens": 1586
+        }
+      },
+      {
+        "label": "monitor",
+        "connection_id": "6758a3908dc54e7e872c885451fd1763",
+        "closed": true,
+        "response_count": 2,
+        "reported_tokens": {
+          "input_tokens": 457,
+          "output_tokens": 55,
+          "total_tokens": 512
+        }
+      },
+      {
+        "label": "event_foreground",
+        "connection_id": "f8bc74a62d464ca7ae44cad9f63ddd0b",
+        "closed": true,
+        "response_count": 0,
+        "reported_tokens": {
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0
+        }
+      }
+    ],
+    "checks": {
+      "P0-A": {
+        "status": "passed",
+        "description": "dual connections and foreground reply after monitor closes",
+        "execution": "completed"
+      },
+      "P0-B": {
+        "status": "passed",
+        "description": "text monitor red/blue latest image + chunked protocol silence"
+      },
+      "P0-C": {
+        "status": "passed",
+        "description": "strict JSON result, negative versus unknown"
+      },
+      "P0-D": {
+        "status": "unknown",
+        "description": "bounded instructions snapshot, ack then explicit audio response",
+        "execution": "failed"
+      },
+      "P0-E": {
+        "status": "unknown",
+        "description": "user speech races at injection/generation/playout (RTC pending)"
+      },
+      "P0-F": {
+        "status": "unknown",
+        "description": "ordinary QA mixed with real idempotent task tools (D3 pending)"
+      },
+      "P0-G": {
+        "status": "unknown",
+        "description": "corrected fact restored in fresh connection (full memory gate pending)"
+      },
+      "P0-H": {
+        "status": "unknown",
+        "description": "separate usage records; shared quota/pricing/auth failures pending"
+      }
+    },
+    "fixed_qa_fixture_end_to_first_audio_ms": [
+      3906.0,
+      3343.0
+    ],
+    "event_failure": {
+      "stage": "response.create after acknowledged instructions snapshot, on fresh connection with no media input",
+      "supplier_error_code": null,
+      "error_type": "QwenProtocolError",
+      "error_message": "not captured by existing redacted trace; root cause unknown",
+      "generation_created": false,
+      "audio_bytes": 0
+    },
+    "memory_probe": "not executed after event failure",
+    "paid_retries": 0,
+    "runtime_capabilities_enabled": false,
+    "currency_cost": null,
+    "billing_note": "4 completed responses reported usage; error connection returned no usage. Account price and complete billed charges unknown."
+  }
+}
