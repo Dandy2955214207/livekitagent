@@ -1,4 +1,4 @@
-"""Isolated LiveKit + browser. Fake provider unless --memory-live is explicit."""
+"""Isolated LiveKit client integration. Fake provider unless --memory-live is explicit."""
 import json
 import argparse
 import os
@@ -20,6 +20,7 @@ def main():
     scenario.add_argument('--call-view', action='store_true', help='Exercise the mobile call interface.')
     scenario.add_argument('--mobile-test-report', action='store_true', help='Exercise local phone test capture and replay.')
     scenario.add_argument('--memory-live', action='store_true', help='Use configured paid provider with synthetic media for visual recall.')
+    scenario.add_argument('--harmony-gateway', action='store_true', help='Exercise the native WebSocket gateway with the real RTC transport.')
     args = parser.parse_args()
     ports = (7890, 7891, 7892, 8002, 8083)
     for port in ports:
@@ -42,6 +43,8 @@ def main():
         'OFFICIAL_TEST_SCENE': 'report' if args.mobile_test_report else 'guide' if args.call_view else args.scene or ''}
     if args.mobile_test_report:
         env['LIVEKIT_MOBILE_TEST_ROOT'] = str(out / 'mobile-tests')
+    if args.harmony_gateway:
+        env.update(QWEN_LIVE_PROACTIVE_ENABLED='false', QWEN_VOICE='harmony-rtc-fixture')
     if args.memory_live:
         # Let Settings resolve the real credentials from the normal environment
         # or .env, never from command-line arguments or test reports.
@@ -78,6 +81,8 @@ def main():
             time.sleep(.3)
         else:
             raise RuntimeError('Isolated fixture services not ready')
+        if args.harmony_gateway:
+            return subprocess.run([sys.executable, 'tests/harmony_gateway_rtc.py'], cwd=ROOT, env=env, timeout=70).returncode
         browser_test = ('web/tests/mobile-test-report-rtc.mjs' if args.mobile_test_report else
             'web/tests/live-memory-rtc.mjs' if args.memory_live else
             'web/tests/call-view-rtc.mjs' if args.call_view else 'web/tests/official-rtc.mjs')
