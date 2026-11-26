@@ -6,7 +6,7 @@ import sys
 import threading
 import time
 import unittest
-from unittest.mock import patch
+from unittest.mock import AsyncMock, patch
 
 from livekit import rtc
 from PIL import Image
@@ -14,8 +14,7 @@ from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from livekit_vlm_agent.config import Settings
 from livekit_vlm_agent.media.video import LatestVideo, SourceFrame, encode_jpeg
-from livekit_vlm_agent.providers.qwen_realtime import QwenRealtimeModel
-from test_realtime_adapter import FakeClient
+from livekit_vlm_agent.official.bridge import OfficialBridge
 
 
 async def until(predicate):
@@ -30,23 +29,25 @@ class VideoTests(unittest.IsolatedAsyncioTestCase):
         video = LatestVideo(Settings(_env_file=None), asyncio.Event(),
                             encoder=lambda frame, _: (str(frame), 10, 10, 3))
         video.sample_fps = 1
-        video.on_encoded = lambda frame: samples.append((frame.image, time.monotonic()))
         try:
             video.offer('first')
-            await until(lambda: len(samples) == 1)
+            await until(lambda: video.pending is not None)
+            samples.append(video.take().encoded_at)
             video.offer('second')
             await asyncio.sleep(.05)  # Already sleeping for the normal 1 FPS deadline.
             video.burst(.6)
-            await until(lambda: len(samples) == 2)
-            self.assertLess(samples[1][1] - samples[0][1], .65)
+            await until(lambda: video.pending is not None)
+            samples.append(video.take().encoded_at)
+            self.assertLess(samples[1] - samples[0], .65)
             video.offer('third')
-            await until(lambda: len(samples) == 3)
-            self.assertLess(samples[2][1] - samples[1][1], .65)
+            await until(lambda: video.pending is not None)
+            samples.append(video.take().encoded_at)
+            self.assertLess(samples[2] - samples[1], .65)
             await asyncio.sleep(.25)
-            self.assertEqual(len(samples), 3)  # No fabricated duplicate without new input.
+            self.assertIsNone(video.pending)  # No fabricated duplicate without new input.
             video.offer('fourth')
-            await until(lambda: len(samples) == 4)
-            self.assertGreater(samples[3][1] - samples[2][1], .85)
+            await until(lambda: video.pending is not None)
+            self.assertGreater(video.take().encoded_at - samples[2], .85)
             video.burst(); video.clear()
             self.assertEqual(video._burst_until, 0)
         finally:
@@ -99,48 +100,27 @@ class VideoTests(unittest.IsolatedAsyncioTestCase):
         finally:
             await video.aclose()
 
-    async def test_slow_encoding_does_not_block_audio_and_image_waits_for_first_audio(self):
+    async def test_slow_encoding_does_not_block_official_bridge_audio(self):
         started, release = threading.Event(), threading.Event()
         def slow(*args):
             started.set(); release.wait(2)
             return "aW1hZ2U=", 10, 10, 5
-        with patch("livekit_vlm_agent.providers.qwen_realtime.QwenClient", FakeClient):
-            model = QwenRealtimeModel(Settings(_env_file=None))
-            session = model.session()
-            session.video.encoder = slow
+        bridge = OfficialBridge(Settings(_env_file=None, model_provider="yibuapi"), "test", AsyncMock())
+        bridge.video.encoder = slow
+        with patch.object(bridge, "_write", new_callable=AsyncMock) as send:
+            bridge.tasks.append(asyncio.create_task(bridge._writer()))
             try:
-                await session.wait_ready()
-                session.push_video("frame")
+                bridge.push_video("frame")
                 await until(started.is_set)
-                session.push_audio(rtc.AudioFrame(bytes(640),16000,1,320))
-                await until(lambda: len(session._client.sent) == 1)
-                self.assertFalse(release.is_set())
+                await bridge.push_audio(rtc.AudioFrame(bytes(640), 16000, 1, 320))
+                await until(lambda: send.await_count == 1)
+                self.assertEqual(send.await_args.args[0]["type"], "audio")
                 release.set()
-                await until(lambda: len(session._client.sent) == 2)
-                self.assertEqual([e["type"] for e in session._client.sent],
-                                 ["input_audio_buffer.append", "input_image_buffer.append"])
-                self.assertEqual(session.video.counts["sent"], 1)
+                await until(lambda: bridge.video.counts["sent"] == 1)
+                self.assertEqual(send.await_args.args[0]["type"], "image")
             finally:
                 release.set()
-                await model.aclose()
-
-    async def test_video_without_audio_never_sends_or_creates_a_response(self):
-        with patch("livekit_vlm_agent.providers.qwen_realtime.QwenClient", FakeClient):
-            model = QwenRealtimeModel(Settings(_env_file=None))
-            session = model.session()
-            session.video.encoder = lambda *args: ("test",10,10,3)
-            try:
-                await session.wait_ready()
-                session.push_video("frame")
-                await until(lambda: session.video.pending is not None)
-                await asyncio.sleep(.02)
-                self.assertEqual(session._client.sent, [])
-                session.clear_video()
-                session.push_audio(rtc.AudioFrame(bytes(640),16000,1,320))
-                await until(lambda: len(session._client.sent) == 1)
-                self.assertEqual(session._client.sent[0]["type"], "input_audio_buffer.append")
-            finally:
-                await model.aclose()
+                await bridge.aclose()
 
 
 if __name__ == "__main__":

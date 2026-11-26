@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from livekit_vlm_agent.config import Settings
+from livekit_vlm_agent.official.bridge import node_executable
 
 
 def main() -> int:
@@ -21,13 +22,14 @@ def main() -> int:
         ("pydantic-settings", "pydantic_settings"),
         ("websockets", "websockets"),
         ("pillow", "PIL.Image"),
-        ("numpy", "numpy"),
         ("pyyaml", "yaml"),
     ]
     print(f"Python {sys.version.split()[0]}")
     for distribution, module in checks:
         importlib.import_module(module)
         print(f"OK {distribution} {version(distribution)}")
+    node_executable()
+    print("OK Node.js and pinned official Harness")
 
     settings = Settings()
     import yaml

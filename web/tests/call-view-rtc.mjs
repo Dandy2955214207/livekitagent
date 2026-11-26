@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 
 // Run against the loopback fixture services from verify_official_harness.py.
-const origin = 'http://127.0.0.1:8002';
+const trial = process.env.OFFICIAL_TRIAL_ORIGIN;
+const origin = trial ?? 'http://127.0.0.1:8002';
 const browser = await chromium.launch({
   executablePath: 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
   headless: true,
@@ -15,6 +16,11 @@ page.on('pageerror', (error) => errors.push(error.message));
 
 try {
   await page.goto(`${origin}/?view=call`);
+  if (trial) {
+    await page.locator('#trial-code').fill(process.env.HARMONY_TRIAL_CODE);
+    await page.locator('#trial-invite-form button').click();
+    await page.locator('#trial-invite').waitFor({ state: 'hidden' });
+  }
   const panel = page.locator('.call-panel');
   const avatar = page.locator('#call-avatar');
   const join = page.getByRole('button', { name: '开始通话' });
@@ -31,9 +37,9 @@ try {
   await page.waitForFunction(() => document.querySelector('.call-panel').dataset.callPhase === 'active',
     {}, { timeout: 50000 });
   assert.equal(await page.locator('#official-panel').isHidden(), true);
-  assert.equal(await page.locator('#record').isHidden(), true);
+  assert.equal(await page.locator('#record, #task-panel, #direct-panel').count(), 0);
   assert.equal(await page.locator('#switch-camera').isDisabled(), true);
-  assert.equal(await more.isHidden(), true);
+  assert.equal(await more.isHidden(), !trial);
   await camera.click();
   const video = page.locator('#preview video');
   await video.waitFor();

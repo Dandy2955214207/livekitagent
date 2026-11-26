@@ -13,10 +13,8 @@ dependencies = [
   "livekit>=1,<2",
   "websockets>=15,<17",
   "pillow>=11,<13",
-  "numpy>=2,<3",
   "psutil>=7,<8",
   "pyyaml>=6,<7",
-  "livekit-plugins-silero==1.8.9",
 ]
 
 [tool.uv]

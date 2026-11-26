@@ -12,7 +12,6 @@ import uuid
 from livekit import api
 
 from .config import Settings
-from .providers.qwen_live import direct_capabilities
 from .official.bridge import capabilities as official_capabilities
 
 
@@ -74,11 +73,7 @@ class SessionRegistry:
                 .to_jwt())
             return {**call.public(), "access_token": call.access, "token": token,
                     "harness_mode": self.settings.harness_mode,
-                    **({'official_harness_capabilities': official_capabilities(self.settings)}
-                       if self.settings.harness_mode == 'qwen_live_official' else {}),
-                    "direct_background_capabilities": (direct_capabilities(self.settings)
-                        if self.settings.harness_mode == "direct_background" else None),
-                    "harness_auto_input": self.settings.harness_auto_input,
+                    "official_harness_capabilities": official_capabilities(self.settings),
                     "livekit_url": self.settings.livekit_public_url or self.settings.livekit_url,
                     "expires_in": self.settings.session_ttl_seconds}
 

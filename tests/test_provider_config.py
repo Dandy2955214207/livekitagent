@@ -3,6 +3,8 @@
 import unittest
 from unittest.mock import patch
 
+from pydantic import ValidationError
+
 from livekit_vlm_agent.config import Settings
 
 
@@ -10,6 +12,13 @@ class ProviderConfigTests(unittest.TestCase):
     def settings(self, **values):
         with patch.dict("os.environ", {}, clear=True):
             return Settings(_env_file=None, **values)
+
+    def test_official_harness_is_the_default_and_only_supported_mode(self):
+        self.assertEqual(self.settings().harness_mode, 'qwen_live_official')
+        for mode in ('legacy_auto', 'controlled_manual', 'direct_background'):
+            with self.subTest(mode=mode), patch.dict("os.environ", {"HARNESS_MODE": mode}, clear=True):
+                with self.assertRaisesRegex(ValidationError, 'qwen_live_official'):
+                    Settings(_env_file=None)
 
     def test_yibuapi_uses_its_own_key_and_fixed_endpoint(self):
         settings = self.settings(

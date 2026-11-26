@@ -13,6 +13,29 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scripts import run_local
 
 
+class LauncherStartupTests(unittest.TestCase):
+    def test_default_and_compatibility_entry_points_run_official_checks(self):
+        from livekit_vlm_agent.config import Settings
+
+        for flags in ([], ['--mobile'], ['--qwen-live', '--official-proactive'],
+                      ['--trial-port', '8097']):
+            with self.subTest(flags=flags), tempfile.TemporaryDirectory() as directory:
+                settings = Settings(_env_file=None, model_provider='yibuapi', yibuapi_api_key='test')
+                with (
+                    patch.multiple(run_local, RUNTIME=Path(directory), PID_FILE=None, STOP_FILE=None),
+                    patch.object(sys, 'argv', ['run_local.py', *flags]),
+                    patch.object(run_local, 'Settings', return_value=settings),
+                    patch('livekit_vlm_agent.official.bridge.node_executable',
+                          side_effect=RuntimeError('Node.js is required')) as node,
+                    patch.object(run_local.subprocess, 'Popen') as spawn,
+                    self.assertRaises(SystemExit) as stopped,
+                ):
+                    run_local.main()
+                self.assertEqual(stopped.exception.code, 1)
+                node.assert_called_once()
+                spawn.assert_not_called()
+
+
 class LauncherRecordTests(unittest.TestCase):
     def setUp(self):
         directory = self.enterContext(tempfile.TemporaryDirectory())

@@ -160,8 +160,7 @@ html[data-view="call"] {
 
 [data-view="call"] .call-panel[data-call-phase="idle"] :is(#leave, .camera-controls),
 [data-view="call"] .call-panel:not([data-call-phase="idle"]) :is(#join, .privacy),
-[data-view="call"] .call-panel:is([data-call-phase="connecting"], [data-call-phase="ending"]) .camera-controls,
-[data-view="call"] body:not(.controlled) #record {
+[data-view="call"] .call-panel:is([data-call-phase="connecting"], [data-call-phase="ending"]) .camera-controls {
   display: none;
 }
 
@@ -218,8 +217,7 @@ html[data-view="call"] {
   pointer-events: none;
 }
 
-[data-view="call"] #mic::after,
-[data-view="call"] #record::after {
+[data-view="call"] #mic::after {
   width: 22px;
   height: 27px;
   background: radial-gradient(ellipse at center, white 62%, transparent 65%) center 0 / 12px 20px no-repeat,
@@ -252,7 +250,6 @@ html[data-view="call"] {
 
 [data-view="call"] #mic[aria-pressed="true"]::before,
 [data-view="call"] #camera[aria-pressed="false"]::before { background: #484c51; }
-[data-view="call"] [data-recording="true"] #record::before { background: #a52d39; }
 
 [data-view="call"] .call-panel:has(#preview video):not([data-immersive])::after {
   position: absolute;
@@ -331,7 +328,7 @@ html[data-view="call"] {
   content: '';
 }
 
-[data-view="call"] #call-select-subject {
+[data-view="call"] :is(#call-select-subject, #call-open-details) {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -344,6 +341,23 @@ html[data-view="call"] {
   color: white;
   font-size: 15px;
 }
+
+[data-view="call"] #call-details {
+  width: min(560px, calc(100% - 32px));
+  max-height: min(720px, calc(100dvh - 48px));
+  overflow: auto;
+  padding: 18px;
+  border: 1px solid #444c49;
+  border-radius: 16px;
+  background: #171d19;
+  color: #f2f5f2;
+  line-height: 1.5;
+}
+[data-view="call"] #call-details::backdrop { background: #090e0bd9; }
+[data-view="call"] .call-details-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+[data-view="call"] .call-details-header h2 { margin: 0; font-size: 20px; }
+[data-view="call"] #call-details .conversation { display: block; padding: 16px 0 0; margin-top: 16px; border: 0; }
+[data-view="call"] #call-details #messages { height: min(300px, 42dvh); margin-top: 12px; }
 
 [data-view="call"] #call-select-hint {
   position: absolute;

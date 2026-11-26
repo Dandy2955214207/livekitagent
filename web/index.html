@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="dark" />
     <title>视觉通话 · LiveKit + Qwen</title>
-    <script>
-      if (new URLSearchParams(location.search).get('view') === 'call') {
-        document.documentElement.dataset.view = 'call';
-      }
-    </script>
   </head>
   <body>
+    <dialog id="trial-invite" aria-labelledby="trial-invite-title">
+      <form id="trial-invite-form">
+        <h2 id="trial-invite-title">同事试用</h2>
+        <p>输入试用码后开始通话。请只展示非保密物品。</p>
+        <label for="trial-code">试用码</label>
+        <input id="trial-code" type="password" required maxlength="100" autocomplete="off" autocapitalize="off">
+        <button class="primary" type="submit">进入试用</button>
+        <p id="trial-invite-status" class="hint" role="status"></p>
+      </form>
+    </dialog>
     <main class="app">
-      <header><a class="brand" href="/">◉ <span>视觉通话</span></a><span class="tag">开发测试 · M2</span></header>
+      <header><a class="brand" href="/">◉ <span>视觉通话</span></a><span class="tag">Qwen Live Harness</span></header>
       <div class="layout">
         <section class="call-panel" aria-labelledby="call-title">
           <div class="eyebrow">LIVEKIT + QWEN</div>
@@ -30,6 +35,7 @@
           <div id="call-options" hidden>
             <button id="call-more" type="button" aria-label="更多功能" aria-expanded="false" aria-controls="call-more-panel">⋯</button>
             <div id="call-more-panel" hidden>
+              <button id="call-open-details" type="button" hidden>任务与对话</button>
               <button id="call-select-subject" type="button">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
                   <path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/>
@@ -39,6 +45,12 @@
               </button>
             </div>
           </div>
+          <dialog id="call-details" aria-labelledby="call-details-title">
+            <div class="call-details-header">
+              <h2 id="call-details-title">任务与对话</h2>
+              <form method="dialog"><button class="secondary">返回通话</button></form>
+            </div>
+          </dialog>
           <p id="call-select-hint" role="status" hidden>轻点画面中要讲解的物品</p>
           <p id="guide-target-hint" class="hint" role="status" hidden></p>
           <p id="video-status" class="hint" role="status">摄像头已关闭 · 不发送新画面</p>
@@ -59,19 +71,8 @@
             <span id="mobile-test-status" role="status"></span>
           </div>
           <p id="call-notice" role="status" hidden></p>
-          <section id="task-panel" class="task-panel" aria-label="指导任务" hidden>
-            <p id="task-status" role="status">可以提问，或请我分步骤指导。</p>
-            <p id="task-step"></p>
-            <button id="record" class="primary" disabled>开始说话</button>
-            <p class="hint">点击开始，说完后点击提交。每段最长30秒。</p>
-            <div class="controls">
-              <button id="task-pause" class="secondary" disabled>暂停任务</button>
-              <button id="task-resume" class="secondary" disabled>继续任务</button>
-              <button id="task-cancel" class="danger" disabled>结束任务</button>
-            </div>
-          </section>
           <button id="enable-audio" class="audio-unlock" hidden>点击启用声音播放</button>
-          <section id="official-panel" class="task-panel" aria-label="官方 Harness 实验" hidden>
+          <section id="official-panel" class="task-panel" aria-label="官方 Harness" hidden>
             <div id="scene-panel" hidden>
               <p id="scene-title"></p><p id="scene-step"></p><p id="scene-status"></p>
               <div class="actions">
@@ -88,42 +89,6 @@
             <ul id="official-tasks"></ul>
             <p id="official-budget" class="hint"></p>
           </section>
-          <section id="direct-panel" class="task-panel" aria-label="观察与本地记忆" hidden>
-            <p id="direct-notice" role="status">普通问答直接响应。观察待接通，本地记忆尚未回注模型。</p>
-            <label for="observation-condition">观察目标</label>
-            <input id="observation-condition" maxlength="1000" placeholder="例如：看到钥匙时提醒我" />
-            <div class="controls">
-              <button id="observation-create" class="secondary">登记目标（暂停）</button>
-              <button id="observation-pause" class="secondary">暂停观察</button>
-              <button id="observation-resume" class="secondary">继续观察</button>
-              <button id="observation-update" class="secondary">修改目标</button>
-              <button id="observation-cancel" class="danger">取消目标</button>
-            </div>
-            <p id="observation-state" class="hint">尚未登记目标</p>
-            <p id="observation-result" role="status" class="hint"></p>
-            <p id="observation-budget" class="hint">独立观察会产生当前提供商用量，每通话最多10次后台生成；语音提醒尚未开放。</p>
-            <details>
-              <summary>管理本地文本记忆</summary>
-              <p id="memory-state" class="hint"></p>
-              <label for="memory-library">库 ID（留空使用隔离记忆）</label>
-              <input id="memory-library" maxlength="64" pattern="[a-zA-Z0-9_-]+" placeholder="显式选择同一库可跨通话恢复" />
-              <div class="controls">
-                <button id="memory-select" class="secondary">选择库</button>
-                <button id="memory-toggle" class="secondary">禁用记忆</button>
-                <button id="memory-clear" class="danger">清空当前本地库</button>
-              </div>
-              <label for="memory-existing">新事实或纠正已有事实</label>
-              <select id="memory-existing"><option value="">保存新事实</option></select>
-              <textarea id="memory-content" maxlength="1000" rows="2" placeholder="只保存你明确填写的事实" aria-label="事实内容"></textarea>
-              <button id="memory-save" class="secondary">保存本地事实</button>
-              <ul id="memory-records"></ul>
-              <label for="memory-search">本地检索</label>
-              <input id="memory-search" maxlength="300" />
-              <button id="memory-query" class="secondary">查询本地记忆</button>
-              <p id="memory-results" class="hint"></p>
-            </details>
-            <button id="direct-refresh" class="text-button">刷新本地状态</button>
-          </section>
           <p id="error" role="alert" hidden></p>
           <p class="privacy">语音与开启摄像头后的抽帧会发送到 Qwen 云端。关闭摄像头会停止新画面输入，模型可能仍记得之前的画面。原始音视频不录制。</p>
         </section>
@@ -133,7 +98,6 @@
           <footer>语音转写可能不完整，请以实际通话为准。更换物品后，可先等待图像状态更新再提问。</footer>
         </section>
       </div>
-      <div id="audio-elements"></div>
     </main>
     <script type="module" src="/src/main.js"></script>
   </body>

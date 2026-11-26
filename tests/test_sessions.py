@@ -32,7 +32,7 @@ class SessionTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(grant["roomCreate"])
         self.assertEqual(grant["canPublishSources"], ["microphone", "camera"])
         self.assertLessEqual(claims["exp"] - claims["nbf"], 60)
-        self.assertNotIn("qwen", json.dumps(result).lower())
+        self.assertNotIn("api_key", json.dumps(result).lower())
         call = self.registry.calls[result["session_id"]]
         with self.assertRaises(KeyError):
             self.registry.authorize(call.id, result["access_token"], worker=True)
@@ -44,16 +44,11 @@ class SessionTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(sum(isinstance(item, SessionBusy) for item in results), 1)
         self.client.agent_dispatch.create_dispatch.assert_awaited_once()
 
-    async def test_direct_background_exposes_explicit_unavailable_features(self):
-        self.settings.harness_mode = "direct_background"
-        result = await self.registry.create()
-        self.assertEqual(result["harness_mode"], "direct_background")
-        self.assertEqual(result["direct_background_capabilities"]["dialogue"], "direct")
-        self.assertEqual(result["direct_background_capabilities"]["proactive_audio"], "unavailable")
-
     async def test_official_core_capabilities_report_call_memory_without_credentials(self):
-        self.settings.harness_mode = 'qwen_live_official'
         result = await self.registry.create()
+        self.assertEqual(result['harness_mode'], 'qwen_live_official')
+        self.assertNotIn('direct_background_capabilities', result)
+        self.assertNotIn('harness_auto_input', result)
         capabilities = result['official_harness_capabilities']
         self.assertEqual(capabilities['engine'], 'qwen-live-harness')
         self.assertEqual(capabilities['memory'], 'call_visual')

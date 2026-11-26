@@ -1,13 +1,13 @@
 import { chromium } from 'playwright-core';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const out = path.join(root, '.runtime/m1-results'); await fs.mkdir(out, { recursive: true });
+const root = 'http://127.0.0.1:8002';
+const out = process.env.OFFICIAL_TEST_OUTPUT;
+if (!out) throw new Error('Run this test through verify_official_harness.py --lifecycle');
 const report = { status: 'failed', cases: [], physicalMicrophoneUsed: false };
 const browser = await chromium.launch({ executablePath: 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe', headless: true,
-  args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream', `--use-file-for-fake-audio-capture=${path.join(root, '.runtime/m1-fixtures/browser-1.wav')}`] });
+  args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'] });
 const context = await browser.newContext();
 let created;
 try {
@@ -15,10 +15,10 @@ try {
   await denialPage.addInitScript(() => { navigator.mediaDevices.getUserMedia = async () => { throw new DOMException('Denied by test', 'NotAllowedError'); }; });
   let sessionRequests = 0;
   denialPage.on('request', (request) => { if (request.url().endsWith('/api/sessions') && request.method() === 'POST') sessionRequests++; });
-  await denialPage.goto('http://127.0.0.1:8000');
+  await denialPage.goto(root);
   await denialPage.getByRole('button', { name: /加入通话/ }).click();
   await denialPage.getByRole('alert').filter({ hasText: '未获得麦克风权限' }).waitFor();
-  if (sessionRequests !== 0) throw new Error('Denied microphone still created a paid session');
+  if (sessionRequests !== 0) throw new Error('Denied microphone still created a session');
   report.cases.push('microphone denial does not create a session');
   await denialPage.close();
 
@@ -29,12 +29,12 @@ try {
     await new Promise((resolve) => setTimeout(resolve, 1200));
     await route.fulfill({ response });
   });
-  await page.goto('http://127.0.0.1:8000');
+  await page.goto(root);
   await page.getByRole('button', { name: /加入通话/ }).click();
   while (!created) await new Promise((resolve) => setTimeout(resolve, 50));
   await page.getByRole('button', { name: '挂断', exact: true }).click();
   await page.waitForTimeout(2000);
-  const status = await context.request.get(`http://127.0.0.1:8000/api/sessions/${created.session_id}`, { headers: { Authorization: `Bearer ${created.access_token}` } });
+  const status = await context.request.get(`${root}/api/sessions/${created.session_id}`, { headers: { Authorization: `Bearer ${created.access_token}` } });
   if ((await status.json()).state !== 'closed') throw new Error('Join cancellation leaked an active session');
   if (!(await page.getByRole('button', { name: /加入通话/ }).isEnabled())) throw new Error('Join button remained disabled');
   report.cases.push('hangup during delayed session creation closes the stale session');
@@ -46,7 +46,7 @@ try {
   report.status = 'passed';
 } catch (error) { report.error = error.message; console.error(error.message); }
 finally {
-  if (created) await context.request.delete(`http://127.0.0.1:8000/api/sessions/${created.session_id}`, { headers: { Authorization: `Bearer ${created.access_token}` } }).catch(() => {});
+  if (created) await context.request.delete(`${root}/api/sessions/${created.session_id}`, { headers: { Authorization: `Bearer ${created.access_token}` } }).catch(() => {});
   await browser.close();
   await fs.writeFile(path.join(out, 'lifecycle-report.json'), JSON.stringify(report, null, 2));
 }

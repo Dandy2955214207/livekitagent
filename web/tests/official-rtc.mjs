@@ -7,13 +7,21 @@ import { setTimeout as sleep } from 'node:timers/promises';
 
 const out = process.env.OFFICIAL_TEST_OUTPUT;
 if (!out) throw new Error('OFFICIAL_TEST_OUTPUT required');
+const trial = process.env.OFFICIAL_TRIAL_ORIGIN;
+const scene = process.env.OFFICIAL_TEST_SCENE;
 const report = { status: 'failed', providerCalls: 0, physicalDevices: false, pageErrors: [], cases: [] };
+const gatewayEvents = new Set();
 const browser = await chromium.launch({ executablePath: 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
   headless: true, args: ['--use-fake-ui-for-media-stream', '--mute-audio'] });
 const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
 page.on('pageerror', (error) => report.pageErrors.push(error.message));
+if (trial) page.on('websocket', socket => socket.on('framereceived', ({ payload }) => {
+  if (typeof payload !== 'string') { gatewayEvents.add('pcm'); return; }
+  const message = JSON.parse(payload);
+  gatewayEvents.add(message.event?.type ?? message.type);
+}));
 try {
-  await page.addInitScript(() => {
+  await page.addInitScript((throughGateway) => {
     window.fixtureTracks = [];
     navigator.mediaDevices.getUserMedia = async (constraints) => {
       let stream;
@@ -39,21 +47,54 @@ try {
         const context = new AudioContext(); await context.resume();
         const destination = context.createMediaStreamDestination();
         const oscillator = context.createOscillator(), gain = context.createGain();
-        gain.gain.value = .001; oscillator.connect(gain); gain.connect(destination); oscillator.start();
+        gain.gain.value = throughGateway ? .04 : .001;
+        oscillator.connect(gain); gain.connect(destination);
+        oscillator.start(throughGateway ? context.currentTime + 1.5 : context.currentTime);
         stream = destination.stream;
       }
       window.fixtureTracks.push(...stream.getTracks()); return stream;
     };
-  });
-  await page.goto('http://127.0.0.1:8002/');
+  }, Boolean(trial));
+  await page.goto(trial ?? 'http://127.0.0.1:8002/');
+  if (trial) {
+    await page.locator('#trial-code').fill('wrong');
+    await page.locator('#trial-invite-form button').click();
+    await page.getByText('试用码无效，请核对后重试。').waitFor();
+    await page.locator('#trial-code').fill(process.env.HARMONY_TRIAL_CODE);
+    await page.locator('#trial-invite-form button').click();
+    await page.locator('#trial-invite').waitFor({ state: 'hidden' });
+  }
+  const openTrialDetails = async () => {
+    if (!trial) return;
+    await page.locator('#call-more').click();
+    await page.locator('#call-open-details').click();
+  };
+  const closeTrialDetails = async () => {
+    if (trial) await page.getByRole('button', { name: '返回通话' }).click();
+  };
+  if (trial && !process.env.OFFICIAL_TEST_SCENE) await page.locator('#mobile-test-enable').check();
   await page.locator('#join').click();
   await page.waitForFunction(() => !document.getElementById('camera').disabled, {}, { timeout: 50000 });
+  await openTrialDetails();
   assert.equal(await page.locator('#official-panel').isVisible(), true);
-  await page.waitForFunction(() => document.getElementById('official-panel').dataset.playback === 'playback_completed', {}, { timeout: 12000 });
-  report.cases.push('real LiveKit audio input → official core → PCM data → browser render → matching completion receipt');
-  assert.match(await page.locator('#messages').textContent(), /本地协议测试/);
-  report.cases.push('identified input and output transcripts');
+  if (scene === 'guide') {
+    // A guide turn can start silently. Its observer needs the camera before it can lock a subject.
+    await page.locator('#camera').click();
+  } else {
+    await page.waitForFunction(() => document.getElementById('official-panel').dataset.playback === 'playback_completed', {}, { timeout: 12000 });
+    report.cases.push('real LiveKit audio input → official core → PCM data → browser render → matching completion receipt');
+    assert.match(await page.locator('#messages').textContent(), /本地协议测试/);
+    report.cases.push('identified input and output transcripts');
+  }
+  await closeTrialDetails();
   if (!process.env.OFFICIAL_TEST_SCENE) {
+    if (trial) {
+      await page.locator('#mobile-test-mark').click();
+      assert.match(await page.locator('#mobile-test-status').textContent(), /已标记/);
+      const reportAccess = await page.request.get(`${trial}/api/test-reports`);
+      assert.equal(reportAccess.status(), 404);
+      report.cases.push('opt-in test recording and mark enabled; report API stays private');
+    }
     for (const code of ['fixture_input_muted', 'fixture_input_unmuted']) {
       await page.locator('#mic').click();
       const deadline = Date.now() + 5000;
@@ -67,9 +108,10 @@ try {
     }
     report.cases.push('browser mute/unmute reaches the official core through LiveKit and the worker');
   }
-  await page.locator('#camera').click();
+  if (scene !== 'guide') await page.locator('#camera').click();
   await page.waitForFunction(() => document.getElementById('video-status').textContent.includes('共'), {}, { timeout: 10000 });
   report.cases.push('existing camera path feeds official core');
+  await openTrialDetails();
   if (process.env.OFFICIAL_TEST_SCENE === 'guide') {
     await page.locator('#guide-target-box').waitFor({ timeout: 15000 });
     assert.match(await page.locator('#guide-target-label').textContent(), /中央绿色盆栽/);
@@ -83,12 +125,16 @@ try {
     await page.locator('#switch-camera').click();
     await page.waitForFunction(()=>{
       const box=document.getElementById('guide-target-box'),preview=document.getElementById('preview');
-      return preview.querySelector('video')?.dataset.mirrored==='true'&&!box.hidden&&box.getBoundingClientRect().left<preview.getBoundingClientRect().left+preview.clientWidth*.2;
+      return preview.querySelector('video')?.dataset.mirrored==='true'&&!box.hidden;
     },{}, {timeout:15000});
     const mirrored=await page.locator('#preview').boundingBox();
     const mw=Math.min(mirrored.width,mirrored.height*4/3),mh=mw*3/4;
     await page.mouse.click(mirrored.x+(mirrored.width-mw)/2+mw*.1,mirrored.y+(mirrored.height-mh)/2+mh*.12);
-    await page.waitForFunction(()=>document.getElementById('guide-target-label').textContent==='右上蓝色瓶子'&&!document.getElementById('guide-target-box').hidden,{}, {timeout:15000});
+    await page.waitForFunction(()=>{
+      const box=document.getElementById('guide-target-box'),preview=document.getElementById('preview');
+      return !box.hidden&&document.getElementById('guide-target-label').textContent==='右上蓝色瓶子'&&
+        box.getBoundingClientRect().left<preview.getBoundingClientRect().left+preview.clientWidth*.2;
+    },{}, {timeout:15000});
     report.cases.push('front-camera mirrored overlay and tap preserve image-space selection');
     await page.locator('#scene-pause').click();
     await page.waitForFunction(()=>document.getElementById('guide-target-box').hidden);
@@ -138,6 +184,7 @@ try {
   }
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
   await page.screenshot({ path: path.join(out, 'phone.png'), fullPage: true });
+  await closeTrialDetails();
   await page.locator('#leave').click();
   await page.waitForFunction(() => !document.getElementById('join').disabled, {}, { timeout: 10000 });
   assert.equal(await page.evaluate(() => window.fixtureTracks.filter((track) => track.readyState === 'live').length), 0);
@@ -145,8 +192,13 @@ try {
   assert.deepEqual(report.pageErrors, []);
   report.cases.push('hangup stops all test tracks and clears the official panel');
   report.status = 'passed';
-} catch (error) { report.error = String(error); report.pageText = (await page.locator('body').textContent()).slice(-1600); }
+} catch (error) {
+  report.error = String(error);
+  if (trial) report.gatewayEvents = [...gatewayEvents];
+  report.pageText = (await page.locator('body').textContent()).slice(-1600);
+}
 finally {
+  if (trial) await page.locator('#call-details').evaluate(dialog => dialog.close()).catch(() => {});
   await page.locator('#leave').click().catch(() => {});
   await browser.close();
   await fs.writeFile(path.join(out, 'report.json'), JSON.stringify(report, null, 2));

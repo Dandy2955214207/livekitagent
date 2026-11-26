@@ -115,8 +115,6 @@ def create_app(settings: Settings | None = None, *, mobile_tests: MobileTests | 
             raise HTTPException(400, "无效的 JSON 请求。") from None
         if isinstance(data, dict) and "test_capture" in data:
             capture = data["test_capture"]
-            if settings.harness_mode != "qwen_live_official":
-                raise HTTPException(409, "本次服务未使用官方 Harness，无法记录完整测试。")
             if not isinstance(capture, dict) or not isinstance(capture.get("id"), str) or not isinstance(capture.get("token"), str):
                 raise HTTPException(400, "缺少测试记录凭据。")
             path = await capture_directory(capture["id"], capture["token"])
@@ -143,8 +141,6 @@ def create_app(settings: Settings | None = None, *, mobile_tests: MobileTests | 
 
     @app.post("/api/mobile-tests", status_code=201)
     async def start_mobile_test():
-        if settings.harness_mode != "qwen_live_official":
-            raise HTTPException(409, "请使用官方 Harness 启动手机测试。")
         return await asyncio.to_thread(mobile_tests.start)
 
     @app.post("/api/mobile-tests/{run_id}/events")

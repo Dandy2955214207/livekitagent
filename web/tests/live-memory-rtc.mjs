@@ -8,6 +8,7 @@ import { setTimeout as sleep } from 'node:timers/promises';
 
 if (process.env.MEMORY_RTC_LIVE !== '1') throw new Error('Set MEMORY_RTC_LIVE=1 to use the configured paid provider');
 const root = process.env.MEMORY_RTC_ROOT ?? 'http://127.0.0.1:8000';
+const trial = process.env.OFFICIAL_TRIAL_ORIGIN;
 assert.match(root, /^http:\/\/127\.0\.0\.1:\d+$/);
 const workerLog = process.env.OFFICIAL_TEST_OUTPUT ? process.env.OFFICIAL_TEST_OUTPUT + '/worker.log' : '.runtime/logs/worker.log';
 assert.equal((await (await fetch(root + '/api/health')).json()).active_sessions, 0, 'Do not interrupt an existing call');
@@ -22,6 +23,11 @@ page.on('pageerror', error => report.errors.push(error.message));
 page.on('response', async response => {
   if (response.url() === root + '/api/sessions' && response.request().method() === 'POST' && response.ok()) call = await response.json();
 });
+if (trial) page.on('websocket', socket => socket.on('framereceived', ({ payload }) => {
+  if (typeof payload !== 'string') return;
+  const event = JSON.parse(payload);
+  if (event.type === 'state' && event.state === 'ready') call = { ...event, session_id: event.call_id };
+}));
 const signals = async () => (await fs.readFile(workerLog, 'utf8')).split('\n').flatMap(line => {
   try {
     const msg = JSON.parse(line).message;
@@ -58,7 +64,12 @@ try {
       return destination.stream;
     };
   });
-  await page.goto(root);
+  await page.goto(trial ?? root);
+  if (trial) {
+    await page.locator('#trial-code').fill(process.env.HARMONY_TRIAL_CODE);
+    await page.locator('#trial-invite-form button').click();
+    await page.locator('#trial-invite').waitFor({ state: 'hidden' });
+  }
   await page.locator('#join').click();
   await page.waitForFunction(() => !document.getElementById('camera').disabled, {}, { timeout: 50000 });
   assert.equal(call?.official_harness_capabilities.memory, 'call_visual');
@@ -96,11 +107,21 @@ try {
 } finally {
   report.signals = await signals();
   await browser.close();
-  if (call) {
+  if (call && !trial) {
     const response = await fetch(root + '/api/sessions/' + call.session_id, {
       method: 'DELETE', headers: { Authorization: 'Bearer ' + call.access_token },
     });
     report.cleanup = response.status;
+  }
+  if (trial) {
+    for (let i = 0; i < 50; i++) {
+      if ((await (await fetch(root + '/api/health')).json()).active_sessions === 0) {
+        report.cleanup = 'websocket_call_released';
+        break;
+      }
+      await sleep(100);
+    }
+    if (!report.cleanup) report.status = 'failed_cleanup';
   }
   const path = '.runtime/memory-probes/rtc-' + randomUUID() + '.json';
   await fs.mkdir('.runtime/memory-probes', { recursive: true });

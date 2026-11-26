@@ -15,6 +15,23 @@ from ..media.video import LatestVideo, encode_jpeg
 BRIDGE = PROJECT_ROOT / 'harness/qwen-live/src/bridge.mjs'
 
 
+def node_executable():
+    node = shutil.which('node')
+    if not node:
+        raise RuntimeError('Node.js is required to run the official Harness.')
+    if not (BRIDGE.parents[1] / 'node_modules/qwen-live-harness/dist/build-info.json').exists():
+        raise RuntimeError('Install the pinned core: npm.cmd ci --prefix harness/qwen-live --ignore-scripts')
+    return node
+
+
+def check_startup(settings):
+    missing = settings.qwen_missing()
+    if missing:
+        raise RuntimeError('Missing provider configuration: ' + ', '.join(missing))
+    settings.qwen_endpoint()
+    node_executable()
+
+
 def capabilities(settings):
     return {'engine': 'qwen-live-harness', 'version': '1.0.0', 'experimental': True,
             'provider': settings.model_provider,
@@ -46,9 +63,7 @@ class OfficialBridge:
     async def start(self):
         if self.settings.qwen_missing():
             raise RuntimeError('Missing provider configuration: ' + ', '.join(self.settings.qwen_missing()))
-        node = shutil.which('node')
-        if not node or not (BRIDGE.parents[1] / 'node_modules/qwen-live-harness/dist/build-info.json').exists():
-            raise RuntimeError('Install the pinned core: npm.cmd ci --prefix harness/qwen-live --ignore-scripts')
+        node = node_executable()
         # Do not leak unrelated service keys into this child or its command line.
         env = {key: value for key, value in os.environ.items() if key.upper() in {
             'PATH', 'SYSTEMROOT', 'WINDIR', 'TEMP', 'TMP', 'USERPROFILE', 'LOCALAPPDATA'}}

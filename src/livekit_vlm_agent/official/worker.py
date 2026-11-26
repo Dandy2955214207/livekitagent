@@ -3,11 +3,13 @@
 import asyncio
 import json
 import logging
+import os
 
 import aiohttp
 from livekit import rtc
 from livekit.agents import AutoSubscribe
 
+from ..harmony_protocol import encode_agent_event
 from ..media.camera import CameraInput
 from ..mobile_test import MobileTests, WorkerCapture
 from .bridge import OfficialBridge
@@ -36,6 +38,7 @@ def failure_message(event):
 
 async def run_official_call(ctx, settings, metadata):
     call_id, identity = metadata['session_id'], metadata['identity']
+    trial_event_key = os.getenv('HARMONY_TRIAL_EVENT_KEY', '').encode('ascii')
     done = asyncio.Event()
     bridge = camera = heartbeat = None
     audio_tasks = set()
@@ -61,7 +64,10 @@ async def run_official_call(ctx, settings, metadata):
 
     async def publish(event, topic='agent.official'):
         if ctx.room.isconnected():
-            await ctx.room.local_participant.publish_data(json.dumps(event, ensure_ascii=False), reliable=True,
+            wire = (encode_agent_event({**event, 'callId': call_id}, trial_event_key, topic)
+                    if trial_event_key and topic in ('agent.official', 'agent.video')
+                    else json.dumps(event, ensure_ascii=False))
+            await ctx.room.local_participant.publish_data(wire, reliable=True,
                 topic=topic, destination_identities=[identity])
 
     async def event_received(event):

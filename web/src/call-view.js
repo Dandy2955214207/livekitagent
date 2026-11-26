@@ -1,6 +1,6 @@
 import './call-view.css';
 
-export function createCallView({ selectTarget }) {
+export function createCallView({ selectTarget, showTrialTools = false }) {
   if (document.documentElement.dataset.view !== 'call') return;
 
   const panel = document.querySelector('.call-panel');
@@ -11,6 +11,9 @@ export function createCallView({ selectTarget }) {
   const options = document.getElementById('call-options');
   const more = document.getElementById('call-more');
   const morePanel = document.getElementById('call-more-panel');
+  const select = document.getElementById('call-select-subject');
+  const details = document.getElementById('call-details');
+  const openDetails = document.getElementById('call-open-details');
   const selectHint = document.getElementById('call-select-hint');
   const notice = document.getElementById('call-notice');
   const status = document.getElementById('call-status');
@@ -22,6 +25,11 @@ export function createCallView({ selectTarget }) {
   avatar.hidden = false;
   document.getElementById('join').textContent = '开始通话';
   cameraControls.prepend(document.getElementById('mic'), document.getElementById('record'));
+  if (showTrialTools) {
+    details.append(document.getElementById('official-panel'), document.querySelector('.conversation'));
+    openDetails.hidden = false;
+    openDetails.addEventListener('click', () => { showMenu(false); details.showModal(); });
+  }
 
   function showControls() {
     delete panel.dataset.immersive;
@@ -32,7 +40,9 @@ export function createCallView({ selectTarget }) {
     more.setAttribute('aria-expanded', String(open));
   }
   function updateOptions() {
-    options.hidden = !cameraReady || !targetAvailable;
+    select.hidden = !cameraReady || !targetAvailable;
+    options.hidden = select.hidden && !(showTrialTools && panel.dataset.callPhase === 'active');
+    if (select.hidden) selectHint.hidden = true;
     if (options.hidden) {
       showMenu(false);
       selectHint.hidden = true;
@@ -57,7 +67,7 @@ export function createCallView({ selectTarget }) {
     selectHint.hidden = true;
     showMenu(morePanel.hidden);
   });
-  document.getElementById('call-select-subject').addEventListener('click', () => {
+  select.addEventListener('click', () => {
     showMenu(false);
     selectHint.hidden = false;
     more.focus({ preventScroll: true });
@@ -105,9 +115,10 @@ export function createCallView({ selectTarget }) {
   }
 
   return {
-    render({ phase, state, cameraOn, cameraBusy, recording }) {
+    render({ phase, state, cameraOn, cameraBusy }) {
       const previous = panel.dataset.callPhase;
       panel.dataset.callPhase = phase;
+      if (phase !== 'active' && details.open) details.close();
       cameraReady = phase === 'active' && cameraOn && !cameraBusy;
       updateOptions();
       if (!cameraOn) {
@@ -116,7 +127,6 @@ export function createCallView({ selectTarget }) {
         avatar.style.removeProperty('top');
       }
       hide.hidden = !cameraOn;
-      panel.dataset.recording = String(Boolean(recording));
       leave.textContent = phase === 'connecting' ? '取消' : '挂断';
       status.textContent = phase === 'ending' ? '正在结束通话…' : phase === 'connecting' ? '正在接通…' : ({
         connecting: '正在恢复连接…',

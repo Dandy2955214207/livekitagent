@@ -68,8 +68,6 @@ class LatestVideo:
         self.last_sent = None
         self.error = None
         self.sample_fps = settings.video_fps
-        self.on_sample = None
-        self.on_encoded = None
         self.motion = None
         self._changed = asyncio.Event()
         self._rate_changed = asyncio.Event()
@@ -152,17 +150,6 @@ class LatestVideo:
             self.pending = encoded
             self.error = None
             self.counts["encoded"] += 1
-            if self.on_encoded:
-                try:
-                    self.on_encoded(encoded)
-                except Exception:
-                    self.counts["fanout_errors"] += 1
-            if self.on_sample:
-                from .presentation import fingerprint
-                signature = await asyncio.to_thread(fingerprint, encoded.image)
-                encoded.signature = signature
-                if self.fresh(encoded):
-                    self.on_sample(encoded, signature)
             self.wake.set()
 
     def take(self):

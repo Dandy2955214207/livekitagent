@@ -1,0 +1,6 @@
+{
+  "string": [
+    { "name": "microphone_reason", "value": "开始通话时，通过麦克风向视觉助手提问。" },
+    { "name": "camera_reason", "value": "打开摄像头后，向视觉助手展示非保密测试物品。" }
+  ]
+}

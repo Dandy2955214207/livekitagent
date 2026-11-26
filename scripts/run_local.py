@@ -1,11 +1,12 @@
 """Start and stop only this launcher's child processes; no machine-wide services."""
 
 import argparse
-from contextlib import contextmanager
+from contextlib import ExitStack, contextmanager
 from datetime import datetime
 import json
 import os
 from pathlib import Path
+from secrets import token_urlsafe
 import socket
 import subprocess
 import sys
@@ -130,65 +131,99 @@ def ready(url):
         return False
 
 
+def trial_ports():
+    with ExitStack() as stack:
+        listeners = [stack.enter_context(socket.socket()) for _ in range(4)]
+        listeners.append(stack.enter_context(socket.socket(type=socket.SOCK_DGRAM)))
+        for listener in listeners:
+            listener.bind(('127.0.0.1', 0))
+        return [listener.getsockname()[1] for listener in listeners]
+
+
 def main():
+    global PID_FILE, STOP_FILE
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--stop", action="store_true")
     parser.add_argument("--mobile", action="store_true", help="Use prepared project-local phone TLS profile")
-    modes = parser.add_mutually_exclusive_group()
-    modes.add_argument("--harness", action="store_true", help="Controlled guidance and automatic object introductions")
-    modes.add_argument("--direct-background", action="store_true", help="D1 direct dialogue skeleton; proactive speech disabled")
-    modes.add_argument('--qwen-live', action='store_true', help='Experimental official Qwen Live Harness with LiveKit Host')
-    parser.add_argument('--official-proactive', action='store_true', help='Enable official observation/timer tools; requires --qwen-live')
-    parser.add_argument('--observe-text', action='store_true', help='Experimental independent text observation; requires --direct-background')
+    parser.add_argument('--trial-port', type=int, help='Run an isolated browser trial gateway on loopback')
+    parser.add_argument('--reuse-trial-invite', action='store_true', help='Keep the browser trial invite code for this port')
+    parser.add_argument('--qwen-live', action='store_true', help='Compatibility flag for the official Harness')
+    parser.add_argument('--official-proactive', action='store_true', help='Enable official observation/timer tools')
     args = parser.parse_args()
-    if args.observe_text and not args.direct_background:
-        parser.error('--observe-text requires --direct-background')
-    if args.official_proactive and not args.qwen_live:
-        parser.error('--official-proactive requires --qwen-live')
-    RUNTIME.mkdir(exist_ok=True)
+    trial = args.trial_port is not None
+    if trial and (args.mobile or not 1024 <= args.trial_port <= 65535):
+        parser.error('--trial-port requires a valid port and cannot be combined with --mobile')
+    if args.reuse_trial_invite and (not trial or args.stop):
+        parser.error('--reuse-trial-invite requires a running trial configuration')
+    trial_dir = RUNTIME / 'remote-trial'
+    instance_dir = trial_dir / str(args.trial_port) if trial else RUNTIME
+    if trial:
+        PID_FILE = instance_dir / 'local-services.json'
+        STOP_FILE = instance_dir / 'local-services.stop'
+    instance_dir.mkdir(parents=True, exist_ok=True)
     if args.stop:
         return stop_services()
-    settings = Settings()
-    if args.qwen_live:
-        if settings.qwen_missing():
-            raise SystemExit('Missing provider configuration: ' + ', '.join(settings.qwen_missing()))
-        settings.qwen_endpoint()
-        if not (ROOT / 'harness/qwen-live/node_modules/qwen-live-harness/dist/build-info.json').exists():
-            raise SystemExit('Install official core first: npm.cmd ci --prefix harness/qwen-live --ignore-scripts')
+    if trial:
+        api_port, worker_port, lk_port, rtc_tcp_port, rtc_udp_port = trial_ports()
+        settings = Settings(api_port=api_port, worker_port=worker_port)
+    else:
+        lk_port, settings = 7880, Settings()
+    from livekit_vlm_agent.official.bridge import check_startup
+    try:
+        check_startup(settings)
+    except (RuntimeError, ValueError) as exc:
+        parser.exit(1, f'{exc}\n')
     mobile = None
     if args.mobile:
         mobile = json.loads((RUNTIME / "mobile/profile.json").read_text(encoding="utf-8-sig"))
         if (RUNTIME / "mobile/probe-running.json").exists():
             raise SystemExit("Stop the capability gateway first: scripts/stop-device-check.ps1")
-    lk_port = 7880
-    for port in (lk_port, settings.api_port, settings.worker_port):
+    ports = (lk_port, settings.api_port, settings.worker_port)
+    if trial:
+        ports += (rtc_tcp_port, args.trial_port)
+        if len(set(ports)) != len(ports):
+            parser.error('--trial-port conflicts with an isolated service port')
+    for port in ports:
         with socket.socket() as probe:
             if probe.connect_ex(("127.0.0.1", port)) == 0:
                 raise SystemExit(f"Port {port} is already in use. Existing services were left untouched.")
     if not (ROOT / "web/dist/index.html").exists():
         raise SystemExit("Build the page first: npm.cmd run build --prefix web")
     env = {**os.environ, "PYTHONPATH": str(ROOT / "src"), "PYTHONUNBUFFERED": "1"}
-    if args.harness:
-        env["HARNESS_MODE"] = "controlled_manual"
-    elif args.direct_background:
-        env["HARNESS_MODE"] = "direct_background"
-    elif args.qwen_live:
-        env['HARNESS_MODE'] = 'qwen_live_official'
+    if args.official_proactive or args.qwen_live:
         env['QWEN_LIVE_PROACTIVE_ENABLED'] = str(args.official_proactive).lower()
-    if args.observe_text:
-        env['BACKGROUND_OBSERVATION_ENABLED'] = 'true'
     if mobile:
         env.update(LIVEKIT_PUBLIC_URL=mobile["livekit_public_url"], WEB_ORIGIN=mobile["origin"], MOBILE_PROBE_ONLY="false")
+    livekit_config = RUNTIME / 'mobile/livekit.yaml' if mobile else ROOT / 'config/livekit.local.yaml'
+    if trial:
+        livekit_config = instance_dir / 'livekit.yaml'
+        livekit_url = f'ws://127.0.0.1:{lk_port}'
+        invite = trial_dir / f'live-{args.trial_port}-invite.txt'
+        if args.reuse_trial_invite and not invite.is_file():
+            raise SystemExit(f'Cannot reuse a missing trial invite: {invite}')
+        trial_code = invite.read_text(encoding='ascii').strip() if args.reuse_trial_invite else token_urlsafe(24)
+        env.update(API_PORT=str(settings.api_port), WORKER_PORT=str(settings.worker_port),
+                   LIVEKIT_URL=livekit_url, LIVEKIT_PUBLIC_URL=livekit_url,
+                   LIVEKIT_API_KEY=token_urlsafe(18), LIVEKIT_API_SECRET=token_urlsafe(32),
+                   HARMONY_GATEWAY_TOKEN=token_urlsafe(32), HARMONY_TRIAL_CODE=trial_code,
+                   HARMONY_TRIAL_EVENT_KEY=token_urlsafe(32),
+                   QWEN_LIVE_PROACTIVE_ENABLED='true', QWEN_LIVE_MEMORY_ENABLED='true')
     python = str(ROOT / ".venv/Scripts/python.exe")
     commands = [
-        ("livekit", [str(ROOT / ".tools/livekit/livekit-server.exe"), "--config", str(RUNTIME / "mobile/livekit.yaml" if mobile else ROOT / "config/livekit.local.yaml")]),
+        ("livekit", [str(ROOT / ".tools/livekit/livekit-server.exe"), "--config", str(livekit_config)]),
         ("api", [python, "-m", "uvicorn", "livekit_vlm_agent.api:app", "--host", "127.0.0.1", "--port", str(settings.api_port), "--no-access-log"]),
         ("worker", [python, "-m", "livekit_vlm_agent.worker", "start"]),
     ]
     if mobile:
         commands.append(("mobile", [python, "-m", "livekit_vlm_agent.mobile_gateway"]))
-    secrets = [settings.qwen_api_key.get_secret_value(), settings.yibuapi_api_key.get_secret_value(), settings.livekit_api_key.get_secret_value(), settings.livekit_api_secret.get_secret_value()]
-    log_dir = RUNTIME / "logs"
+    if trial:
+        commands.append(('trial', [python, '-m', 'livekit_vlm_agent.harmony_gateway', '--mode', 'live',
+                                   '--port', str(args.trial_port), '--api-url', f'http://127.0.0.1:{settings.api_port}',
+                                   '--livekit-url', livekit_url]))
+    secrets = [settings.qwen_api_key.get_secret_value(), settings.yibuapi_api_key.get_secret_value(),
+               env.get('LIVEKIT_API_KEY', settings.livekit_api_key.get_secret_value()),
+               env.get('LIVEKIT_API_SECRET', settings.livekit_api_secret.get_secret_value()), env.get('HARMONY_TRIAL_EVENT_KEY')]
+    log_dir = instance_dir / "logs"
     log_dir.mkdir(exist_ok=True)
     children, threads, claimed = [], [], False
 
@@ -203,6 +238,13 @@ def main():
     try:
         record = claim_record()
         claimed = True
+        if trial:
+            livekit_config.write_text(json.dumps({
+                'port': lk_port, 'bind_addresses': ['127.0.0.1'],
+                'rtc': {'tcp_port': rtc_tcp_port, 'udp_port': rtc_udp_port, 'node_ip': '127.0.0.1',
+                        'use_external_ip': False, 'enable_loopback_candidate': True},
+                'keys': {env['LIVEKIT_API_KEY']: env['LIVEKIT_API_SECRET']},
+            }), encoding='utf-8')
         for name, command in commands:
             process = subprocess.Popen(command, cwd=ROOT, env=env, stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT, text=True, encoding="utf-8", errors="replace",
@@ -221,16 +263,22 @@ def main():
             worker_log = log_dir / "worker.log"
             registered = worker_log.exists() and "registered worker" in worker_log.read_text(encoding="utf-8")
             gateway_ready = not mobile or ((log_dir / "mobile.log").exists() and "Mobile TLS gateway ready" in (log_dir / "mobile.log").read_text(encoding="utf-8"))
+            if trial:
+                gateway_ready = ready(f'http://127.0.0.1:{args.trial_port}/health')
             if registered and gateway_ready and ready(f"http://127.0.0.1:{settings.api_port}/api/health"):
                 break
             time.sleep(0.3)
         else:
             raise RuntimeError("Services did not become ready within 30 seconds.")
         print(f"Ready: http://127.0.0.1:{settings.api_port}", flush=True)
+        if trial:
+            invite.write_text(env['HARMONY_TRIAL_CODE'] + '\n', encoding='ascii')
+            print(f'Trial page: http://127.0.0.1:{args.trial_port}/  Invite code file: {invite}', flush=True)
         if mobile:
             print(f"Phone call: {mobile['origin']}/", flush=True)
             print("Phone needs scoped TCP 7881 / UDP 7882 firewall rules: scripts/mobile-firewall.ps1 -Media", flush=True)
-        print("Ctrl+C or scripts/stop-local.ps1 stops these local services.", flush=True)
+        stop_script = 'scripts/start-remote-trial.ps1 -Stop' if trial else 'scripts/stop-local.ps1'
+        print(f'Ctrl+C or {stop_script} stops these local services.', flush=True)
         while not STOP_FILE.exists():
             if any(proc.poll() is not None for _, proc in children):
                 raise RuntimeError("A child service exited. Restart to reset all sessions.")

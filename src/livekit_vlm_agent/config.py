@@ -33,7 +33,7 @@ class Settings(BaseSettings):
     qwen_model: str = "qwen3.8-omni-flash-realtime"
     qwen_voice: str = "Tina"
     qwen_turn_detection: Literal["semantic_vad", "semantic_vad_ec"] = "semantic_vad_ec"
-    harness_mode: Literal["legacy_auto", "controlled_manual", "direct_background", "qwen_live_official"] = "legacy_auto"
+    harness_mode: Literal["qwen_live_official"] = "qwen_live_official"
     qwen_live_proactive_enabled: bool = False
     qwen_live_memory_enabled: bool = True
     qwen_memory_vision_model: str = "qwen3.5-flash"
@@ -41,23 +41,9 @@ class Settings(BaseSettings):
     qwen_live_max_generations: int = Field(default=80, ge=1, le=80)
     qwen_live_max_monitor_generations: int = Field(default=60, ge=1, le=60)
     qwen_live_max_call_seconds: int = Field(default=600, ge=30, le=1800)
-    background_observation_enabled: bool = False
-    background_max_generations_per_call: int = Field(default=10, ge=1, le=20)
-    harness_auto_input: bool = True
-    harness_end_silence_seconds: float = Field(default=.75, ge=.4, le=2)
     audio_input_sample_rate: int = 16000
     audio_output_sample_rate: int = 24000
-    audio_input_chunk_ms: int = Field(default=20, ge=10, le=100)
     video_fps: float = Field(default=1, gt=0, le=5)
-    showcase_sample_fps: float = Field(default=3, ge=1, le=5)
-    showcase_stable_seconds: float = Field(default=1.5, ge=0.5, le=5)
-    showcase_early_observe_seconds: float = Field(default=.3, ge=.2, le=5)
-    showcase_fast_path: bool = True
-    showcase_pipeline: bool = True
-    showcase_fast_dwell_seconds: float = Field(default=1.2, ge=.8, le=5)
-    showcase_fast_match_threshold: float = Field(default=.12, ge=.03, le=.18)
-    showcase_recheck_seconds: float = Field(default=12, ge=5, le=60)
-    showcase_motion_threshold: float = Field(default=0.07, ge=0.01, le=0.5)
     video_max_width: int = Field(default=640, ge=32, le=1920)
     video_max_height: int = Field(default=480, ge=32, le=1080)
     video_max_frame_age_ms: int = Field(default=1500, ge=100, le=10000)
@@ -66,7 +52,6 @@ class Settings(BaseSettings):
     agent_name: str = "qwen-voice-agent"
     session_ttl_seconds: int = Field(default=1800, ge=60, le=7200)
     join_timeout_seconds: int = Field(default=45, ge=10, le=120)
-    output_buffer_max_ms: int = Field(default=10000, ge=1000, le=30000)
     worker_port: int = 8081
 
     def qwen_endpoint(self) -> str:

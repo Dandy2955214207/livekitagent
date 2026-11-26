@@ -1,0 +1,9 @@
+/.hvigor/
+/.idea/
+/oh_modules/
+/local.properties
+/.sign/sign-config.json5
+/**/build/
+*.p12
+*.cer
+*.p7b
