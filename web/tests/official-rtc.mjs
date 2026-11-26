@@ -56,6 +56,12 @@ try {
     };
   }, Boolean(trial));
   await page.goto(trial ?? 'http://127.0.0.1:8002/');
+  const privateTrial = await page.locator('html[data-private-trial]').count() > 0;
+  if (privateTrial) {
+    assert.ok(await page.locator('#mobile-test-enable').isHidden());
+    assert.equal((await page.request.post(trial + '/api/mobile-tests')).status(), 404);
+    report.cases.push('service deployment disables test capture');
+  }
   if (trial) {
     await page.locator('#trial-code').fill('wrong');
     await page.locator('#trial-invite-form button').click();
@@ -72,7 +78,7 @@ try {
   const closeTrialDetails = async () => {
     if (trial) await page.getByRole('button', { name: '返回通话' }).click();
   };
-  if (trial && !process.env.OFFICIAL_TEST_SCENE) await page.locator('#mobile-test-enable').check();
+  if (trial && !privateTrial && !scene) await page.locator('#mobile-test-enable').check();
   await page.locator('#join').click();
   await page.waitForFunction(() => !document.getElementById('camera').disabled, {}, { timeout: 50000 });
   await openTrialDetails();
@@ -87,7 +93,7 @@ try {
     report.cases.push('identified input and output transcripts');
   }
   await closeTrialDetails();
-  if (!process.env.OFFICIAL_TEST_SCENE) {
+  if (!scene && !privateTrial) {
     if (trial) {
       await page.locator('#mobile-test-mark').click();
       assert.match(await page.locator('#mobile-test-status').textContent(), /已标记/);

@@ -1,0 +1,20 @@
+services:
+  api:
+    environment:
+      QWEN_LIVE_MEMORY_ENABLED: "false"
+  gateway:
+    networks: [default, ingress]
+  worker:
+    command: ["python", "/app/tests/official_fixture_worker.py", "start"]
+    environment:
+      QWEN_API_KEY: offline-fixture-only
+      QWEN_WORKSPACE_ID: offline-fixture
+      QWEN_VOICE: harmony-rtc-fixture
+      QWEN_LIVE_MEMORY_ENABLED: "false"
+    volumes:
+      - ../tests/official_fixture_worker.py:/app/tests/official_fixture_worker.py:ro
+      - ../harness/qwen-live/test:/app/harness/qwen-live/test:ro
+networks:
+  ingress: {}
+  default:
+    internal: true

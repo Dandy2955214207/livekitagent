@@ -55,8 +55,9 @@ async def run_official_call(ctx, settings, metadata):
             logger.warning('Phone test directory unavailable for this call')
 
     async def report(state, error=None):
+        base_url = settings.internal_api_url.rstrip('/') or f'http://127.0.0.1:{settings.api_port}'
         async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=4)) as http:
-            async with http.post(f'http://127.0.0.1:{settings.api_port}/api/internal/sessions/{call_id}',
+            async with http.post(f'{base_url}/api/internal/sessions/{call_id}',
                 headers={'Authorization': 'Bearer ' + metadata['worker_access']},
                 json={'state': state, 'error': error}) as response:
                 response.raise_for_status()

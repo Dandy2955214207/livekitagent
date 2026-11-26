@@ -1,0 +1,12 @@
+**
+!pyproject.toml
+!uv.lock
+!src/livekit_vlm_agent/**/*.py
+!web/package*.json
+!web/*.html
+!web/vite.config.js
+!web/src/*.js
+!web/src/*.css
+!harness/qwen-live/package*.json
+!harness/qwen-live/src/*.mjs
+!harness/qwen-live/skills/*.md

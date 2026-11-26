@@ -3,7 +3,7 @@ import { preferences } from '@kit.ArkData';
 import { url } from '@kit.ArkTS';
 import { webview } from '@kit.ArkWeb';
 
-const DEFAULT_ORIGIN = 'https://eva-comm-utc-newly.trycloudflare.com';
+const DEFAULT_ORIGIN = '';
 const SERVER_KEY = 'server_origin';
 const SURFACE = '#14171A';
 const TEXT = '#F4F6F5';
@@ -87,6 +87,10 @@ struct Index {
     this.fullscreen = false;
     this.fullscreenHandler = undefined;
     clearTimeout(this.loadTimer);
+    if (!this.serverOrigin) {
+      this.loadingFailed('请先填写试用服务的 HTTPS 地址。');
+      return;
+    }
     // Create a fresh Web component so retry also recovers a terminated renderer.
     setTimeout(() => {
       if (generation !== this.generation) return;
@@ -268,7 +272,11 @@ struct Index {
               Text(this.loading ? '正在连接试用服务…' : this.loadError)
                 .fontSize(15).fontColor(TEXT).textAlign(TextAlign.Center)
               if (!this.loading) {
-                Button('重试连接').backgroundColor(ACCENT).fontColor('#1B2415').onClick(() => { this.connect(); })
+                Button(this.serverOrigin ? '重试连接' : '设置服务地址')
+                  .backgroundColor(ACCENT).fontColor('#1B2415').onClick(() => {
+                    if (this.serverOrigin) this.connect();
+                    else this.editServer();
+                  })
               }
             }.justifyContent(FlexAlign.Center).padding(28).width('100%').height('100%').backgroundColor(SURFACE)
           }

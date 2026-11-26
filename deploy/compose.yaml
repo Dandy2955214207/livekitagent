@@ -1,0 +1,77 @@
+name: livekitagent
+
+x-operations: &operations
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: "3"
+  security_opt: ["no-new-privileges:true"]
+
+x-application: &application
+  <<: *operations
+  image: livekitagent/service:${SERVICE_VERSION:?set SERVICE_VERSION}
+  pull_policy: never
+  init: true
+  cap_drop: [ALL]
+  stop_grace_period: 45s
+
+x-probe: &probe
+  interval: 10s
+  timeout: 7s
+  retries: 4
+  start_period: 20s
+
+services:
+  livekit:
+    <<: *operations
+    image: livekit/livekit-server:v1.13.11@sha256:25cd902de7cacbd5f1f779f6a6ac1eae20ba8f56b0935934ce6b0ab80d1e3d20
+    command: ["--config", "/etc/livekit/config.yaml"]
+    volumes:
+      - "${SERVICE_CONFIG:?set SERVICE_CONFIG}/livekit.yaml:/etc/livekit/config.yaml:ro"
+
+  api:
+    <<: *application
+    depends_on: [livekit]
+    env_file: ["${SERVICE_CONFIG}/session.env"]
+    command: ["uvicorn", "livekit_vlm_agent.api:app", "--host", "0.0.0.0", "--port", "8000", "--no-access-log", "--no-proxy-headers"]
+    healthcheck:
+      <<: *probe
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://localhost:8000/api/ready', timeout=5)"]
+
+  worker:
+    <<: *application
+    cpus: ${WORKER_CPUS:-2.0}
+    mem_limit: ${WORKER_MEMORY:-1536m}
+    env_file: ["${SERVICE_CONFIG}/session.env", "${SERVICE_CONFIG}/event.env", "${SERVICE_CONFIG}/provider.env"]
+    environment:
+      INTERNAL_API_URL: http://api:8000
+      WORKER_HOST: 0.0.0.0
+      # This dedicated dispatch pool admits exactly one call through SessionRegistry.
+      # A transient SDK slot reservation must not mark the next room undispatchable.
+      WORKER_LOAD_THRESHOLD: "inf"
+    depends_on:
+      api: {condition: service_healthy}
+    command: ["python", "-m", "livekit_vlm_agent.worker", "start"]
+    healthcheck:
+      <<: *probe
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://localhost:8081/', timeout=5)"]
+
+  gateway:
+    <<: *application
+    env_file: ["${SERVICE_CONFIG}/event.env"]
+    environment:
+      HARMONY_GATEWAY_API_URL: http://api:8000
+      HARMONY_GATEWAY_LIVEKIT_URL: ws://livekit:7880
+      HARMONY_WORKER_HEALTH_URL: http://worker:8081/
+      HARMONY_INVITE_DIR: /run/service-invites
+    volumes:
+      - "${SERVICE_CONFIG}/invites:/run/service-invites:ro"
+    ports: ["127.0.0.1:${GATEWAY_PORT:-18095}:8095"]
+    command: ["python", "-m", "livekit_vlm_agent.harmony_gateway", "--mode", "live", "--host", "0.0.0.0"]
+    depends_on:
+      worker: {condition: service_healthy}
+    healthcheck:
+      <<: *probe
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://localhost:8095/ready', timeout=6)"]

@@ -12,8 +12,8 @@ from .official.worker import run_official_call
 settings = Settings()
 server = AgentServer(ws_url=settings.livekit_url,
     api_key=settings.livekit_api_key.get_secret_value(), api_secret=settings.livekit_api_secret.get_secret_value(),
-    host="127.0.0.1", port=settings.worker_port, num_idle_processes=0,
-    load_threshold=1.0, log_level="INFO", shutdown_process_timeout=10, session_end_timeout=15)
+    host=settings.worker_host, port=settings.worker_port, num_idle_processes=0,
+    load_threshold=settings.worker_load_threshold, log_level="INFO", shutdown_process_timeout=10, session_end_timeout=15)
 
 
 @server.rtc_session(agent_name=settings.agent_name)

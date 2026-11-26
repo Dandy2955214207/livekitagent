@@ -23,6 +23,8 @@ class Settings(BaseSettings):
     livekit_api_secret: SecretStr = SecretStr("")
     api_host: str = "127.0.0.1"
     api_port: int = Field(default=8000, ge=1024, le=65535)
+    internal_api_url: str = ""
+    service_owner: str = ""
     web_origin: str = "http://localhost:5173"
     model_provider: Literal["aliyun", "yibuapi"] = "aliyun"
     yibuapi_api_key: SecretStr = SecretStr("")
@@ -53,6 +55,8 @@ class Settings(BaseSettings):
     session_ttl_seconds: int = Field(default=1800, ge=60, le=7200)
     join_timeout_seconds: int = Field(default=45, ge=10, le=120)
     worker_port: int = 8081
+    worker_host: str = "127.0.0.1"
+    worker_load_threshold: float = Field(default=1.0, gt=0)
 
     def qwen_endpoint(self) -> str:
         if self.model_provider == "yibuapi":

@@ -57,6 +57,7 @@ def create_app(settings: Settings | None = None, *, mobile_tests: MobileTests | 
             api_key=settings.livekit_api_key.get_secret_value(),
             api_secret=settings.livekit_api_secret.get_secret_value(), timeout=aiohttp.ClientTimeout(total=8)) as client:
             registry = SessionRegistry(settings, client)
+            await registry.recover()
             app.state.registry = registry
 
             async def sweep():
@@ -103,6 +104,14 @@ def create_app(settings: Settings | None = None, *, mobile_tests: MobileTests | 
     async def health(request: Request):
         return {"status": "ok", "active_sessions": sum(
             not call.cleaned for call in request.app.state.registry.calls.values())}
+
+    @app.get("/api/ready")
+    async def ready(request: Request):
+        try:
+            await request.app.state.registry.client.room.list_rooms(api.ListRoomsRequest())
+        except (aiohttp.ClientError, api.TwirpError, TimeoutError):
+            return JSONResponse({"status": "unavailable"}, status_code=503)
+        return {"status": "ready"}
 
     @app.post("/api/sessions", status_code=201)
     async def create_session(request: Request):

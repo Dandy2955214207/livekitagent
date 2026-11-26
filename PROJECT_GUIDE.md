@@ -86,20 +86,14 @@ npm.cmd run build --prefix web
 
 ## 发布基线与分支
 
-当前主线是 `main`。它已快进纳入 `37b4424` 的开发基线，包含鸿蒙网关、跨城浏览器试用、独立鸿蒙 Demo 和目录边界整理。H1、H2、讲解实验和官方 Harness 的开发提交都可以从 `main` 回溯。
-
-另一条发布历史的原始提交仍可通过 `archive/github-publish`（`1450cc1`）和 `archive/harmony-gateway-v1`（`afbc2e6`）查看。两者的末端文件分别与主线中的 `98b7412` 和 `17cace7` 相同。当前仓库没有配置 Git 远端。
+共享开发从 GitHub 上的 [源码基线](https://github.com/Dandy2955214207/livekitagent/commit/961e84ca3324fb84f4eda6a285bf41eaa5773ab8) 接续，服务化改动进入 `main`。开发时从最新的 `origin/main` 起分支。原开发历史与内部汇报资料保存在原开发机的本地归档中。
 
 ## 长期运行和 App 接入
 
-1. **固定发布候选。** 把工作区中实际参与通话、试用入口的代码与测试一起审阅，按用途提交并用版本号或标签标记。部署时记录代码版本、锁定依赖和配置版本。模型密钥、试用码、鸿蒙本机签名和测试采集文件由运行环境单独管理。
-2. **Windows 本机常驻。** 先用 `scripts/start-remote-trial.ps1` 验证同一入口能完成通话和挂断。然后让 Windows 服务管理器或任务计划程序在开机后启动，以专用账户运行，补齐异常退出重试、有上限的日志、电脑休眠设置和停止流程。现有启动器会拉起并清理子进程，子进程退出时整组停止，且每次启动重建日志。验收时模拟 Worker 退出和电脑重启，检查服务能恢复并接受新通话。
-3. **迁到单台远程 Linux 服务器。** 用 Docker Compose 或 systemd 分别管理入口网关、FastAPI、LiveKit 和 Python Worker，Node Harness 随 Worker 部署。按依赖锁文件重新构建 Python、Node 运行环境和网页产物。首版沿用现在的 WSS 网关，HTTPS 提供页面，WSS 承载通话数据，LiveKit 和 FastAPI 留在内部网络。这样迁移时保留 App 使用的协议，部署配置管理域名、证书和密钥。若以后客户端直接连接 LiveKit，再部署公网信令、媒体端口和受限网络所需的 TURN 中继。 [Compose 启动与健康检查](https://docs.docker.com/compose/how-tos/startup-order/) · [LiveKit 端口配置](https://docs.livekit.io/transport/self-hosting/ports-firewall/)
-4. **从邀请试用走到多用户。** 现有试用码和原生固定 Bearer 凭据适用于小范围联调。正式接入时由服务端验证用户登录，签发短期且绑定用户和用途的通话凭证。会话 API 的建房接口留在内部，应用入口按用户限流并确保只能访问自己的通话。当前 `SessionRegistry` 在进程内保存会话，整组服务同时只接受一场通话。先在单个 API 实例中实现不同用户并发、每用户与全局限额、故障清理和成本预算，压测后再决定共享状态和多实例方案。 [会话创建与清理](src/livekit_vlm_agent/session.py) · [网关](src/livekit_vlm_agent/harmony_gateway.py)
-5. **让 App 接入同一个服务。** 独立鸿蒙 Demo 已用 ArkWeb 打开网页通话页。优先用新视界的 `feature_webview` 承载该页面，复用现有登录，在服务端完成身份换票。页面负责通话交互，App 负责麦克风与摄像头授权、前后台及退出释放。若产品后续需要原生通话界面，可接入 `/v1/calls`，客户端自行实现采集、播放、播放回执和异常释放。服务端可以独立发布，App 由鸿蒙工程构建和签名；协议变更保留旧客户端兼容期。 [独立 App 工程](harmony-demo/README.md) · [原生 WSS 协议](docs/harmony-gateway-v1.md)
+Windows 脚本用于平时开发。服务部署采用单机 Docker Compose，网关提供网页和 WSS，FastAPI、LiveKit 和 Worker 各自运行在容器内。Node Harness 随 Worker 镜像发布。服务版只映射一个回环端口。Ubuntu 上的 HTTPS 入口待已有业务和域名盘点后确定。构建、邀请、启停、健康检查、日志与版本回滚见 [单机服务运维](deploy/README.md)。
 
-### 运维验收
+本地 Docker 验收使用隔离网络、合成媒体和模拟模型。真实模型、合规的 HTTPS 入口、设备权限和跨城弱网体验须在远程环境另行验收。
 
-- **可用性。** `/api/health` 目前只确认 API 能应答并报告活动会话数。补充网关、LiveKit 和 Worker 的就绪检查，再用低频合成通话确认建房、输入输出及清理。
-- **容量与成本。** 记录接通成功率、接通耗时、首段语音耗时、异常断线、模型用量、队列和资源占用。用长通话、重复挂断、并发和弱网验证容量，再定并发与单用户额度。
-- **数据与故障。** 通话内记忆随通话结束清空。测试复盘会写入画面与转写，内测使用时设置访问和留存期限。测试重启后的陈旧房间清理、告警、回滚到上一版本，以及旧 App 能否继续拨通。
+服务版为每位同事分发可过期、可撤销的凭据，维持一个 API 进程和全局单通话。每场通话使用独立房间、令牌和通话内记忆。正式账号接入、同一时间多场通话、成本与并发配额留到容量测试后设计。现有鸿蒙 Demo 可直接配置试用域名，原生接入复用现有 WSS 协议。 [鸿蒙 Demo](harmony-demo/README.md) · [网关协议](docs/harmony-gateway-v1.md)
+
+现有 App 后续可优先用新视界的 `feature_webview` 承载通话页，复用登录和服务端换票。App 负责设备权限、前后台和退出释放。服务化验收完成后再进行客户端集成。

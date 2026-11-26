@@ -43,6 +43,18 @@ class SessionRegistry:
         self.calls = {}
         self.lock = asyncio.Lock()
 
+    async def recover(self):
+        owner = self.settings.service_owner
+        if owner:
+            rooms = await self.client.room.list_rooms(api.ListRoomsRequest())
+            for room in rooms.rooms:
+                if room.metadata == owner and room.name.startswith("voice-"):
+                    try:
+                        await self.client.room.delete_room(api.DeleteRoomRequest(room=room.name))
+                    except api.TwirpError as exc:
+                        if exc.code != "not_found":
+                            raise
+
     async def create(self, *, capture_id=None):
         async with self.lock:
             if any(not call.cleaned for call in self.calls.values()):
@@ -52,7 +64,7 @@ class SessionRegistry:
             self.calls[call.id] = call
             try:
                 await self.client.room.create_room(api.CreateRoomRequest(
-                    name=call.room, empty_timeout=self.settings.join_timeout_seconds,
+                    name=call.room, metadata=self.settings.service_owner, empty_timeout=self.settings.join_timeout_seconds,
                     departure_timeout=10, max_participants=2))
                 await self.client.agent_dispatch.create_dispatch(api.CreateAgentDispatchRequest(
                     room=call.room, agent_name=self.settings.agent_name,

@@ -428,6 +428,7 @@ html[data-view="call"] {
   gap: 5px;
   justify-items: start;
 }
+html[data-private-trial] #mobile-test,
 [data-view="call"] .call-panel:not([data-call-phase="idle"]) #mobile-test-option,
 [data-view="call"] .call-panel[data-immersive] #mobile-test {
   display: none;

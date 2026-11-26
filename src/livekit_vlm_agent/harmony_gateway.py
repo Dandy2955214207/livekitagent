@@ -11,7 +11,7 @@ import ssl
 import struct
 import uuid
 
-from aiohttp import ClientSession, ClientTimeout, WSMsgType, web
+from aiohttp import ClientError, ClientSession, ClientTimeout, WSMsgType, web
 
 from .harmony_protocol import CAMERA, INPUT_SAMPLES, JPEG_LIMIT, MIC, OFFICIAL_CONTROLS, GatewayError, audio_packet, decode_jpeg, valid_uint
 
@@ -287,21 +287,21 @@ class MockCall:
 
 
 def create_app(token, *, mode='mock', api_url='http://127.0.0.1:8000', livekit_url=None, trial_code=None,
-               trial_event_key=None):
+               trial_event_key=None, invites=None):
     if mode not in ('live', 'mock'):
         raise ValueError('Unknown Harmony gateway mode')
-    if len(token) < 16 or not token.isascii() or any(ch.isspace() for ch in token):
+    if not invites and (len(token) < 16 or not token.isascii() or any(ch.isspace() for ch in token)):
         raise ValueError('HARMONY_GATEWAY_TOKEN must be at least 16 non-whitespace ASCII characters')
-    if mode == 'live' and trial_code is not None and (not trial_event_key or len(trial_event_key) < 32 or not trial_event_key.isascii()):
+    if mode == 'live' and (invites or trial_code is not None) and (not trial_event_key or len(trial_event_key) < 32 or not trial_event_key.isascii()):
         raise ValueError('Live browser trials require HARMONY_TRIAL_EVENT_KEY')
 
     app = web.Application(client_max_size=48 * 1024)
     http = None
     trial_authorize = None
-    if trial_code is not None:
+    if invites or trial_code is not None:
         from .harmony_trial import add_trial_routes
-        trial_authorize = add_trial_routes(app, trial_code, api_url=api_url if mode == 'live' else None,
-                                           get_http=lambda: http)
+        trial_authorize = add_trial_routes(app, trial_code, api_url=api_url if mode == 'live' and not invites else None,
+                                           get_http=lambda: http, invites=invites)
     connections = set()
     if mode == 'live':
         from .harmony_livekit import LiveCall
@@ -315,9 +315,21 @@ def create_app(token, *, mode='mock', api_url='http://127.0.0.1:8000', livekit_u
     async def health(_):
         return web.json_response({'status': 'ok', 'mode': mode})
 
+    async def ready(_):
+        try:
+            for endpoint in (api_url.rstrip('/') + '/api/ready', os.environ['HARMONY_WORKER_HEALTH_URL']):
+                async with http.get(endpoint) as response:
+                    response.raise_for_status()
+        except (OSError, TimeoutError, ClientError):
+            return web.json_response({'status': 'unavailable'}, status=503)
+        return web.json_response({'status': 'ready'})
+
     async def calls(request):
         supplied = request.headers.get('Authorization', '').encode('utf-8')
-        native_authorized = hmac.compare_digest(supplied, ('Bearer ' + token).encode('ascii'))
+        if invites:
+            native_authorized = invites.credential(supplied[7:]) if supplied.startswith(b'Bearer ') else ''
+        else:
+            native_authorized = hmac.compare_digest(supplied, ('Bearer ' + token).encode('ascii'))
         trial_authorized = trial_authorize and trial_authorize(request)
         browser = request.query.get('client') == 'browser'
         if (browser and not trial_authorized) or (not browser and not native_authorized and not trial_authorized):
@@ -338,9 +350,19 @@ def create_app(token, *, mode='mock', api_url='http://127.0.0.1:8000', livekit_u
         connection = Connection(ws, make_backend, browser=browser)
         task = asyncio.current_task()
         connections.add((connection, task))
+        async def check_invite():
+            digest = trial_authorized or native_authorized
+            while invites.active(digest):
+                await asyncio.sleep(5)
+            connection.stop('access_expired')
+
+        expiry = asyncio.create_task(check_invite()) if invites else None
         try:
             await connection.run()
         finally:
+            if expiry:
+                expiry.cancel()
+                await asyncio.gather(expiry, return_exceptions=True)
             connections.discard((connection, task))
         return ws
 
@@ -352,6 +374,8 @@ def create_app(token, *, mode='mock', api_url='http://127.0.0.1:8000', livekit_u
 
     if mode == 'live':
         app.cleanup_ctx.append(http_context)
+        if os.getenv('HARMONY_WORKER_HEALTH_URL'):
+            app.router.add_get('/ready', ready)
     app.on_shutdown.append(shutdown)
     app.router.add_get('/health', health)
     app.router.add_get(PATH, calls)
@@ -376,9 +400,12 @@ def main():
         ssl_context.minimum_version = ssl.TLSVersion.TLSv1_2
         ssl_context.load_cert_chain(args.certfile, args.keyfile)
     try:
+        from .invites import Invites
+        directory = os.getenv('HARMONY_INVITE_DIR')
         app = create_app(os.getenv('HARMONY_GATEWAY_TOKEN', ''), mode=args.mode,
                          api_url=args.api_url, livekit_url=args.livekit_url,
-                         trial_code=os.getenv('HARMONY_TRIAL_CODE'), trial_event_key=os.getenv('HARMONY_TRIAL_EVENT_KEY'))
+                         trial_code=os.getenv('HARMONY_TRIAL_CODE'), trial_event_key=os.getenv('HARMONY_TRIAL_EVENT_KEY'),
+                         invites=Invites(directory) if directory else None)
     except ValueError as exc:
         parser.error(str(exc))
     logging.basicConfig(level=logging.INFO)

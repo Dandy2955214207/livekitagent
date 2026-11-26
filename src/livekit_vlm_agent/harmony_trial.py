@@ -17,8 +17,8 @@ HEADERS = {
 }
 
 
-def add_trial_routes(app, code, *, api_url=None, get_http=None):
-    if len(code) < 20 or not code.isascii() or any(ch.isspace() for ch in code):
+def add_trial_routes(app, code, *, api_url=None, get_http=None, invites=None):
+    if not invites and (len(code) < 20 or not code.isascii() or any(ch.isspace() for ch in code)):
         raise ValueError('HARMONY_TRIAL_CODE needs at least 20 non-whitespace ASCII characters')
     cookie_value = secrets.token_urlsafe(32)
     dist = PROJECT_ROOT / 'web/dist'
@@ -36,6 +36,8 @@ def add_trial_routes(app, code, *, api_url=None, get_http=None):
         return request.headers.get('Origin') == f'{scheme}://{request.host}'
 
     def authorized(request):
+        if invites:
+            return invites.from_cookie(request.cookies.get(COOKIE, ''))
         return hmac.compare_digest(request.cookies.get(COOKIE, '').encode('utf-8'), cookie_value.encode('ascii'))
 
     def browser_authorized(request):
@@ -43,7 +45,8 @@ def add_trial_routes(app, code, *, api_url=None, get_http=None):
 
     async def index(_):
         html = (dist / 'index.html').read_text(encoding='utf-8')
-        html = html.replace('<html lang="zh-CN">', '<html lang="zh-CN" data-trial>', 1)
+        flags = 'data-trial data-private-trial' if invites else 'data-trial'
+        html = html.replace('<html lang="zh-CN">', f'<html lang="zh-CN" {flags}>', 1)
         return web.Response(text=html, content_type='text/html', headers=HEADERS)
 
     async def asset(request):
@@ -59,10 +62,12 @@ def add_trial_routes(app, code, *, api_url=None, get_http=None):
         if request.content_length is None or request.content_length > limit:
             return web.Response(status=400, headers=HEADERS)
         supplied = await request.read()
-        if not hmac.compare_digest(supplied, code.encode('ascii')):
+        digest = invites.credential(supplied) if invites else None
+        if not (digest if invites else hmac.compare_digest(supplied, code.encode('ascii'))):
             return web.Response(status=401, headers=HEADERS)
         response = web.Response(status=204, headers=HEADERS)
-        response.set_cookie(COOKIE, cookie_value, secure=https(request), httponly=True, samesite='Strict')
+        response.set_cookie(COOKIE, invites.cookie(digest) if invites else cookie_value,
+                            secure=https(request), httponly=True, samesite='Strict')
         return response
 
     async def capture(request):
